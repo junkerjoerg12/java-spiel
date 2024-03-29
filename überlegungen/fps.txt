@@ -1,0 +1,9 @@
+wie viele fps hat swing by default? / wann wird die giu gerepaintet?
+
+wie können wir selber festlegen, wann die giu geupdatet wird?
+  |_> objekt, dass repaitn methode alle {sekunde/gewünschteFps} repaint aufruft, falls alles fertig berechnet ist oder repaitn aufruft, sobalt alles fertig berechnet ist, wenn {sekunde/gewünschteFps} läbger ist, als die zeit, die zum berechnen gebraucht wurde
+  |_> müssen dafür sorgen, dass repaint nur aufgerufen wird, wenn wir es tun, nicht über andere schon da siende methoden
+
+https://stackoverflow.com/questions/771206/how-do-i-cap-my-framerate-at-60-fps-in-java 
+https://dewitters.com/dewitters-gameloop/ 
+https://www.youtube.com/watch?v=gVfooB42l8M und ff.

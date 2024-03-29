@@ -1,0 +1,7 @@
+AABB/SAT als Methode zum Kollisioncheck
+
+AABBB ist einfacher, kann aber nur bei rechtecken angewandt werden, die nicht rotiert worden sind
+SAT würde bei allen arten von formane funktionieren, ist aber (rechen)aufwändiger
+
+AABB: https://developer.mozilla.org/en-US/docs/Games/Techniques/3D_collision_detection
+SAT: https://dyn4j.org/2010/01/sat/ 
