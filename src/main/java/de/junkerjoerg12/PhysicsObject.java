@@ -3,9 +3,9 @@ package de.junkerjoerg12;
 import java.awt.Color;
 import java.util.ArrayList;
 
-import javax.swing.JLabel;
+import javax.swing.JPanel;
 
-public abstract class PhysicsObject extends JLabel {
+public abstract class PhysicsObject extends JPanel {
 
   protected double acceleration;
   protected double velocityHorizontally;
@@ -23,6 +23,8 @@ public abstract class PhysicsObject extends JLabel {
     }
 
 
+
     return false;
   }
+  protected abstract void calculatePosition();
 }

@@ -1,16 +1,18 @@
 package de.junkerjoerg12;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.ImageIcon;
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import java.io.File;
 
 public class MainMenu extends JPanel implements ActionListener {
 
@@ -18,20 +20,24 @@ public class MainMenu extends JPanel implements ActionListener {
     JButton settings;
     JButton quit;
 
-    public MainMenu() {
+    private Image backgroundImage;
+
+    private Game game;
+
+    public MainMenu(Game game) {
 
         this.setLayout(new GridBagLayout());
         this.setVisible(true);
         this.setBackground(Color.GRAY);
 
-        //ginge, aber die Knöpfe wären an unerreichbaren stellen
-        /*
-        ImageIcon icon = new ImageIcon("C:\\Users\\andre\\Documents\\Informatik_Projekte\\java-spiel\\src\\main\\resources\\MainMenu-Background.png");
-        JLabel idk = new JLabel();
-        idk.setIcon(icon);
-        this.add(idk);
-        */
+        this.game = game;
 
+        try {
+            backgroundImage = ImageIO.read(new File(
+                    "C:\\Users\\andre\\Documents\\Informatik_Projekte\\java-spiel\\src\\main\\resources\\MainMenu-Background.png"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.gridx = 1;
         constraints.gridy = 1;
@@ -53,11 +59,18 @@ public class MainMenu extends JPanel implements ActionListener {
     }
 
     @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.drawImage(backgroundImage, 0, 0, this);
+    }
+
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == quit) {
             System.exit(0);
         } else if (e.getSource() == start) {
             System.out.println("Spiel starten");
+            game.start();
         } else if (e.getSource() == settings) {
             System.out.println("Einstellungen öffnen");
         }
