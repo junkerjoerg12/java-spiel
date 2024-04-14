@@ -40,4 +40,11 @@ public class Map extends JPanel {
         player = new Player();
         this.add(player);
     }
+
+    public void tick() {
+        //wird in jedem game tick einmal aufgerufen um alles zu berechnen
+        player.calculatePosition();
+
+
+    }
 }

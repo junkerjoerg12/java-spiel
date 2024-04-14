@@ -11,6 +11,9 @@ public class Player extends Character implements KeyListener {
     final int keyLeft = 65;
     final int keyJump = 32;
 
+    private float lastTimeInTouchWithFloor;
+    private float lastTick;
+
     public Player(double acceleration) {
         super(acceleration);
         this.setBackground(Color.PINK);
@@ -30,16 +33,16 @@ public class Player extends Character implements KeyListener {
     public void keyPressed(KeyEvent e) {
         // soweit ich weiß brauchen wir diehier
 
+        System.out.println("Achtung Achtung!!!");
+
         switch (e.getKeyCode()) {
             case keyRight:
-                System.out.println("Move forward");
-                break;
+                this.velocityHorizontally = 100;
             case keyLeft:
-                System.out.println("Move backwards");
-                break;
+                this.velocityHorizontally = 100;
             case keyJump:
                 System.out.println("Jump");
-
+                this.velocityVertically = -100;
             default:
                 break;
         }
@@ -47,11 +50,18 @@ public class Player extends Character implements KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
-        //alle geschindigkeiten wieder null setzen
+        // alle geschindigkeiten wieder null setzen
     }
 
     @Override
-    protected void calculatePosition() {
+    public void calculatePosition() {
+        System.out.println("jasklsdjf");
+        System.out.println(velocityHorizontally);
+
+        this.setLocation(
+                (int) (this.getX() + velocityHorizontally * ((1 / 1000) * System.currentTimeMillis() - lastTick)),
+                this.getY());
+        this.lastTick = System.currentTimeMillis();
 
     }
 }

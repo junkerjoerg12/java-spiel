@@ -1,6 +1,5 @@
 package de.junkerjoerg12;
 
-import de.junkerjoerg12.character.Player;
 import de.junkerjoerg12.map.Map;
 
 import java.awt.BorderLayout;
@@ -11,9 +10,10 @@ public class Game extends JFrame {
 
     MainMenu mainMenu;
     private Map map;
-    private int targetFPS = 60;
+    private int targetFPS = 1;
 
     private double delayBetewenFrames; // in Millisekunden
+
 
     public Game() {
         delayBetewenFrames = 1.0 / targetFPS * 1000;
@@ -25,6 +25,7 @@ public class Game extends JFrame {
         this.setLayout(new BorderLayout());
         mainMenu();
         this.setVisible(true);
+
 
         // sodass ich nicht immer irgendwelche knöpfe drücken muss
         start();
@@ -47,28 +48,34 @@ public class Game extends JFrame {
     }
 
     public void loop() {
+        int counter = 0;
         while (true) {
             long timeSAtart = System.currentTimeMillis();
 
-            if (System.currentTimeMillis() - timeSAtart > delayBetewenFrames) {
+            // alles bewegen und neu zeichnen und so
+            map.tick();
+            System.out.println("Zeichne neu...");
 
-                // frame anzeigen
-                map.repaint();
-                // i guesss thats it
-            } else { // Wartet, bis der es an der >Zeit ist den Frame anzuzeigen
+            // wartet falls nötig darauf, dass die zeit zwichen frames abgelaufen ist
+            if ((System.currentTimeMillis() - timeSAtart - delayBetewenFrames) <= 0) {
+                System.out.println("muss warten");
                 try {
+                    System.out.println(delayBetewenFrames - (System.currentTimeMillis() - timeSAtart));
                     Thread.sleep((long) (delayBetewenFrames - (System.currentTimeMillis() - timeSAtart)));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                // frame anzeigen
-                map.repaint();
-                // i guesss thats it
+            } else {
+                System.err.println("muss nicht warten");
             }
 
             // an irgendeine Logische bedingung knüpfen
-            stop();
-            break;
+            System.out.println(counter);
+            if (counter > 100) {
+                stop();
+                break;
+            }
+            counter++;
         }
     }
 
@@ -80,4 +87,5 @@ public class Game extends JFrame {
 
         // kehrt in hauptmenue zurrück
     }
+
 }
