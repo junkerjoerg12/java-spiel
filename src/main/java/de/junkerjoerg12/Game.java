@@ -3,10 +3,13 @@ package de.junkerjoerg12;
 import de.junkerjoerg12.map.Map;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
+import javax.swing.Timer;
 
-public class Game extends JFrame {
+public class Game extends JFrame implements ActionListener {
 
     MainMenu mainMenu;
     private Map map;
@@ -14,6 +17,7 @@ public class Game extends JFrame {
 
     private double delayBetewenFrames; // in Millisekunden
 
+    private Timer timer;
 
     public Game() {
         delayBetewenFrames = 1.0 / targetFPS * 1000;
@@ -26,7 +30,8 @@ public class Game extends JFrame {
         mainMenu();
         this.setVisible(true);
 
-
+        timer = new Timer((int) delayBetewenFrames, this);
+        timer.setRepeats(false);
         // sodass ich nicht immer irgendwelche knöpfe drücken muss
         start();
     }
@@ -44,39 +49,7 @@ public class Game extends JFrame {
         this.add(map, BorderLayout.CENTER);
         revalidate();
         repaint();
-        loop();
-    }
-
-    public void loop() {
-        int counter = 0;
-        while (true) {
-            long timeSAtart = System.currentTimeMillis();
-
-            // alles bewegen und neu zeichnen und so
-            map.tick();
-            System.out.println("Zeichne neu...");
-
-            // wartet falls nötig darauf, dass die zeit zwichen frames abgelaufen ist
-            if ((System.currentTimeMillis() - timeSAtart - delayBetewenFrames) <= 0) {
-                System.out.println("muss warten");
-                try {
-                    System.out.println(delayBetewenFrames - (System.currentTimeMillis() - timeSAtart));
-                    Thread.sleep((long) (delayBetewenFrames - (System.currentTimeMillis() - timeSAtart)));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            } else {
-                System.err.println("muss nicht warten");
-            }
-
-            // an irgendeine Logische bedingung knüpfen
-            System.out.println(counter);
-            if (counter > 100) {
-                stop();
-                break;
-            }
-            counter++;
-        }
+        timer.start();
     }
 
     public void pause() {
@@ -88,4 +61,22 @@ public class Game extends JFrame {
         // kehrt in hauptmenue zurrück
     }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == timer) {
+            long timeSAtart = System.currentTimeMillis();
+
+            map.tick();
+
+            // wartet falls nötig darauf, dass die zeit zwichen frames abgelaufen ist
+            if ((System.currentTimeMillis() - timeSAtart - delayBetewenFrames) <= 0) {
+                    timer.setDelay((int) (delayBetewenFrames - (System.currentTimeMillis() - timeSAtart)));
+                    timer.start();
+            } else {
+                actionPerformed(e);
+            }
+
+        }
+
+    }
 }

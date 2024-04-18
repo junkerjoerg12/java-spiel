@@ -19,6 +19,9 @@ public class Player extends Character implements KeyListener {
         this.setBackground(Color.PINK);
 
         this.setBounds(300, 300, 50, 50);
+
+        this.addKeyListener(this);
+        this.requestFocus();
     }
 
     public Player() {
@@ -37,8 +40,10 @@ public class Player extends Character implements KeyListener {
 
         switch (e.getKeyCode()) {
             case keyRight:
+                System.out.println("right");
                 this.velocityHorizontally = 100;
             case keyLeft:
+                System.out.println("left");
                 this.velocityHorizontally = 100;
             case keyJump:
                 System.out.println("Jump");
@@ -55,9 +60,7 @@ public class Player extends Character implements KeyListener {
 
     @Override
     public void calculatePosition() {
-        System.out.println("jasklsdjf");
-        System.out.println(velocityHorizontally);
-
+        // this.setLocation(getX() + 1, getY() + 1);
         this.setLocation(
                 (int) (this.getX() + velocityHorizontally * ((1 / 1000) * System.currentTimeMillis() - lastTick)),
                 this.getY());
