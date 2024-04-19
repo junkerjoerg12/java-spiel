@@ -17,32 +17,28 @@ public class Map extends JPanel {
 
     private Player player;
 
-    public Map() {
+    public Map(Player player) {
         this.setBackground(Color.GRAY);
         this.setLayout(null);
+
+        this.player = player;
+        this.add(player);
 
         build();
     }
 
     private void build() {
 
-        this.player = new Player();
-
         MapElement temp = new Floor();
         temp.setBounds(0, 1000, 1920, 80);
         this.add(temp);
         allObjects.add(temp);
 
-        spawnPlayer();
-    }
-
-    private void spawnPlayer() {
-        player = new Player();
-        this.add(player);
     }
 
     public void tick() {
         //wird in jedem game tick einmal aufgerufen um alles zu berechnen
+        player.printVelocity();
         player.calculatePosition();
 
 

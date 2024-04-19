@@ -1,16 +1,10 @@
 package de.junkerjoerg12.character;
 
 import java.awt.Color;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
-public class Player extends Character implements KeyListener {
+public class Player extends Character {
 
     // Keycodes für bewegungen:
-    final int keyRight = 68;
-    final int keyLeft = 65;
-    final int keyJump = 32;
-
     private float lastTimeInTouchWithFloor;
     private float lastTick;
 
@@ -20,7 +14,7 @@ public class Player extends Character implements KeyListener {
 
         this.setBounds(300, 300, 50, 50);
 
-        this.addKeyListener(this);
+        this.setFocusable(true);
         this.requestFocus();
     }
 
@@ -29,42 +23,27 @@ public class Player extends Character implements KeyListener {
     }
 
     @Override
-    public void keyTyped(KeyEvent e) {
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        // soweit ich weiß brauchen wir diehier
-
-        System.out.println("Achtung Achtung!!!");
-
-        switch (e.getKeyCode()) {
-            case keyRight:
-                System.out.println("right");
-                this.velocityHorizontally = 100;
-            case keyLeft:
-                System.out.println("left");
-                this.velocityHorizontally = 100;
-            case keyJump:
-                System.out.println("Jump");
-                this.velocityVertically = -100;
-            default:
-                break;
-        }
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-        // alle geschindigkeiten wieder null setzen
-    }
-
-    @Override
     public void calculatePosition() {
         // this.setLocation(getX() + 1, getY() + 1);
-        this.setLocation(
-                (int) (this.getX() + velocityHorizontally * ((1 / 1000) * System.currentTimeMillis() - lastTick)),
-                this.getY());
+        System.out.println("calculate psoition");
+        System.out.println(velocityHorizontally);
+        this.setLocation((int) (this.getX() + velocityHorizontally * ((1 / 1000) *System.currentTimeMillis() - lastTick)),this.getY());
         this.lastTick = System.currentTimeMillis();
+        revalidate();
+        repaint();
 
+    }
+
+    public void setVelocityHorizontally(double velocity) {
+        velocityHorizontally = velocity;
+    }
+
+    public void setVelocityVertically(double velocity) {
+        velocityVertically = velocity;
+    }
+
+    public void printVelocity() {
+        System.out.println("HOrizontally: " + velocityHorizontally);
+        System.out.println("Vertically: " + velocityVertically);
     }
 }

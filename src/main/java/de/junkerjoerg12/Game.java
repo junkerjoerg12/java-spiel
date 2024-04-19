@@ -1,18 +1,36 @@
 package de.junkerjoerg12;
 
+import de.junkerjoerg12.character.Player;
 import de.junkerjoerg12.map.Map;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.Random;
 
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
-public class Game extends JFrame implements ActionListener {
+public class Game extends JFrame implements ActionListener, KeyListener {
 
-    MainMenu mainMenu;
+    final int keyRight = 68;
+    final int keyLeft = 65;
+    final int keyJump = 32;
+
+    //auf welchem Monitor das Spiel angezeigt werden soll
+    //nur während entwicklung wichtig
+    byte monitor = 2;
+
+
+    private MainMenu mainMenu;
     private Map map;
+    private Player player;
+
+
     private int targetFPS = 1;
 
     private double delayBetewenFrames; // in Millisekunden
@@ -24,14 +42,27 @@ public class Game extends JFrame implements ActionListener {
         this.setResizable(false);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        this.setSize(200, 200);
-        this.setUndecorated(true);
+        // this.setUndecorated(true);
         this.setLayout(new BorderLayout());
+
+
+        //öffnet spiel auf gewnschtem monitor 
+        this.setLocation(GraphicsEnvironment
+                .getLocalGraphicsEnvironment()
+                .getScreenDevices()[monitor - 1]
+                .getDefaultConfiguration()
+                .getBounds()
+                .getLocation());
+        
         mainMenu();
         this.setVisible(true);
 
         timer = new Timer((int) delayBetewenFrames, this);
         timer.setRepeats(false);
+
+        this.addKeyListener(this);
+
+        this.setFocusable(true);
         // sodass ich nicht immer irgendwelche knöpfe drücken muss
         start();
     }
@@ -44,11 +75,13 @@ public class Game extends JFrame implements ActionListener {
     public void start() {
         remove(mainMenu);
 
-        map = new Map();
+        player = new Player();
+        map = new Map(player);
         map.setVisible(true);
         this.add(map, BorderLayout.CENTER);
         revalidate();
         repaint();
+        this.requestFocus();
         timer.start();
     }
 
@@ -75,8 +108,40 @@ public class Game extends JFrame implements ActionListener {
             } else {
                 actionPerformed(e);
             }
-
         }
 
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        // soweit ich weiß brauchen wir diehiero
+
+        switch (e.getKeyCode()) {
+            case keyRight:
+                System.out.println("right");
+                player.setVelocityHorizontally(100.0);
+                break;
+            case keyLeft:
+                System.out.println("left");
+                player.setVelocityHorizontally(-100.0);
+                break;
+            case keyJump:
+                System.out.println("Jump");
+                player.setVelocityVertically(-100.0);
+                break;
+            default:
+                break;
+        }
+        player.printVelocity();
+    }
+
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        // alle geschindigkeiten wieder null setzen
     }
 }
