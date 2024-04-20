@@ -15,31 +15,27 @@ public class Map extends JPanel {
     private ArrayList<PhysicsObject> allObjects = new ArrayList<>();
     private ArrayList<Enemy> enemies = new ArrayList<>();
 
-    private Player player;
+    public Player player; //irgandwann mal private machen + getter Methode
 
-    public Map(Player player) {
+    public Map() {
         this.setBackground(Color.GRAY);
         this.setLayout(null);
 
-        this.player = player;
-        this.add(player);
 
         build();
     }
 
     private void build() {
-
-        MapElement temp = new Floor();
+        player = new Player(this);
+        this.add(player);
+        MapElement temp = new Floor(this);
         temp.setBounds(0, 1000, 1920, 80);
         this.add(temp);
         allObjects.add(temp);
 
     }
 
-    public void tick() {
-        //wird in jedem game tick einmal aufgerufen um alles zu berechnen
-        player.calculatePosition();
-
-
+    public ArrayList<PhysicsObject> getAllObjects() {
+        return allObjects;
     }
 }

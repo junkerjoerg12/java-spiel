@@ -26,7 +26,6 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 
     private MainMenu mainMenu;
     private Map map;
-    private Player player;
 
 
     private int targetFPS = 30;
@@ -74,8 +73,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     public void start() {
         remove(mainMenu);
 
-        player = new Player();
-        map = new Map(player);
+        map = new Map();
         map.setVisible(true);
         this.add(map, BorderLayout.CENTER);
         revalidate();
@@ -98,7 +96,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         if (e.getSource() == timer) {
             long timeSAtart = System.currentTimeMillis();
 
-            map.tick();
+            tick();
 
             // wartet falls nötig darauf, dass die zeit zwichen frames abgelaufen ist
             if ((System.currentTimeMillis() - timeSAtart - delayBetewenFrames) <= 0) {
@@ -111,6 +109,10 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 
     }
 
+    private void tick() {
+        map.player.calculatePosition();
+    }
+
     @Override
     public void keyTyped(KeyEvent e) {
     }
@@ -121,13 +123,13 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 
         switch (e.getKeyCode()) {
             case keyRight:
-                player.setVelocityHorizontally(100);
+                map.player.setVelocityHorizontally(100);
                 break;
             case keyLeft:
-                player.setVelocityHorizontally(-100);
+                map.player.setVelocityHorizontally(-100);
                 break;
             case keyJump:
-                player.setVelocityVertically(-100);
+                map.player.setVelocityVertically(-100);
                 break;
             default:
                 break;
@@ -138,10 +140,10 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     public void keyReleased(KeyEvent e) {
         switch (e.getKeyCode()) {
             case keyRight:
-                player.setVelocityHorizontally(0);
+                map.player.setVelocityHorizontally(0);
                 break;
             case keyLeft:
-                player.setVelocityHorizontally(0);
+                map.player.setVelocityHorizontally(0);
                 break;
             default:
                 break;
