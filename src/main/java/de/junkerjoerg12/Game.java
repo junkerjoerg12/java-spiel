@@ -4,13 +4,11 @@ import de.junkerjoerg12.character.Player;
 import de.junkerjoerg12.map.Map;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.Random;
 
 import javax.swing.JFrame;
 import javax.swing.Timer;
@@ -31,7 +29,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     private Player player;
 
 
-    private int targetFPS = 1;
+    private int targetFPS = 30;
 
     private double delayBetewenFrames; // in Millisekunden
 
@@ -124,24 +122,27 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         switch (e.getKeyCode()) {
             case keyRight:
                 System.out.println("right");
-                player.setVelocityHorizontally(100.0);
+                player.setVelocityHorizontally(100);
                 break;
             case keyLeft:
                 System.out.println("left");
-                player.setVelocityHorizontally(-100.0);
+                player.setVelocityHorizontally(-100);
                 break;
             case keyJump:
                 System.out.println("Jump");
-                player.setVelocityVertically(-100.0);
+                player.setVelocityVertically(-100);
                 break;
             default:
                 break;
         }
     }
 
-
     @Override
     public void keyReleased(KeyEvent e) {
         // alle geschindigkeiten wieder null setzen
+    }
+
+    public static void main(String[] args) {
+        new Game();
     }
 }
