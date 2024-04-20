@@ -5,8 +5,8 @@ import java.awt.Color;
 public class Player extends Character {
 
     // Keycodes für bewegungen:
-    private float lastTimeInTouchWithFloor;
-    private float lastTick;
+    private long lastTimeInTouchWithFloor;
+    private long lastTick;
 
     public Player(double acceleration) {
         super(acceleration);
@@ -24,10 +24,7 @@ public class Player extends Character {
 
     @Override
     public void calculatePosition() {
-        // this.setLocation(getX() + 1, getY() + 1);
-        System.out.println("calculate psoition");
-        System.out.println(velocityHorizontally);
-        this.setLocation((int) (this.getX() + velocityHorizontally * ((1 / 1000) *System.currentTimeMillis() - lastTick)),this.getY());
+        this.setLocation((int) (this.getX() + velocityHorizontally * (System.currentTimeMillis() - lastTick) / 1000) ,this.getY());
         this.lastTick = System.currentTimeMillis();
         revalidate();
         repaint();

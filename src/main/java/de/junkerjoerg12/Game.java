@@ -39,6 +39,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 
     public Game() {
         delayBetewenFrames = 1.0 / targetFPS * 1000;
+
         this.setResizable(false);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -136,7 +137,6 @@ public class Game extends JFrame implements ActionListener, KeyListener {
             default:
                 break;
         }
-        player.printVelocity();
     }
 
 

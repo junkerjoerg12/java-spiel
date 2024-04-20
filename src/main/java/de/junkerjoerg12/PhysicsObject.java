@@ -8,6 +8,8 @@ import javax.swing.JPanel;
 public abstract class PhysicsObject extends JPanel {
 
   protected double acceleration;
+
+  //in pixeln/sekunde
   protected double velocityHorizontally;
   protected double velocityVertically;
 

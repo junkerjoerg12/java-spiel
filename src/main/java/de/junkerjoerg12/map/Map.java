@@ -38,7 +38,6 @@ public class Map extends JPanel {
 
     public void tick() {
         //wird in jedem game tick einmal aufgerufen um alles zu berechnen
-        player.printVelocity();
         player.calculatePosition();
 
 
