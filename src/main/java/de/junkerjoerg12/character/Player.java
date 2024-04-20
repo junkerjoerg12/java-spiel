@@ -24,14 +24,15 @@ public class Player extends Character {
     @Override
     public void calculatePosition() {
         calculateVerticalVelocity();
-        this.setLocation((int) (this.getX() + velocityHorizontally * (System.currentTimeMillis() - lastTick) / 1000) ,(int) (this.getY() + velocityVertically *( System.currentTimeMillis() - lastTick) / 1000));
+        this.setLocation(Math.round( (this.getX() + velocityHorizontally * (System.currentTimeMillis() - lastTick) / 1000)),
+                 Math.round((this.getY() + velocityVertically * (System.currentTimeMillis() - lastTick) / 1000)));
         this.lastTick = System.currentTimeMillis();
         revalidate();
         repaint();
 
     }
 
-    public void setVelocityHorizontally(int  velocity) {
+    public void setVelocityHorizontally(int velocity) {
         velocityHorizontally = velocity;
     }
 

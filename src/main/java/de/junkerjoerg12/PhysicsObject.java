@@ -10,14 +10,13 @@ public abstract class PhysicsObject extends JPanel {
     // in pixeln/sekunde²
     protected double acceleration;
     // in pixeln/sekunde
-    protected int  velocityHorizontally;
-    protected int  velocityVertically;
+    protected int velocityHorizontally;
+    protected int velocityVertically;
 
     private long lastTimeInTouchWithFloor;
 
     public PhysicsObject(double acceleration) {
-        this.acceleration = acceleration;
-
+        this.acceleration = -acceleration;//Minus, weil die Y-Achse bei Komputergraphik quasi gespiegelt ist
 
         this.setBackground(Color.CYAN);
     }
@@ -34,7 +33,9 @@ public abstract class PhysicsObject extends JPanel {
         if (lastTimeInTouchWithFloor == 0) {
             lastTimeInTouchWithFloor = System.currentTimeMillis();
         }
-        velocityVertically = (int) (-1*(acceleration * ((lastTimeInTouchWithFloor - System.currentTimeMillis()) / 1000))); //Rest noch mit beachten, sonst wirkt das unsmooth
+        //bin mir nicht sicher, ob das realistisch ist, es sieht aber ganz gut aus
+        velocityVertically +=  (int) (acceleration * ((lastTimeInTouchWithFloor - System.currentTimeMillis()) / 1000));
+        // Rest noch mit beachten, sonst wirkt das unsmooth
     }
 
     protected abstract void calculatePosition();

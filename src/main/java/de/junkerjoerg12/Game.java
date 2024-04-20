@@ -121,15 +121,12 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 
         switch (e.getKeyCode()) {
             case keyRight:
-                System.out.println("right");
                 player.setVelocityHorizontally(100);
                 break;
             case keyLeft:
-                System.out.println("left");
                 player.setVelocityHorizontally(-100);
                 break;
             case keyJump:
-                System.out.println("Jump");
                 player.setVelocityVertically(-100);
                 break;
             default:
@@ -139,7 +136,16 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
-        // alle geschindigkeiten wieder null setzen
+        switch (e.getKeyCode()) {
+            case keyRight:
+                player.setVelocityHorizontally(0);
+                break;
+            case keyLeft:
+                player.setVelocityHorizontally(0);
+                break;
+            default:
+                break;
+        }
     }
 
     public static void main(String[] args) {
