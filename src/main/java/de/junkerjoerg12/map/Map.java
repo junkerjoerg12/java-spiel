@@ -38,4 +38,8 @@ public class Map extends JPanel {
     public ArrayList<PhysicsObject> getAllObjects() {
         return allObjects;
     }
+
+    public Player getPLayer() {
+        return player;
+    }
 }

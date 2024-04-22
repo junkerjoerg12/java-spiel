@@ -25,25 +25,30 @@ public class Player extends Character {
 
     @Override
     public void calculatePosition() {
-        calculateVerticalVelocity();
-        this.setLocation(Math.round((this.getX() + velocityHorizontally * (System.currentTimeMillis() - lastTick) / 1000)),
-                 Math.round((this.getY() + velocityVertically * (System.currentTimeMillis() - lastTick) / 1000)));
+        velocityVertically = calculateVerticalVelocity();
+        this.setLocation(
+                Math.round((this.getX() + velocityHorizontally * (System.currentTimeMillis() - lastTick) / 1000)),
+                Math.round((this.getY() + velocityVertically * (System.currentTimeMillis() - lastTick) / 1000)));
         this.lastTick = System.currentTimeMillis();
         revalidate();
         repaint();
 
     }
 
-    public void setVelocityHorizontally(int velocity) {
-        velocityHorizontally = velocity;
-    }
-
-    public void setVelocityVertically(int velocity) {
-        velocityVertically = velocity;
-    }
-
     public void printVelocity() {
         System.out.println("HOrizontally: " + velocityHorizontally);
         System.out.println("Vertically: " + velocityVertically);
+    }
+
+    public void walk(int velocity) {
+        velocityHorizontally = velocity;
+    }
+
+    public void jump() {
+        if (checkCollision(map.getAllObjects())) {
+            jump = true;
+            velocityVertically = -100;
+            lastTimeInTouchWithFloor = System.currentTimeMillis();
+        }
     }
 }

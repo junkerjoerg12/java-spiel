@@ -123,13 +123,13 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 
         switch (e.getKeyCode()) {
             case keyRight:
-                map.player.setVelocityHorizontally(100);
+                map.getPLayer().walk(100);
                 break;
             case keyLeft:
-                map.player.setVelocityHorizontally(-100);
+                map.getPLayer().walk(-100);
                 break;
             case keyJump:
-                map.player.setVelocityVertically(-100);
+                map.getPLayer().jump();
                 break;
             default:
                 break;
@@ -140,10 +140,10 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     public void keyReleased(KeyEvent e) {
         switch (e.getKeyCode()) {
             case keyRight:
-                map.player.setVelocityHorizontally(0);
+                map.getPLayer().walk(0);
                 break;
             case keyLeft:
-                map.player.setVelocityHorizontally(0);
+                map.getPLayer().walk(0);
                 break;
             default:
                 break;

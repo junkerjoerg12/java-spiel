@@ -15,7 +15,10 @@ public abstract class PhysicsObject extends JPanel {
     protected int velocityHorizontally;
     protected int velocityVertically;
 
-    private long lastTimeInTouchWithFloor;
+    public long lastTimeInTouchWithFloor;
+
+    protected boolean jump;
+    //vielleicht noch was besseres überlegen
 
     protected Map map;
 
@@ -24,11 +27,15 @@ public abstract class PhysicsObject extends JPanel {
         this.map = map;
 
         this.setBackground(Color.CYAN);
+
+        lastTimeInTouchWithFloor = System.currentTimeMillis();
     }
 
     public boolean checkCollision(ArrayList<PhysicsObject> list) {
         // viellcit später zahlen als code für Collision links, rechts, oben oder unten
         // zurückgeben
+
+        //Problem: bei schneller Bewegung kann man sich in gegenstände reinbewegen, da nicht nach jedem bewegten Pixel überprüft wird, ob kollision vorhanden ist, sondern nur nach jedem Frame, also nachdem man sich mehrere pisel weit verschpben hat 
 
         for (PhysicsObject p : list) {
             if (this.getBounds().intersects(p.getBounds())) {
@@ -38,18 +45,18 @@ public abstract class PhysicsObject extends JPanel {
         return false;
     }
 
-    protected void calculateVerticalVelocity() {
-        if (lastTimeInTouchWithFloor == 0) {
-            lastTimeInTouchWithFloor = System.currentTimeMillis();
-        }
+    protected int calculateVerticalVelocity() {
         // bin mir nicht sicher, ob das realistisch ist, es sieht aber ganz gut aus
-        if (!checkCollision(map.getAllObjects())) {
-            velocityVertically += (int) (acceleration
+
+        if (jump) {//ist nicht schön, funktioniert aber, also vielleicht mal noch was anderes überlegen
+            jump = false;
+            return velocityVertically;
+        } else if (!checkCollision(map.getAllObjects())) {
+            return velocityVertically + (int) (acceleration
                     * ((lastTimeInTouchWithFloor - System.currentTimeMillis()) / 1000));
-            // Rest noch mit beachten, sonst wirkt das unsmooth
-        } else {
-            velocityVertically = 0;
         }
+        return 0;
+        // problem: wird auch falls man springen will gleich wieder auf null gesetzt
     }
 
     protected abstract void calculatePosition();
