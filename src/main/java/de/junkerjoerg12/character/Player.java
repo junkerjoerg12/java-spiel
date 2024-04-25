@@ -6,8 +6,6 @@ import de.junkerjoerg12.map.Map;
 
 public class Player extends Character {
 
-    // Keycodes für bewegungen:
-    private long lastTick;
 
     public Player(double acceleration, Map map) {
         super(acceleration, map);
@@ -21,34 +19,5 @@ public class Player extends Character {
 
     public Player(Map map) {
         this(10, map);
-    }
-
-    @Override
-    public void calculatePosition() {
-        velocityVertically = calculateVerticalVelocity();
-        this.setLocation(
-                Math.round((this.getX() + velocityHorizontally * (System.currentTimeMillis() - lastTick) / 1000)),
-                Math.round((this.getY() + velocityVertically * (System.currentTimeMillis() - lastTick) / 1000)));
-        this.lastTick = System.currentTimeMillis();
-        revalidate();
-        repaint();
-
-    }
-
-    public void printVelocity() {
-        System.out.println("HOrizontally: " + velocityHorizontally);
-        System.out.println("Vertically: " + velocityVertically);
-    }
-
-    public void walk(int velocity) {
-        velocityHorizontally = velocity;
-    }
-
-    public void jump() {
-        if (checkCollision(map.getAllObjects())) {
-            jump = true;
-            velocityVertically = -100;
-            lastTimeInTouchWithFloor = System.currentTimeMillis();
-        }
     }
 }

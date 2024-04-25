@@ -1,6 +1,5 @@
 package de.junkerjoerg12;
 
-import de.junkerjoerg12.character.Player;
 import de.junkerjoerg12.map.Map;
 
 import java.awt.BorderLayout;
@@ -19,14 +18,12 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     final int keyLeft = 65;
     final int keyJump = 32;
 
-    //auf welchem Monitor das Spiel angezeigt werden soll
-    //nur während entwicklung wichtig
+    // auf welchem Monitor das Spiel angezeigt werden soll
+    // nur während entwicklung wichtig
     byte monitor = 2;
-
 
     private MainMenu mainMenu;
     private Map map;
-
 
     private int targetFPS = 30;
 
@@ -43,15 +40,14 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         // this.setUndecorated(true);
         this.setLayout(new BorderLayout());
 
-
-        //öffnet spiel auf gewnschtem monitor 
+        // öffnet spiel auf gewnschtem monitor
         this.setLocation(GraphicsEnvironment
                 .getLocalGraphicsEnvironment()
                 .getScreenDevices()[monitor - 1]
                 .getDefaultConfiguration()
                 .getBounds()
                 .getLocation());
-        
+
         mainMenu();
         this.setVisible(true);
 
@@ -100,8 +96,8 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 
             // wartet falls nötig darauf, dass die zeit zwichen frames abgelaufen ist
             if ((System.currentTimeMillis() - timeSAtart - delayBetewenFrames) <= 0) {
-                    timer.setDelay((int) (delayBetewenFrames - (System.currentTimeMillis() - timeSAtart)));
-                    timer.start();
+                timer.setDelay((int) (delayBetewenFrames - (System.currentTimeMillis() - timeSAtart)));
+                timer.start();
             } else {
                 actionPerformed(e);
             }
@@ -113,6 +109,8 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         map.player.calculatePosition();
     }
 
+
+    //alternativ Keybindings
     @Override
     public void keyTyped(KeyEvent e) {
     }
@@ -129,7 +127,8 @@ public class Game extends JFrame implements ActionListener, KeyListener {
                 map.getPLayer().walk(-100);
                 break;
             case keyJump:
-                map.getPLayer().jump();
+                if (map.getPLayer().checkCollision(map.getAllObjects()))
+                    map.getPLayer().jump();
                 break;
             default:
                 break;
