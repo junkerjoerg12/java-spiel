@@ -1,7 +1,9 @@
 package de.junkerjoerg12.character;
 
 import java.awt.Color;
+import java.util.ArrayList;
 
+import de.junkerjoerg12.PhysicsObject;
 import de.junkerjoerg12.map.Map;
 
 public class Player extends Character {
@@ -20,4 +22,6 @@ public class Player extends Character {
     public Player(Map map) {
         this(10, map);
     }
+
+
 }

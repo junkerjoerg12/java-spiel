@@ -117,17 +117,20 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        // soweit ich weiß brauchen wir diehiero
 
         switch (e.getKeyCode()) {
             case keyRight:
-                map.getPLayer().walk(100);
+            if (!map.getPLayer().checkCollisionRight(map.getAllObjects())) {
+                map.getPLayer().walk(200);
+            }
                 break;
             case keyLeft:
-                map.getPLayer().walk(-100);
+            if (!map.getPLayer().checkCollisionLeft(map.getAllObjects())) {
+                    map.getPLayer().walk(-200);
+            }
                 break;
             case keyJump:
-                if (map.getPLayer().checkCollision(map.getAllObjects()))
+                if (map.getPLayer().checkCollisionDown(map.getAllObjects()))
                     map.getPLayer().jump();
                 break;
             default:

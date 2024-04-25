@@ -10,17 +10,17 @@ import de.junkerjoerg12.character.Enemy;
 import de.junkerjoerg12.character.Player;
 import de.junkerjoerg12.map.mapElements.Floor;
 import de.junkerjoerg12.map.mapElements.MapElement;
+import de.junkerjoerg12.map.mapElements.Wall;
 
 public class Map extends JPanel {
     private ArrayList<PhysicsObject> allObjects = new ArrayList<>();
     private ArrayList<Enemy> enemies = new ArrayList<>();
 
-    public Player player; //irgandwann mal private machen + getter Methode
+    public Player player; // irgandwann mal private machen + getter Methode
 
     public Map() {
         this.setBackground(Color.GRAY);
         this.setLayout(null);
-
 
         build();
     }
@@ -28,8 +28,24 @@ public class Map extends JPanel {
     private void build() {
         player = new Player(this);
         this.add(player);
+
         MapElement temp = new Floor(this);
         temp.setBounds(0, 1000, 1920, 80);
+        this.add(temp);
+        allObjects.add(temp);
+
+        temp = new Floor(this);
+        temp.setBounds(0, 0, 1920, 20);
+        this.add(temp);
+        allObjects.add(temp);
+
+        temp = new Wall(this);
+        temp.setBounds(0, 0, 10, 1080);
+        this.add(temp);
+        allObjects.add(temp);
+
+        temp = new Wall(this);
+        temp.setBounds(1910, 0, 10, 1080);
         this.add(temp);
         allObjects.add(temp);
 
