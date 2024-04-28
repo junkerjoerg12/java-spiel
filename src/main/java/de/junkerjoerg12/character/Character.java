@@ -14,7 +14,7 @@ public abstract class Character extends PhysicsObject {
     }
 
     @Override
-    public void calculatePosition() {
+    public void calculatePosition() {       //gefühlt gibt es beim Springen minimale Abweichungen
         // berechnet anhand der Geschindigkeiten und der Vergangenen Zeit die Positin
         // des Objekts
 
