@@ -51,6 +51,11 @@ public class Map extends JPanel {
         this.add(temp);
         allObjects.add(temp);
 
+        temp = new Floor(this);
+        temp.setBounds(0, 900, 200, 10);
+        this.add(temp);
+        allObjects.add(temp);
+
     }
 
     public ArrayList<PhysicsObject> getAllObjects() {
