@@ -1,7 +1,6 @@
 package de.junkerjoerg12;
 
 import java.awt.Color;
-import java.awt.Rectangle;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
@@ -45,7 +44,6 @@ public abstract class PhysicsObject extends JPanel {
         for (PhysicsObject p : list) {
             if (this.getX() == p.getX() + p.getWidth() && this.getY() < p.getY() + p.getHeight()
                     && this.getY() + this.getHeight() > p.getY()) {
-                System.out.println("kollision nach rehcts");
                 return true;
             }
         }
@@ -56,7 +54,6 @@ public abstract class PhysicsObject extends JPanel {
         for (PhysicsObject p : list) {
             if (this.getX() + this.getWidth() == p.getX() && this.getY() < p.getY() + p.getHeight()
                     && this.getY() + this.getHeight() > p.getY()) {
-                System.out.println("Kollision nach rechts");
                 return true;
             }
         }
@@ -67,7 +64,6 @@ public abstract class PhysicsObject extends JPanel {
         for (PhysicsObject p : list) {
             if (this.getY() == p.getY() + p.getHeight() && this.getX() < p.getX() + p.getWidth()
                     && this.getX() + this.getWidth() > p.getX()) {
-                System.out.println("Kollision nach oben");
                 return true;
             }
         }
@@ -78,7 +74,6 @@ public abstract class PhysicsObject extends JPanel {
         for (PhysicsObject p : list) {
             if (this.getY() + this.getHeight() == p.getY() && this.getX() < p.getX() + p.getWidth()
                     && this.getX() + this.getWidth() > p.getX()) {
-                System.out.println("kollision nach unten");
                 return true;
             }
         }
@@ -92,7 +87,7 @@ public abstract class PhysicsObject extends JPanel {
                    // überlegen
             jump = false;
             return velocityVertically;
-        } else if (!collision(map.getAllObjects())) {
+        } else if (!collisionBottom(map.getAllObjects())) {
             return velocityVertically + (int) (acceleration
                     * ((lastTimeInTouchWithFloor - System.currentTimeMillis()) / 1000));
         }

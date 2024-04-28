@@ -26,14 +26,9 @@ public abstract class Character extends PhysicsObject {
         // kann und sollte warscheinlich auch noch mal überarbeitet werden
         if (collision(map.getAllObjects())) {
 
-            /*********************** 
-            wird dauerhalt aufgerufen, da es halt immer true ist, wenn es  irgendwo aufliegt
-            *************************/
-            
             // pixel für pixel bewegen, damit die bewegung gestoppt werden kann, sobald die
             // KOlision stattfindet
             // und die Objekte sich nicht mehr überschneiden
-            System.out.println("pixel für pixel bewegen");
             int movedHorizontal = 0;
             int movedVertical = 0;
 
