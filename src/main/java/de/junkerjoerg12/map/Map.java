@@ -13,10 +13,12 @@ import de.junkerjoerg12.map.mapElements.MapElement;
 import de.junkerjoerg12.map.mapElements.Wall;
 
 public class Map extends JPanel {
+    // wenn irgendetwas keien Kollision haben soll einfach noch iene andere Liste
+    // machen, die auf kollision überprüft wird und die hier nicht mehr überprüfen
     private ArrayList<PhysicsObject> allObjects = new ArrayList<>();
     private ArrayList<Enemy> enemies = new ArrayList<>();
 
-    public Player player; // irgandwann mal private machen + getter Methode
+    private Player player;
 
     public Map() {
         this.setBackground(Color.GRAY);
@@ -55,7 +57,7 @@ public class Map extends JPanel {
         return allObjects;
     }
 
-    public Player getPLayer() {
+    public Player getPlayer() {
         return player;
     }
 }

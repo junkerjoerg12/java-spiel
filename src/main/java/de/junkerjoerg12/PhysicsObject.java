@@ -32,107 +32,53 @@ public abstract class PhysicsObject extends JPanel {
         lastTimeInTouchWithFloor = System.currentTimeMillis();
     }
 
-    // public boolean[] checkCollision(ArrayList<PhysicsObject> list) {
-    // // viellcit später zahlen als code für Collision links, rechts, oben oder
-    // unten
-    // // zurückgeben
-
-    // // Problem: bei schneller Bewegung kann man sich in gegenstände reinbewegen,
-    // da
-    // // nicht nach jedem bewegten Pixel überprüft wird, ob kollision vorhanden
-    // ist,
-    // // sondern nur nach jedem Frame, also nachdem man sich mehrere pisel weit
-    // // verschpben hat
-
-    // // gibt 4 byte array zurück: [x, x, x, x]
-    // // [kollision oben, kollision rechts, kollision unten, kollision links]
-
-    // // bei fragen mal in goodnotes nachgucken
-    // boolean[] result = new boolean[4];
-    // // oben
-    // for (PhysicsObject p : list) {
-    // if (((p.getY() + p.getHeight() < getY() && p.getY() <= getY())
-    // && (p.getX() + p.getWidth() >= getX() || p.getX() <= getX() + getWidth()))) {
-    // result[0] = true;
-    // System.out.println("kollision nach oben");
-    // break;
-    // }
-    // }
-    // // rechts
-    // for (PhysicsObject p : list) {
-    // if (!((p.getX() <= getX() + getWidth())
-    // && (p.getY() + p.getHeight() >= getY() || p.getY() <= getY() + getHeight())))
-    // {
-    // result[1] = true;
-    // System.out.println("kollision nach rechts");
-    // break;
-    // }
-    // }
-    // // unten
-    // for (PhysicsObject p : list) {
-    // if (((p.getY() >= getY() + getHeight())
-    // && (p.getX() + p.getWidth() >= getX() || p.getX() <= getX() + getWidth()))) {
-    // result[2] = true;
-    // System.out.println("kollision nach unten");
-    // break;
-    // }
-    // }
-    // // links
-    // for (PhysicsObject p : list) {
-    // if (!((p.getX() + getWidth() <= getX())
-    // && (p.getY() + p.getHeight() >= getY() || p.getY() <= getY() + getHeight())))
-    // {
-    // result[3] = true;
-    // System.out.println("kollision nach links");
-    // break;
-    // }
-    // }
-    // return result;
-    // }
-
-    public boolean checkCollisionDown(ArrayList<PhysicsObject> list) {
+    public boolean collision(ArrayList<PhysicsObject> list) {
         for (PhysicsObject p : list) {
-            if (p.getY() + p.getHeight() >= this.getY()
-                    && p.getY() <= this.getY() + this.getHeight()
-                    && p.getX() <= this.getX() + this.getWidth()
-                    && p.getX() + p.getWidth() >= this.getX()) {
+            if (this.getBounds().intersects(p.getBounds())) {
                 return true;
             }
         }
         return false;
     }
 
-    public boolean checkCollisionRight(ArrayList<PhysicsObject> list) {
-        Rectangle bounds1 = this.getBounds();
+    public boolean collisionLeft(ArrayList<PhysicsObject> list) {
         for (PhysicsObject p : list) {
-            Rectangle bounds2 = p.getBounds();
-            if (bounds1.x + bounds1.width >= bounds2.x &&
-                    bounds1.x < bounds2.x + bounds2.width &&
-                    bounds1.y < bounds2.y + bounds2.height &&
-                    bounds1.y + bounds1.height > bounds2.y) {
+            if (this.getX() == p.getX() + p.getWidth() && this.getY() < p.getY() + p.getHeight()
+                    && this.getY() + this.getHeight() > p.getY()) {
+                System.out.println("kollision nach rehcts");
                 return true;
             }
         }
         return false;
     }
 
-    public boolean checkCollisionLeft(ArrayList<PhysicsObject> list) {
-        Rectangle bounds1 = this.getBounds();
+    public boolean collisionRight(ArrayList<PhysicsObject> list) {
         for (PhysicsObject p : list) {
-            Rectangle bounds2 = p.getBounds();
-            if (bounds1.x <= bounds2.x + bounds2.width &&
-                    bounds1.x + bounds1.width > bounds2.x &&
-                    bounds1.y < bounds2.y + bounds2.height &&
-                    bounds1.y + bounds1.height > bounds2.y) {
+            if (this.getX() + this.getWidth() == p.getX() && this.getY() < p.getY() + p.getHeight()
+                    && this.getY() + this.getHeight() > p.getY()) {
+                System.out.println("Kollision nach rechts");
                 return true;
             }
         }
         return false;
     }
 
-    public boolean checkCollisionUp(ArrayList<PhysicsObject> list) {
+    public boolean collisionTop(ArrayList<PhysicsObject> list) {
         for (PhysicsObject p : list) {
-            if (true) {
+            if (this.getY() == p.getY() + p.getHeight() && this.getX() < p.getX() + p.getWidth()
+                    && this.getX() + this.getWidth() > p.getX()) {
+                System.out.println("Kollision nach oben");
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean collisionBottom(ArrayList<PhysicsObject> list) {
+        for (PhysicsObject p : list) {
+            if (this.getY() + this.getHeight() == p.getY() && this.getX() < p.getX() + p.getWidth()
+                    && this.getX() + this.getWidth() > p.getX()) {
+                System.out.println("kollision nach unten");
                 return true;
             }
         }
@@ -146,7 +92,7 @@ public abstract class PhysicsObject extends JPanel {
                    // überlegen
             jump = false;
             return velocityVertically;
-        } else if (!checkCollisionDown(map.getAllObjects())) {
+        } else if (!collision(map.getAllObjects())) {
             return velocityVertically + (int) (acceleration
                     * ((lastTimeInTouchWithFloor - System.currentTimeMillis()) / 1000));
         }

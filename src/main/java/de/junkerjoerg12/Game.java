@@ -106,11 +106,10 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     }
 
     private void tick() {
-        map.player.calculatePosition();
+        map.getPlayer().calculatePosition();
     }
 
-
-    //alternativ Keybindings
+    // alternativ Keybindings
     @Override
     public void keyTyped(KeyEvent e) {
     }
@@ -120,18 +119,18 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 
         switch (e.getKeyCode()) {
             case keyRight:
-            if (!map.getPLayer().checkCollisionRight(map.getAllObjects())) {
-                map.getPLayer().walk(200);
-            }
+                if (!map.getPlayer().collisionRight(map.getAllObjects())) {
+                    map.getPlayer().walk(200);
+                }
                 break;
             case keyLeft:
-            if (!map.getPLayer().checkCollisionLeft(map.getAllObjects())) {
-                    map.getPLayer().walk(-200);
-            }
+                if (!map.getPlayer().collisionLeft(map.getAllObjects())) {
+                    map.getPlayer().walk(-200);
+                }
                 break;
             case keyJump:
-                if (map.getPLayer().checkCollisionDown(map.getAllObjects()))
-                    map.getPLayer().jump();
+                if (map.getPlayer().collisionBottom(map.getAllObjects()))
+                    map.getPlayer().jump();
                 break;
             default:
                 break;
@@ -142,10 +141,10 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     public void keyReleased(KeyEvent e) {
         switch (e.getKeyCode()) {
             case keyRight:
-                map.getPLayer().walk(0);
+                map.getPlayer().walk(0);
                 break;
             case keyLeft:
-                map.getPLayer().walk(0);
+                map.getPlayer().walk(0);
                 break;
             default:
                 break;
