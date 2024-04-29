@@ -1,76 +1,80 @@
 package de.junkerjoerg12.tools;
 
 import java.awt.BorderLayout;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import de.junkerjoerg12.map.Map;
 
-public class Console extends JFrame implements KeyListener{
+public class Console extends JFrame {
 
-    private JTextArea textArea;
+    private JTextArea outputArea;
     private JTextField inputField;
+    private String userInput = "";
+
     private Map map;
 
     public Console(Map map) {
+        this.map = map;
         setTitle("Console");
         setSize(500, 500);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setLayout(new BorderLayout());
 
-        textArea = new JTextArea();
-        textArea.setEditable(false);
-        textArea.setFont(new Font("monospaced", Font.PLAIN, 12));
-        JScrollPane scrollPane = new JScrollPane(textArea);
-
-        inputField = new JTextField();
-
-        this.add(inputField, BorderLayout.SOUTH);
-
+        // Create the output area
+        outputArea = new JTextArea();
+        outputArea.setEditable(false);
+        JScrollPane scrollPane = new JScrollPane(outputArea);
         add(scrollPane, BorderLayout.CENTER);
 
-        this.addKeyListener(this);
-    }
-
-    public void print(String message) {
-        textArea.append(message + "\n");
-    }
-
-    public void processUserInput(String userInput) {
-        // Verarbeiten Sie die Benutzereingabe hier
-        print("Benutzereingabe: " + userInput);
-    }
-
-        public static void main(String[] args) {
-        Console consoleFrame = new Console(null);
-        consoleFrame.setVisible(true);
-        consoleFrame.print("Hallo, Welt!");
-    }
-
-        @Override
-        public void keyTyped(KeyEvent e) {
-        }
-
-        @Override
-        public void keyPressed(KeyEvent e) {
-            System.out.println(e.getKeyCode());
-            if (e.getKeyCode() == 10) {//enter
-                processUserInput(inputField.getText());
-                inputField.setText("");
+        // Create the input field
+        inputField = new JTextField();
+        inputField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    userInput = inputField.getText();
+                    processInput(userInput);
+                    inputField.setText("");
+                } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+                    // evtl irgendwas um die arbeit zu erleichtern, z.B. Ausgewähltes Objekt wird
+                    // automatisch rot umrandet
+                }
             }
-        }
+        });
+        add(inputField, BorderLayout.SOUTH);
 
-        @Override
-        public void keyReleased(KeyEvent e) {
+        setLocationRelativeTo(null);
+        setVisible(true);
+    }
 
+    public void print(String text) {
+        outputArea.append(text + "\n");
+    }
+
+    public void setVisible(boolean visible) {
+        super.setVisible(visible);
+        inputField.requestFocus();
+    }
+
+    private void processInput(String input) {
+        // Process the user input here
+        print(input);
+        input = input.toLowerCase();
+        System.out.println(input);
+        if (input.equals("highlight player")) {
+            map.getPlayer().highlight();
+        } else if (input.matches("^highlight mapelement \\d+$")) {
+            map.getAllObjects().get(Integer.parseInt(input.replaceAll("[a-z]", "").trim())).highlight();
+        } else if (input.equals("hide")) {
+            setVisible(false);
+        } else {
+            print("Der Befehl " + input + " ist entweder falsch geschrieben oder konnte nicht gefunden werden.");
         }
+    }
 }

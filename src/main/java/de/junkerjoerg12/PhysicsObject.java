@@ -1,6 +1,7 @@
 package de.junkerjoerg12;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
@@ -21,6 +22,8 @@ public abstract class PhysicsObject extends JPanel {
     // vielleicht noch was besseres überlegen
 
     protected Map map;
+
+    private boolean highlighted;
 
     public PhysicsObject(double acceleration, Map map) {
         this.acceleration = -acceleration;// Minus, weil die Y-Achse bei Komputergraphik quasi gespiegelt ist
@@ -93,6 +96,24 @@ public abstract class PhysicsObject extends JPanel {
         }
         return 0;
         // problem: wird auch falls man springen will gleich wieder auf null gesetzt
+    }
+
+    public void highlight() {
+        for (PhysicsObject p : map.getAllObjects()) {
+            p.highlighted = false;
+            p.repaint();
+        }
+        highlighted = !highlighted;
+        repaint();
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        if (highlighted) {
+            g.setColor(Color.RED);
+            g.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
+        }
     }
 
     protected abstract void calculatePosition();

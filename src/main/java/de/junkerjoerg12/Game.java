@@ -1,6 +1,7 @@
 package de.junkerjoerg12;
 
 import de.junkerjoerg12.map.Map;
+import de.junkerjoerg12.tools.Console;
 
 import java.awt.BorderLayout;
 import java.awt.GraphicsEnvironment;
@@ -24,6 +25,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 
     private MainMenu mainMenu;
     private Map map;
+    private Console console;
 
     private int targetFPS = 30;
 
@@ -112,6 +114,13 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     // alternativ Keybindings
     @Override
     public void keyTyped(KeyEvent e) {
+        if (e.getKeyCode() == 0) {
+            if (console == null) {
+                console = new Console(map);
+            }else{
+                console.setVisible(!console.isVisible());
+            }
+        }
     }
 
     @Override
