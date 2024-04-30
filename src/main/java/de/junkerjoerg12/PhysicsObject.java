@@ -95,7 +95,6 @@ public abstract class PhysicsObject extends JPanel {
                     * ((lastTimeInTouchWithFloor - System.currentTimeMillis()) / 1000));
         }
         return 0;
-        // problem: wird auch falls man springen will gleich wieder auf null gesetzt
     }
 
     public void highlight() {

@@ -18,7 +18,7 @@ public abstract class Character extends PhysicsObject {
         // berechnet anhand der Geschindigkeiten und der Vergangenen Zeit die Positin
         // des Objekts
 
-        velocityVertically = calculateVerticalVelocity();
+        velocityVertically = calculateVerticalVelocity();//wird bei mehr fps öfter aufgerufen und addiert -> schneller höhere Geschwindigket
 
         long now = System.currentTimeMillis();
 
