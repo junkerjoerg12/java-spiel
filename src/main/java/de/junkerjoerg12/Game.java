@@ -15,26 +15,28 @@ import javax.swing.Timer;
 
 public class Game extends JFrame implements ActionListener, KeyListener {
 
-    final int keyRight = 68;
-    final int keyLeft = 65;
-    final int keyJump = 32;
+    // keybinds
+    private final int keyRight = 68;
+    private final int keyLeft = 65;
+    private final int keyJump = 32;
+    private final int keyConsole = 130;
 
     // auf welchem Monitor das Spiel angezeigt werden soll
     // nur während entwicklung wichtig
-    byte monitor = 2;
+    byte monitor = 1;
 
     private MainMenu mainMenu;
     private Map map;
     private Console console;
 
-    private int targetFPS = 30;
+    private int targetFPS = 144;
 
-    private double delayBetewenFrames; // in Millisekunden
+    private double delayBetweenFrames; // in Millisekunden
 
     private Timer timer;
 
     public Game() {
-        delayBetewenFrames = 1.0 / targetFPS * 1000;
+        delayBetweenFrames = 1.0 / targetFPS * 1000;
 
         this.setResizable(false);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -53,14 +55,14 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         mainMenu();
         this.setVisible(true);
 
-        timer = new Timer((int) delayBetewenFrames, this);
+        timer = new Timer((int) delayBetweenFrames, this);
         timer.setRepeats(false);
 
         this.addKeyListener(this);
 
         this.setFocusable(true);
         // sodass ich nicht immer irgendwelche knöpfe drücken muss
-        start();
+        // start();
     }
 
     private void mainMenu() {
@@ -84,9 +86,9 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         // pausiert das Spiel
     }
 
-    public void stop() {
+    public void quit() {
 
-        // kehrt in hauptmenue zurrück
+        // kehrt in hauptmenue zurück
     }
 
     @Override
@@ -97,8 +99,8 @@ public class Game extends JFrame implements ActionListener, KeyListener {
             tick();
 
             // wartet falls nötig darauf, dass die zeit zwichen frames abgelaufen ist
-            if ((System.currentTimeMillis() - timeSAtart - delayBetewenFrames) <= 0) {
-                timer.setDelay((int) (delayBetewenFrames - (System.currentTimeMillis() - timeSAtart)));
+            if ((System.currentTimeMillis() - timeSAtart - delayBetweenFrames) <= 0) {
+                timer.setDelay((int) (delayBetweenFrames - (System.currentTimeMillis() - timeSAtart)));
                 timer.start();
             } else {
                 actionPerformed(e);
@@ -114,18 +116,18 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     // alternativ Keybindings
     @Override
     public void keyTyped(KeyEvent e) {
-        if (e.getKeyCode() == 0) {
-            if (console == null) {
-                console = new Console(map);
-            }else{
-                console.setVisible(!console.isVisible());
-            }
-        }
+        // System.out.println(e.getKeyCode());
+        // if (e.getKeyCode() == keyConsole) {
+        // if (console == null) {
+        // console = new Console(map);
+        // } else {
+        // console.setVisible(!console.isVisible());
+        // }
+        // }
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-
         switch (e.getKeyCode()) {
             case keyRight:
                 if (!map.getPlayer().collisionRight(map.getAllObjects())) {
@@ -140,6 +142,13 @@ public class Game extends JFrame implements ActionListener, KeyListener {
             case keyJump:
                 if (map.getPlayer().collisionBottom(map.getAllObjects()))
                     map.getPlayer().jump();
+                break;
+            case keyConsole:
+                if (console == null) {
+                    console = new Console(map);
+                } else {
+                    console.setVisible(!console.isVisible());
+                }
                 break;
             default:
                 break;

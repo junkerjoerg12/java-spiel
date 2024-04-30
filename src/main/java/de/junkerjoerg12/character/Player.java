@@ -6,7 +6,6 @@ import de.junkerjoerg12.map.Map;
 
 public class Player extends Character {
 
-
     public Player(double acceleration, Map map) {
         super(acceleration, map);
         this.setBackground(Color.PINK);
@@ -18,8 +17,7 @@ public class Player extends Character {
     }
 
     public Player(Map map) {
-        this(10, map);
+        this(20, map);
     }
-
 
 }
