@@ -1,26 +1,35 @@
 package de.junkerjoerg12.tools;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import de.junkerjoerg12.map.Map;
+import de.junkerjoerg12.map.mapElements.Floor;
 import de.junkerjoerg12.map.mapElements.MapElement;
+import de.junkerjoerg12.map.mapElements.Wall;
 
 public class Mapreader {
+
     private BufferedReader reader;
+    Map map;
 
-    public Mapreader(String filepath) throws IOException {
-        reader = new BufferedReader(new FileReader(filepath));
+    public Mapreader() {
+        this.map = map;
 
     }
-
-    public void setFilepath(String filepath) throws IOException {
-        reader = new BufferedReader(new FileReader(filepath));
+    public void setFilepath(String filepath) throws FileNotFoundException {
+        if (new File(filepath).exists()) {
+            reader = new BufferedReader(new FileReader(filepath));
+        } else {
+            throw new FileNotFoundException();
+        }
     }
 
-    public MapElement[] read() {
+    public ArrayList<MapElement> read() {
         String line;
         ArrayList<MapElement> elements = new ArrayList<>();
         try {
@@ -31,11 +40,25 @@ public class Mapreader {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
-        return (MapElement[]) elements.toArray();
+        return elements;
     }
 
     private MapElement process(String line) {
+        String [] objectSomething = line.split(";");
+        
+        MapElement mapelement;
 
+
+        if (objectSomething[0].equals("Floor")) {
+            mapelement = new Floor(map);
+        } else {
+            mapelement = new Wall(map);
+        }   
+
+        String[] coordinates = objectSomething[1].split(",");
+        String[] dimesnsions = objectSomething[2].split(",");
+        mapelement.setBounds(Integer.parseInt(coordinates[0].strip()), Integer.parseInt(coordinates[1].strip()), Integer.parseInt(dimesnsions[0].strip()), Integer.parseInt(dimesnsions[1].strip()));
+
+        return mapelement;
     }
 }

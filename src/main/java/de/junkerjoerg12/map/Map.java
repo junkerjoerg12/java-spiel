@@ -22,7 +22,7 @@ public class Map extends JPanel {
     private ArrayList<PhysicsObject> allObjects = new ArrayList<>();
     private ArrayList<Enemy> enemies = new ArrayList<>();
     private BufferedReader reader;
-    private Mapreader = new Mapreader();
+    private Mapreader mapreader;
 
     private Player player;
 
@@ -35,13 +35,27 @@ public class Map extends JPanel {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
+            mapreader = new Mapreader();
         build();
     }
 
     private void build() {
         player = new Player(this);
         this.add(player);
+
+        try {
+            mapreader.setFilepath("maps\\level1\\map1.txt");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        for (MapElement m : mapreader.read()) {
+            this.add(m);
+            allObjects.add(m);
+            
+        }
+
+        
 
         // MapElement temp = new Floor(this);
         // temp.setBounds(0, 1000, 1920, 80);
