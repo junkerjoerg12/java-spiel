@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
+import de.junkerjoerg12.Game;
 import de.junkerjoerg12.PhysicsObject;
 import de.junkerjoerg12.character.Enemy;
 import de.junkerjoerg12.character.Player;
@@ -25,8 +26,10 @@ public class Map extends JPanel {
     private Mapreader mapreader;
 
     private Player player;
+    private Game game;
 
-    public Map() {
+    public Map(Game game) {
+        this.game = game;
         this.setBackground(Color.GRAY);
         this.setLayout(null);
         try {
@@ -90,5 +93,9 @@ public class Map extends JPanel {
 
     public Player getPlayer() {
         return player;
+    }
+    
+    public Game getGame() {
+        return game;
     }
 }

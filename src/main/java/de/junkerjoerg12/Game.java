@@ -23,13 +23,13 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 
     // auf welchem Monitor das Spiel angezeigt werden soll
     // nur während entwicklung wichtig
-    byte monitor = 1;
+    byte monitor = 2;
 
     private MainMenu mainMenu;
     private Map map;
     private Console console;
 
-    private int targetFPS = 144;
+    private int targetFPS = 150;
 
     private double delayBetweenFrames; // in Millisekunden
 
@@ -62,7 +62,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 
         this.setFocusable(true);
         // sodass ich nicht immer irgendwelche knöpfe drücken muss
-        // start();
+        start();
     }
 
     private void mainMenu() {
@@ -73,7 +73,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     public void start() {
         remove(mainMenu);
 
-        map = new Map();
+        map = new Map(this);
         map.setVisible(true);
         this.add(map, BorderLayout.CENTER);
         revalidate();
@@ -116,7 +116,6 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     // alternativ Keybindings
     @Override
     public void keyTyped(KeyEvent e) {
-        // System.out.println(e.getKeyCode());
         // if (e.getKeyCode() == keyConsole) {
         // if (console == null) {
         // console = new Console(map);
@@ -167,6 +166,12 @@ public class Game extends JFrame implements ActionListener, KeyListener {
             default:
                 break;
         }
+    }
+
+    public void setFPSTarget(int fps) {
+        this.targetFPS = fps;
+        this.delayBetweenFrames = 1.0 / targetFPS * 1000;
+        System.out.println("FPS set");
     }
 
     public static void main(String[] args) {

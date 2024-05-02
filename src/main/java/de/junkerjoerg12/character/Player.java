@@ -17,7 +17,7 @@ public class Player extends Character {
     }
 
     public Player(Map map) {
-        this(20, map);
+        this(10, map);
     }
 
 }

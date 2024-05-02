@@ -91,10 +91,16 @@ public abstract class PhysicsObject extends JPanel {
             jump = false;
             return velocityVertically;
         } else if (!collisionBottom(map.getAllObjects())) {
-            return velocityVertically + (int) (acceleration
-                    * ((lastTimeInTouchWithFloor - System.currentTimeMillis()) / 1000));
+            int v = velocityVertically + (int) (acceleration
+                    * ((lastTimeInTouchWithFloor - System.currentTimeMillis()) / 1000.0 ));
+            System.out.println("Velociy: " + velocityVertically);
+            System.out.println("acceleration: " + acceleration);
+            System.out.println("delta T: " + (lastTimeInTouchWithFloor - System.currentTimeMillis())/1000.0);
+            System.out.println(v);
+            return v;
+        } else {
+            return 0;
         }
-        return 0;
     }
 
     public void highlight() {

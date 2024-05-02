@@ -66,15 +66,17 @@ public class Console extends JFrame {
         // Process the user input here
         print(input);
         input = input.toLowerCase();
-        System.out.println(input);
         if (input.equals("highlight player")) {
             map.getPlayer().highlight();
         } else if (input.matches("^highlight mapelement \\d+$")) {
             map.getAllObjects().get(Integer.parseInt(input.replaceAll("[a-z]", "").trim())).highlight();
         } else if (input.equals("hide")) {
             setVisible(false);
+        } else if (input.matches("set fps \\d+$")) {
+            map.getGame().setFPSTarget(Integer.parseInt(input.replaceAll("[a-z]", "").trim()));
         } else {
             print("Der Befehl " + input + " ist entweder falsch geschrieben oder konnte nicht gefunden werden.");
         }
     }
 }
+

@@ -18,7 +18,7 @@ public abstract class Character extends PhysicsObject {
         // berechnet anhand der Geschindigkeiten und der Vergangenen Zeit die Positin
         // des Objekts
 
-        velocityVertically = calculateVerticalVelocity();//wird bei mehr fps öfter aufgerufen und addiert -> schneller höhere Geschwindigket
+        velocityVertically = calculateVerticalVelocity();
 
         long now = System.currentTimeMillis();
 
@@ -87,7 +87,7 @@ public abstract class Character extends PhysicsObject {
 
     public void jump() {
         jump = true;
-        velocityVertically = -100;
+        velocityVertically = -250;
         lastTimeInTouchWithFloor = System.currentTimeMillis();
     }
 }
