@@ -23,7 +23,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 
     // auf welchem Monitor das Spiel angezeigt werden soll
     // nur während entwicklung wichtig
-    byte monitor = 2;
+    byte monitor = 1;
 
     private MainMenu mainMenu;
     private Map map;
@@ -169,9 +169,11 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     }
 
     public void setFPSTarget(int fps) {
-        this.targetFPS = fps;
-        this.delayBetweenFrames = 1.0 / targetFPS * 1000;
-        System.out.println("FPS set");
+        targetFPS = fps;
+        delayBetweenFrames = 1.0 / targetFPS * 1000;
+        timer = new Timer((int) delayBetweenFrames, this);
+        timer.setRepeats(false);
+        timer.start();
     }
 
     public static void main(String[] args) {
