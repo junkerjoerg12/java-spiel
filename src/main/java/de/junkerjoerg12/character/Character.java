@@ -2,12 +2,14 @@ package de.junkerjoerg12.character;
 
 import java.util.ArrayList;
 
+import de.junkerjoerg12.Game;
 import de.junkerjoerg12.PhysicsObject;
 import de.junkerjoerg12.map.Map;
 
 public abstract class Character extends PhysicsObject {
 
-    private long lastTick;
+    public long now;
+    public long lastTick;
 
     public Character(double acceleration, Map map) {
         super(acceleration, map);
@@ -18,9 +20,9 @@ public abstract class Character extends PhysicsObject {
         // berechnet anhand der Geschindigkeiten und der Vergangenen Zeit die Positin
         // des Objekts
 
-        velocityVertically = calculateVerticalVelocity();
+        velocityVertically = calculateVerticalVelocity(now, lastTick);
+        // System.out.println(now - lastTick);
 
-        long now = System.currentTimeMillis();
 
         int distanceHorizontal = (int) (velocityHorizontally * (now - lastTick) / 1000);
         int distanceVertical = (int) (velocityVertically * (now - lastTick) / 1000);
@@ -51,6 +53,8 @@ public abstract class Character extends PhysicsObject {
                         if (!this.collisionRight(list)) {
                             this.setLocation(this.getX() + 1, this.getY());
                             movedHorizontal++;
+                        }else{
+                            System.out.println( System.currentTimeMillis() - Game.start);
                         }
                     } else {// nach links
                         if (!this.collisionLeft(list)) {
@@ -78,7 +82,6 @@ public abstract class Character extends PhysicsObject {
                 }
             }
         }
-        this.lastTick = now;
     }
 
     public void walk(int velocity) {

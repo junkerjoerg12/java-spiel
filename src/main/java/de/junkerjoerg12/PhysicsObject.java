@@ -31,7 +31,7 @@ public abstract class PhysicsObject extends JPanel {
 
         this.setBackground(Color.CYAN);
 
-        lastTimeInTouchWithFloor = System.currentTimeMillis();
+        lastTimeInTouchWithFloor = System.currentTimeMillis();// brauche ich 
     }
 
     public boolean collision(ArrayList<PhysicsObject> list) {
@@ -83,7 +83,7 @@ public abstract class PhysicsObject extends JPanel {
         return false;
     }
 
-    protected int calculateVerticalVelocity() {
+    protected int calculateVerticalVelocity(long now, long lastTick) {
         // bin mir nicht sicher, ob das realistisch ist, es sieht aber ganz gut aus
 
         if (jump) {// ist nicht schön, funktioniert aber, also vielleicht mal noch was anderes
@@ -92,11 +92,11 @@ public abstract class PhysicsObject extends JPanel {
             return velocityVertically;
         } else if (!collisionBottom(map.getAllObjects())) {
             int v = velocityVertically + (int) (acceleration
-                    * ((lastTimeInTouchWithFloor - System.currentTimeMillis()) / 1000.0 ));
-            System.out.println("Velociy: " + velocityVertically);
-            System.out.println("acceleration: " + acceleration);
-            System.out.println("delta T: " + (lastTimeInTouchWithFloor - System.currentTimeMillis())/1000.0);
-            System.out.println(v);
+                    * ((lastTimeInTouchWithFloor - now) / 1000.0 ));
+            // System.out.println("Velociy: " + velocityVertically);
+            // System.out.println("acceleration: " + acceleration);
+            // System.out.println("delta T: " + (lastTimeInTouchWithFloor - now)/1000.0);
+            // System.out.println(v);
             return v;
         } else {
             return 0;

@@ -23,17 +23,19 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 
     // auf welchem Monitor das Spiel angezeigt werden soll
     // nur während entwicklung wichtig
-    byte monitor = 1;
+    byte monitor = 2;
 
     private MainMenu mainMenu;
     private Map map;
     private Console console;
 
-    private int targetFPS = 150;
+    private int targetFPS = 144;
 
     private double delayBetweenFrames; // in Millisekunden
 
     private Timer timer;
+
+    public static long start;
 
     public Game() {
         delayBetweenFrames = 1.0 / targetFPS * 1000;
@@ -94,7 +96,9 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == timer) {
+            map.getPlayer().lastTick = map.getPlayer().now;
             long timeSAtart = System.currentTimeMillis();
+            map.getPlayer().now = timeSAtart; 
 
             tick();
 
@@ -131,6 +135,8 @@ public class Game extends JFrame implements ActionListener, KeyListener {
             case keyRight:
                 if (!map.getPlayer().collisionRight(map.getAllObjects())) {
                     map.getPlayer().walk(200);
+                    if (start == 0) {
+                    }
                 }
                 break;
             case keyLeft:
