@@ -8,11 +8,9 @@ import de.junkerjoerg12.map.Map;
 
 public abstract class Character extends PhysicsObject {
 
-    public long now;
-    public long lastTick;
 
-    public Character(double acceleration, Map map) {
-        super(acceleration, map);
+    public Character(double acceleration, Game game) {
+        super(acceleration, game);
     }
 
     @Override
@@ -20,14 +18,13 @@ public abstract class Character extends PhysicsObject {
         // berechnet anhand der Geschindigkeiten und der Vergangenen Zeit die Positin
         // des Objekts
 
-        velocityVertically = calculateVerticalVelocity(now, lastTick);
-        // System.out.println(now - lastTick);
+        velocityVertically = calculateVerticalVelocity();
 
+        //auch mit berechneten, nicht gemessenene Zeiten berechnen
+        int distanceHorizontal = (int) (velocityHorizontally * (game.getNow() - game.getLastTick()) / 1000);
+        int distanceVertical = (int) (velocityVertically * (game.getNow() - game.getLastTick()) / 1000);
 
-        int distanceHorizontal = (int) (velocityHorizontally * (now - lastTick) / 1000);
-        int distanceVertical = (int) (velocityVertically * (now - lastTick) / 1000);
-
-        ArrayList<PhysicsObject> list = map.getAllObjects();
+        ArrayList<PhysicsObject> list = game.getMap().getAllObjects();
 
         this.setLocation(
                 (this.getX() + distanceHorizontal),
@@ -53,8 +50,6 @@ public abstract class Character extends PhysicsObject {
                         if (!this.collisionRight(list)) {
                             this.setLocation(this.getX() + 1, this.getY());
                             movedHorizontal++;
-                        }else{
-                            System.out.println( System.currentTimeMillis() - Game.start);
                         }
                     } else {// nach links
                         if (!this.collisionLeft(list)) {
@@ -70,6 +65,8 @@ public abstract class Character extends PhysicsObject {
                         if (!this.collisionBottom(list)) {
                             this.setLocation(this.getX(), this.getY() + 1);
                             movedVertical++;
+                        } else {
+                            lastTimeInTouchWithFloor = System.currentTimeMillis();
                         }
                     } else {// nach oben
                         if (!this.collisionTop(list)) {

@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import de.junkerjoerg12.Game;
 import de.junkerjoerg12.map.Map;
 import de.junkerjoerg12.map.mapElements.Floor;
 import de.junkerjoerg12.map.mapElements.MapElement;
@@ -16,9 +17,11 @@ public class Mapreader {
 
     private BufferedReader reader;
     Map map;
+    Game game;
 
-    public Mapreader() {
-        this.map = map;
+    public Mapreader(Game game) {
+        this.game = game;
+        this.map = game.getMap();
 
     }
     public void setFilepath(String filepath) throws FileNotFoundException {
@@ -50,9 +53,9 @@ public class Mapreader {
 
 
         if (objectSomething[0].equals("Floor")) {
-            mapelement = new Floor(map);
+            mapelement = new Floor(game);
         } else {
-            mapelement = new Wall(map);
+            mapelement = new Wall(game);
         }   
 
         String[] coordinates = objectSomething[1].split(",");

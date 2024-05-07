@@ -38,12 +38,12 @@ public class Map extends JPanel {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-            mapreader = new Mapreader();
+            mapreader = new Mapreader(game);
         build();
     }
 
     private void build() {
-        player = new Player(this);
+        player = new Player(game);
         this.add(player);
 
         try {
@@ -55,10 +55,7 @@ public class Map extends JPanel {
         for (MapElement m : mapreader.read()) {
             this.add(m);
             allObjects.add(m);
-            
         }
-
-        
 
         // MapElement temp = new Floor(this);
         // temp.setBounds(0, 1000, 1920, 80);

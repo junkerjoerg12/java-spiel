@@ -35,10 +35,17 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 
     private Timer timer;
 
-    public static long start;
+    // System Zeit zu Beginndes jetziegen Ticks und des letzten Ticks
+    private long now;
+    private long lastTick;
+
+    // Systemzeit zum Start des Programms
+    // long start;
 
     public Game() {
+        // start = System.currentTimeMillis();
         delayBetweenFrames = 1.0 / targetFPS * 1000;
+        // System.out.println("delay betweenFrames" + delayBetweenFrames);
 
         this.setResizable(false);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -58,7 +65,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         this.setVisible(true);
 
         timer = new Timer((int) delayBetweenFrames, this);
-        timer.setRepeats(false);
+        timer.setRepeats(true);
 
         this.addKeyListener(this);
 
@@ -96,24 +103,27 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == timer) {
-            map.getPlayer().lastTick = map.getPlayer().now;
-            long timeSAtart = System.currentTimeMillis();
-            map.getPlayer().now = timeSAtart; 
+            lastTick = now;
+            now = System.currentTimeMillis();
 
             tick();
 
             // wartet falls nötig darauf, dass die zeit zwichen frames abgelaufen ist
-            if ((System.currentTimeMillis() - timeSAtart - delayBetweenFrames) <= 0) {
-                timer.setDelay((int) (delayBetweenFrames - (System.currentTimeMillis() - timeSAtart)));
-                timer.start();
-            } else {
-                actionPerformed(e);
-            }
+            // if ((System.currentTimeMillis() - now - delayBetweenFrames) <= 0) {
+            // timer.setDelay((int) (delayBetweenFrames - (System.currentTimeMillis() -
+            // now)));
+            // timer.start();
+            // System.out.println("if");
+            // } else {
+            // actionPerformed(e);
+            // System.out.println("else");
+            // }
         }
 
     }
 
     private void tick() {
+        // System.out.println("now - lastTick" + (now - lastTick));
         map.getPlayer().calculatePosition();
     }
 
@@ -135,8 +145,6 @@ public class Game extends JFrame implements ActionListener, KeyListener {
             case keyRight:
                 if (!map.getPlayer().collisionRight(map.getAllObjects())) {
                     map.getPlayer().walk(200);
-                    if (start == 0) {
-                    }
                 }
                 break;
             case keyLeft:
@@ -150,7 +158,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
                 break;
             case keyConsole:
                 if (console == null) {
-                    console = new Console(map);
+                    console = new Console(this);
                 } else {
                     console.setVisible(!console.isVisible());
                 }
@@ -177,13 +185,35 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     public void setFPSTarget(int fps) {
         targetFPS = fps;
         delayBetweenFrames = 1.0 / targetFPS * 1000;
+        // System.out.println("delay betweenFrames" + delayBetweenFrames);
+        timer = null;
         timer = new Timer((int) delayBetweenFrames, this);
-        timer.setRepeats(false);
+        timer.setRepeats(true);
         timer.start();
+    }
+
+    public long getNow() {
+        return now;
+    }
+
+    public long getLastTick() {
+        return lastTick;
+    }
+
+    public Map getMap() {
+        return map;
+    }
+
+    public double getDelaybetweenFrames() {
+        // System.out.println(delayBetweenFrames);
+        return delayBetweenFrames;
     }
 
     public static void main(String[] args) {
         new Game();
+        // for (int i = 0; i < 120; i++) {
+        // System.out.println(System.currentTimeMillis());
+        // }
 
     }
 }

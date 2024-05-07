@@ -9,6 +9,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import de.junkerjoerg12.Game;
 import de.junkerjoerg12.map.Map;
 
 public class Console extends JFrame {
@@ -17,10 +18,10 @@ public class Console extends JFrame {
     private JTextField inputField;
     private String userInput = "";
 
-    private Map map;
+    private Game game;
 
-    public Console(Map map) {
-        this.map = map;
+    public Console(Game game) {
+        this.game = game;
         setTitle("Console");
         setSize(500, 500);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -67,13 +68,13 @@ public class Console extends JFrame {
         print(input);
         input = input.toLowerCase();
         if (input.equals("highlight player")) {
-            map.getPlayer().highlight();
+            game.getMap().getPlayer().highlight();
         } else if (input.matches("^highlight mapelement \\d+$")) {
-            map.getAllObjects().get(Integer.parseInt(input.replaceAll("[a-z]", "").trim())).highlight();
+            game.getMap().getAllObjects().get(Integer.parseInt(input.replaceAll("[a-z]", "").trim())).highlight();
         } else if (input.equals("hide")) {
             setVisible(false);
         } else if (input.matches("set fps \\d+$")) {
-            map.getGame().setFPSTarget(Integer.parseInt(input.replaceAll("[a-z]", "").trim()));
+            game.getMap().getGame().setFPSTarget(Integer.parseInt(input.replaceAll("[a-z]", "").trim()));
         } else {
             print("Der Befehl " + input + " ist entweder falsch geschrieben oder konnte nicht gefunden werden.");
         }

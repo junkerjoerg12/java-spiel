@@ -1,12 +1,13 @@
 package de.junkerjoerg12.map.mapElements;
 
+import de.junkerjoerg12.Game;
 import de.junkerjoerg12.PhysicsObject;
 import de.junkerjoerg12.map.Map;
 
 public abstract class MapElement extends PhysicsObject{
 
-    public MapElement(Map map) {
-        super(0,map);
+    public MapElement(Game game) {
+        super(0, game);
         this.setVisible(true);
     }
 

@@ -17,21 +17,23 @@ public abstract class PhysicsObject extends JPanel {
     protected int velocityVertically;
 
     public long lastTimeInTouchWithFloor;
+    public long deltaTSinceInTouchWithFloor;
 
     protected boolean jump;
     // vielleicht noch was besseres überlegen
 
-    protected Map map;
+    protected Game game;
 
     private boolean highlighted;
 
-    public PhysicsObject(double acceleration, Map map) {
-        this.acceleration = -acceleration;// Minus, weil die Y-Achse bei Komputergraphik quasi gespiegelt ist
-        this.map = map;
+    public PhysicsObject(double acceleration, Game game) {
+        this.acceleration = acceleration;
+        this.game = game;
 
         this.setBackground(Color.CYAN);
 
-        lastTimeInTouchWithFloor = System.currentTimeMillis();// brauche ich 
+        lastTimeInTouchWithFloor = System.currentTimeMillis();// brauche ich
+
     }
 
     public boolean collision(ArrayList<PhysicsObject> list) {
@@ -83,20 +85,19 @@ public abstract class PhysicsObject extends JPanel {
         return false;
     }
 
-    protected int calculateVerticalVelocity(long now, long lastTick) {
+    protected int calculateVerticalVelocity() {
         // bin mir nicht sicher, ob das realistisch ist, es sieht aber ganz gut aus
 
         if (jump) {// ist nicht schön, funktioniert aber, also vielleicht mal noch was anderes
                    // überlegen
             jump = false;
+            deltaTSinceInTouchWithFloor = 0;
             return velocityVertically;
-        } else if (!collisionBottom(map.getAllObjects())) {
+        } else if (!collisionBottom(game.getMap().getAllObjects())) {
+            deltaTSinceInTouchWithFloor += game.getDelaybetweenFrames();
             int v = velocityVertically + (int) (acceleration
-                    * ((lastTimeInTouchWithFloor - now) / 1000.0 ));
-            // System.out.println("Velociy: " + velocityVertically);
-            // System.out.println("acceleration: " + acceleration);
-            // System.out.println("delta T: " + (lastTimeInTouchWithFloor - now)/1000.0);
-            // System.out.println(v);
+                    * ((deltaTSinceInTouchWithFloor) / 1000.0));
+            // System.out.println(deltaTSinceInTouchWithFloor);
             return v;
         } else {
             return 0;
@@ -104,7 +105,7 @@ public abstract class PhysicsObject extends JPanel {
     }
 
     public void highlight() {
-        for (PhysicsObject p : map.getAllObjects()) {
+        for (PhysicsObject p : game.getMap().getAllObjects()) {
             p.highlighted = false;
             p.repaint();
         }
