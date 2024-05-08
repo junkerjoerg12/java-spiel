@@ -4,10 +4,8 @@ import java.util.ArrayList;
 
 import de.junkerjoerg12.Game;
 import de.junkerjoerg12.PhysicsObject;
-import de.junkerjoerg12.map.Map;
 
 public abstract class Character extends PhysicsObject {
-
 
     public Character(double acceleration, Game game) {
         super(acceleration, game);
@@ -20,7 +18,7 @@ public abstract class Character extends PhysicsObject {
 
         velocityVertically = calculateVerticalVelocity();
 
-        //auch mit berechneten, nicht gemessenene Zeiten berechnen
+        // auch mit berechneten, nicht gemessenene Zeiten berechnen
         int distanceHorizontal = (int) (velocityHorizontally * (game.getNow() - game.getLastTick()) / 1000);
         int distanceVertical = (int) (velocityVertically * (game.getNow() - game.getLastTick()) / 1000);
 

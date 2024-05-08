@@ -23,13 +23,13 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 
     // auf welchem Monitor das Spiel angezeigt werden soll
     // nur während entwicklung wichtig
-    byte monitor = 2;
+    byte monitor = 1;
 
     private MainMenu mainMenu;
     private Map map;
     private Console console;
 
-    private int targetFPS = 144;
+    private final int targetFPS = 60;
 
     private double delayBetweenFrames; // in Millisekunden
 
@@ -40,12 +40,9 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     private long lastTick;
 
     // Systemzeit zum Start des Programms
-    // long start;
 
     public Game() {
-        // start = System.currentTimeMillis();
-        delayBetweenFrames = 1.0 / targetFPS * 1000;
-        // System.out.println("delay betweenFrames" + delayBetweenFrames);
+        delayBetweenFrames = Math.round(1.0 / targetFPS * 1000);
 
         this.setResizable(false);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -103,6 +100,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == timer) {
+            // raus am besten
             lastTick = now;
             now = System.currentTimeMillis();
 
@@ -182,15 +180,16 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         }
     }
 
-    public void setFPSTarget(int fps) {
-        targetFPS = fps;
-        delayBetweenFrames = 1.0 / targetFPS * 1000;
-        // System.out.println("delay betweenFrames" + delayBetweenFrames);
-        timer = null;
-        timer = new Timer((int) delayBetweenFrames, this);
-        timer.setRepeats(true);
-        timer.start();
-    }
+    // public void setFPSTarget(int fps) {
+    // targetFPS = fps;
+    // delayBetweenFrames = Math.round(1.0 / targetFPS * 1000);
+    // // System.out.println("delay betweenFrames" + delayBetweenFrames);
+    // timer.stop();
+    // timer = null;
+    // timer = new Timer((int) delayBetweenFrames, this);
+    // timer.setRepeats(true);
+    // timer.start();
+    // }
 
     public long getNow() {
         return now;

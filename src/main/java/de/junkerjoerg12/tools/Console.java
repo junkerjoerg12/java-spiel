@@ -74,10 +74,10 @@ public class Console extends JFrame {
         } else if (input.equals("hide")) {
             setVisible(false);
         } else if (input.matches("set fps \\d+$")) {
-            game.getMap().getGame().setFPSTarget(Integer.parseInt(input.replaceAll("[a-z]", "").trim()));
-        } else {
+            // game.getMap().getGame().setFPSTarget(Integer.parseInt(input.replaceAll("[a-z]",
+            // "").trim()));
+            // } else {
             print("Der Befehl " + input + " ist entweder falsch geschrieben oder konnte nicht gefunden werden.");
         }
     }
 }
-
