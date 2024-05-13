@@ -142,18 +142,19 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         switch (e.getKeyCode()) {
             case keyRight:
                 if (!map.getPlayer().collisionRight(map.getAllObjects())) {
-                    map.getPlayer().walk(200);
+                    map.getPlayer().walkRight = true;
                 }
                 break;
             case keyLeft:
                 if (!map.getPlayer().collisionLeft(map.getAllObjects())) {
-                    map.getPlayer().walk(-200);
+                    map.getPlayer().walkLeft = true;
                 }
                 break;
             case keyJump:
-                if (map.getPlayer().collisionBottom(map.getAllObjects()))
+                if (map.getPlayer().collisionBottom(map.getAllObjects())) {
                     map.getPlayer().jump();
-                break;
+                }
+                    break;
             case keyConsole:
                 if (console == null) {
                     console = new Console(this);
@@ -170,10 +171,10 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     public void keyReleased(KeyEvent e) {
         switch (e.getKeyCode()) {
             case keyRight:
-                map.getPlayer().walk(0);
+                map.getPlayer().walkRight = false;
                 break;
             case keyLeft:
-                map.getPlayer().walk(0);
+                map.getPlayer().walkLeft  = false;
                 break;
             default:
                 break;

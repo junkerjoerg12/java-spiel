@@ -7,8 +7,18 @@ import de.junkerjoerg12.PhysicsObject;
 
 public abstract class Character extends PhysicsObject {
 
+    protected int maxHorizontalSpeed = 250;
+    protected double horizontalAccelleration = 40;
+    public boolean walkRight;
+    public boolean walkLeft;
+
     public Character(double acceleration, Game game) {
         super(acceleration, game);
+    }
+
+    public Character(double acceleration, Game game, double horizontalAccelleration) {
+        this(acceleration, game);
+        this.horizontalAccelleration = horizontalAccelleration;
     }
 
     @Override
@@ -17,6 +27,7 @@ public abstract class Character extends PhysicsObject {
         // des Objekts
 
         velocityVertically = calculateVerticalVelocity();
+        velocityHorizontally = calculateHorizontalVelocity();
 
         // auch mit berechneten, nicht gemessenene Zeiten berechnen
         int distanceHorizontal = (int) (velocityHorizontally * (game.getNow() - game.getLastTick()) / 1000);
@@ -79,8 +90,23 @@ public abstract class Character extends PhysicsObject {
         }
     }
 
-    public void walk(int velocity) {
-        velocityHorizontally = velocity;
+    public double calculateHorizontalVelocity() {
+        if (walkRight && walkLeft) {
+            return 0;
+        } else if (walkRight) {
+            if (velocityHorizontally + horizontalAccelleration < maxHorizontalSpeed) {
+                return velocityHorizontally + horizontalAccelleration;
+            } else {
+                return maxHorizontalSpeed;
+            }
+        } else if (walkLeft) {
+            if (velocityHorizontally - horizontalAccelleration > -maxHorizontalSpeed) {
+                return velocityHorizontally - horizontalAccelleration;
+            } else {
+                return -maxHorizontalSpeed;
+            }
+        }
+        return 0;
     }
 
     public void jump() {
