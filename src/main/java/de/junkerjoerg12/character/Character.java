@@ -12,6 +12,7 @@ public abstract class Character extends PhysicsObject {
     public boolean walkRight;
     public boolean walkLeft;
 
+    protected int jumpHeight = 1000; // nicht die Tatsächliche höhe des Sprungs, aber höhere Zahl = höherer Sprung
     public Character(double acceleration, Game game) {
         super(acceleration, game);
     }
@@ -22,9 +23,7 @@ public abstract class Character extends PhysicsObject {
     }
 
     @Override
-    public void calculatePosition() { // gefühlt gibt es beim Springen minimale Abweichungen
-        // berechnet anhand der Geschindigkeiten und der Vergangenen Zeit die Positin
-        // des Objekts
+    public void calculatePosition() { 
 
         velocityVertically = calculateVerticalVelocity();
         velocityHorizontally = calculateHorizontalVelocity();
@@ -111,7 +110,7 @@ public abstract class Character extends PhysicsObject {
 
     public void jump() {
         jump = true;
-        velocityVertically = -250;
+        velocityVertically = -jumpHeight;
         lastTimeInTouchWithFloor = game.getUptime();
     }
 }

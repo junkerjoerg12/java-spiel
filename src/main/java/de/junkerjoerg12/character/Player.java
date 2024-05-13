@@ -3,7 +3,6 @@ package de.junkerjoerg12.character;
 import java.awt.Color;
 
 import de.junkerjoerg12.Game;
-import de.junkerjoerg12.map.Map;
 
 public class Player extends Character {
 
@@ -18,7 +17,7 @@ public class Player extends Character {
     }
 
     public Player(Game game) {
-        this(10, game);
+        this(2, game);
     }
 
 }

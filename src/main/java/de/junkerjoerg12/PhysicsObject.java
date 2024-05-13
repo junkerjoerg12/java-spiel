@@ -95,8 +95,9 @@ public abstract class PhysicsObject extends JPanel {
             return velocityVertically;
         } else if (!collisionBottom(game.getMap().getAllObjects())) {
             deltaTSinceInTouchWithFloor += game.getDelaybetweenFrames();
-            double v = velocityVertically + (int) Math.round((acceleration
-                    * ((deltaTSinceInTouchWithFloor) / 1000.0)));
+            double v = velocityVertically + (int) Math.round((acceleration) * game.getDelaybetweenFrames());
+            // double v = velocityVertically + (int) Math.round((acceleration
+            //         * ((deltaTSinceInTouchWithFloor) / 1000.0)));
             return v;
         } else {
             return 0;

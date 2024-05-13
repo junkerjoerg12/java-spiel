@@ -109,7 +109,6 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         map.getPlayer().calculatePosition();
     }
 
-    // alternativ Keybindings
     @Override
     public void keyTyped(KeyEvent e) {
         // if (e.getKeyCode() == keyConsole) {
@@ -121,6 +120,9 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         // }
     }
 
+    /*!!!
+        fragen, warum ich die breaks nicht weglassen kann, bzw warum sonst die Konsole erscheint
+    !!!*/
     @Override
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
