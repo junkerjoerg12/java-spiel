@@ -30,8 +30,8 @@ public abstract class Character extends PhysicsObject {
         velocityHorizontally = calculateHorizontalVelocity();
 
         // auch mit berechneten, nicht gemessenene Zeiten berechnen
-        int distanceHorizontal = (int) (velocityHorizontally * (game.getNow() - game.getLastTick()) / 1000);
-        int distanceVertical = (int) (velocityVertically * (game.getNow() - game.getLastTick()) / 1000);
+        int distanceHorizontal = (int) (velocityHorizontally * (game.getDelaybetweenFrames()) / 1000);
+        int distanceVertical = (int) (velocityVertically * (game.getDelaybetweenFrames()) / 1000);
 
         ArrayList<PhysicsObject> list = game.getMap().getAllObjects();
 
@@ -75,7 +75,7 @@ public abstract class Character extends PhysicsObject {
                             this.setLocation(this.getX(), this.getY() + 1);
                             movedVertical++;
                         } else {
-                            lastTimeInTouchWithFloor = System.currentTimeMillis();
+                            lastTimeInTouchWithFloor = game.getUptime();
                         }
                     } else {// nach oben
                         if (!this.collisionTop(list)) {
@@ -112,6 +112,6 @@ public abstract class Character extends PhysicsObject {
     public void jump() {
         jump = true;
         velocityVertically = -250;
-        lastTimeInTouchWithFloor = System.currentTimeMillis();
+        lastTimeInTouchWithFloor = game.getUptime();
     }
 }

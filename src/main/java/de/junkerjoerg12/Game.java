@@ -35,11 +35,8 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 
     private Timer timer;
 
-    // System Zeit zu Beginndes jetziegen Ticks und des letzten Ticks
-    private long now;
-    private long lastTick;
-
-    // Systemzeit zum Start des Programms
+    // misst die Zeit, die das Spiel Läuft
+    private double upTime;
 
     public Game() {
         delayBetweenFrames = Math.round(1.0 / targetFPS * 1000);
@@ -101,27 +98,14 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == timer) {
             // raus am besten
-            lastTick = now;
-            now = System.currentTimeMillis();
-
             tick();
 
-            // wartet falls nötig darauf, dass die zeit zwichen frames abgelaufen ist
-            // if ((System.currentTimeMillis() - now - delayBetweenFrames) <= 0) {
-            // timer.setDelay((int) (delayBetweenFrames - (System.currentTimeMillis() -
-            // now)));
-            // timer.start();
-            // System.out.println("if");
-            // } else {
-            // actionPerformed(e);
-            // System.out.println("else");
-            // }
         }
 
     }
 
     private void tick() {
-        // System.out.println("now - lastTick" + (now - lastTick));
+        upTime += delayBetweenFrames;
         map.getPlayer().calculatePosition();
     }
 
@@ -154,7 +138,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
                 if (map.getPlayer().collisionBottom(map.getAllObjects())) {
                     map.getPlayer().jump();
                 }
-                    break;
+                break;
             case keyConsole:
                 if (console == null) {
                     console = new Console(this);
@@ -174,30 +158,15 @@ public class Game extends JFrame implements ActionListener, KeyListener {
                 map.getPlayer().walkRight = false;
                 break;
             case keyLeft:
-                map.getPlayer().walkLeft  = false;
+                map.getPlayer().walkLeft = false;
                 break;
             default:
                 break;
         }
     }
 
-    // public void setFPSTarget(int fps) {
-    // targetFPS = fps;
-    // delayBetweenFrames = Math.round(1.0 / targetFPS * 1000);
-    // // System.out.println("delay betweenFrames" + delayBetweenFrames);
-    // timer.stop();
-    // timer = null;
-    // timer = new Timer((int) delayBetweenFrames, this);
-    // timer.setRepeats(true);
-    // timer.start();
-    // }
-
-    public long getNow() {
-        return now;
-    }
-
-    public long getLastTick() {
-        return lastTick;
+    public double getUptime() {
+        return upTime;
     }
 
     public Map getMap() {
@@ -205,15 +174,10 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     }
 
     public double getDelaybetweenFrames() {
-        // System.out.println(delayBetweenFrames);
         return delayBetweenFrames;
     }
 
     public static void main(String[] args) {
         new Game();
-        // for (int i = 0; i < 120; i++) {
-        // System.out.println(System.currentTimeMillis());
-        // }
-
     }
 }
