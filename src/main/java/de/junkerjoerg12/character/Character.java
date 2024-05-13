@@ -12,6 +12,7 @@ public abstract class Character extends PhysicsObject {
     public boolean walkRight;
     public boolean walkLeft;
 
+    protected int jumpHeight = 1000; // nicht die Tatsächliche höhe des Sprungs, aber höhere Zahl = höherer Sprung
     public Character(double acceleration, Game game) {
         super(acceleration, game);
     }
@@ -22,16 +23,14 @@ public abstract class Character extends PhysicsObject {
     }
 
     @Override
-    public void calculatePosition() { // gefühlt gibt es beim Springen minimale Abweichungen
-        // berechnet anhand der Geschindigkeiten und der Vergangenen Zeit die Positin
-        // des Objekts
+    public void calculatePosition() { 
 
         velocityVertically = calculateVerticalVelocity();
         velocityHorizontally = calculateHorizontalVelocity();
 
         // auch mit berechneten, nicht gemessenene Zeiten berechnen
-        int distanceHorizontal = (int) (velocityHorizontally * (game.getNow() - game.getLastTick()) / 1000);
-        int distanceVertical = (int) (velocityVertically * (game.getNow() - game.getLastTick()) / 1000);
+        int distanceHorizontal = (int) (velocityHorizontally * (game.getDelaybetweenFrames()) / 1000);
+        int distanceVertical = (int) (velocityVertically * (game.getDelaybetweenFrames()) / 1000);
 
         ArrayList<PhysicsObject> list = game.getMap().getAllObjects();
 
@@ -75,7 +74,7 @@ public abstract class Character extends PhysicsObject {
                             this.setLocation(this.getX(), this.getY() + 1);
                             movedVertical++;
                         } else {
-                            lastTimeInTouchWithFloor = System.currentTimeMillis();
+                            lastTimeInTouchWithFloor = game.getUptime();
                         }
                     } else {// nach oben
                         if (!this.collisionTop(list)) {
@@ -111,7 +110,7 @@ public abstract class Character extends PhysicsObject {
 
     public void jump() {
         jump = true;
-        velocityVertically = -250;
-        lastTimeInTouchWithFloor = System.currentTimeMillis();
+        velocityVertically = -jumpHeight;
+        lastTimeInTouchWithFloor = game.getUptime();
     }
 }

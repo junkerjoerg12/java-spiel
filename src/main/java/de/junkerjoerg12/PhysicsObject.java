@@ -16,8 +16,8 @@ public abstract class PhysicsObject extends JPanel {
     protected double velocityHorizontally;
     protected double velocityVertically;
 
-    public long lastTimeInTouchWithFloor;
-    public long deltaTSinceInTouchWithFloor;
+    public double lastTimeInTouchWithFloor;
+    public double deltaTSinceInTouchWithFloor;
 
     protected boolean jump;
     // vielleicht noch was besseres überlegen
@@ -32,7 +32,7 @@ public abstract class PhysicsObject extends JPanel {
 
         this.setBackground(Color.CYAN);
 
-        lastTimeInTouchWithFloor = System.currentTimeMillis();// brauche ich
+        lastTimeInTouchWithFloor = 0;// brauche ich
 
     }
 
@@ -95,9 +95,9 @@ public abstract class PhysicsObject extends JPanel {
             return velocityVertically;
         } else if (!collisionBottom(game.getMap().getAllObjects())) {
             deltaTSinceInTouchWithFloor += game.getDelaybetweenFrames();
-            double v = velocityVertically + (int) Math.round((acceleration
-                    * ((deltaTSinceInTouchWithFloor) / 1000.0)));
-            // System.out.println(deltaTSinceInTouchWithFloor);
+            double v = velocityVertically + (int) Math.round((acceleration) * game.getDelaybetweenFrames());
+            // double v = velocityVertically + (int) Math.round((acceleration
+            //         * ((deltaTSinceInTouchWithFloor) / 1000.0)));
             return v;
         } else {
             return 0;
