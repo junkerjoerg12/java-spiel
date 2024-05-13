@@ -1,6 +1,7 @@
 package de.junkerjoerg12;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
@@ -16,19 +17,23 @@ public abstract class PhysicsObject extends JPanel {
     protected int velocityVertically;
 
     public long lastTimeInTouchWithFloor;
+    public long deltaTSinceInTouchWithFloor;
 
     protected boolean jump;
     // vielleicht noch was besseres überlegen
 
-    protected Map map;
+    protected Game game;
 
-    public PhysicsObject(double acceleration, Map map) {
-        this.acceleration = -acceleration;// Minus, weil die Y-Achse bei Komputergraphik quasi gespiegelt ist
-        this.map = map;
+    private boolean highlighted;
+
+    public PhysicsObject(double acceleration, Game game) {
+        this.acceleration = acceleration;
+        this.game = game;
 
         this.setBackground(Color.CYAN);
 
-        lastTimeInTouchWithFloor = System.currentTimeMillis();
+        lastTimeInTouchWithFloor = System.currentTimeMillis();// brauche ich
+
     }
 
     public boolean collision(ArrayList<PhysicsObject> list) {
@@ -86,13 +91,35 @@ public abstract class PhysicsObject extends JPanel {
         if (jump) {// ist nicht schön, funktioniert aber, also vielleicht mal noch was anderes
                    // überlegen
             jump = false;
+            deltaTSinceInTouchWithFloor = 0;
             return velocityVertically;
-        } else if (!collisionBottom(map.getAllObjects())) {
-            return velocityVertically + (int) (acceleration
-                    * ((lastTimeInTouchWithFloor - System.currentTimeMillis()) / 1000));
+        } else if (!collisionBottom(game.getMap().getAllObjects())) {
+            deltaTSinceInTouchWithFloor += game.getDelaybetweenFrames();
+            int v = velocityVertically + (int) Math.round((acceleration
+                    * ((deltaTSinceInTouchWithFloor) / 1000.0)));
+            // System.out.println(deltaTSinceInTouchWithFloor);
+            return v;
+        } else {
+            return 0;
         }
-        return 0;
-        // problem: wird auch falls man springen will gleich wieder auf null gesetzt
+    }
+
+    public void highlight() {
+        for (PhysicsObject p : game.getMap().getAllObjects()) {
+            p.highlighted = false;
+            p.repaint();
+        }
+        highlighted = !highlighted;
+        repaint();
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        if (highlighted) {
+            g.setColor(Color.RED);
+            g.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
+        }
     }
 
     protected abstract void calculatePosition();

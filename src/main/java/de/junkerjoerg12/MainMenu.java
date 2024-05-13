@@ -34,7 +34,7 @@ public class MainMenu extends JPanel implements ActionListener {
 
         try {
             backgroundImage = ImageIO.read(new File(
-                    "C:\\Users\\andre\\Documents\\Informatik_Projekte\\java-spiel\\src\\main\\resources\\MainMenu-Background.png"));
+                    "src\\main\\resources\\MainMenu-Background.png"));
         } catch (Exception e) {
             e.printStackTrace();
         }

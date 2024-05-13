@@ -2,37 +2,34 @@ package de.junkerjoerg12.character;
 
 import java.util.ArrayList;
 
+import de.junkerjoerg12.Game;
 import de.junkerjoerg12.PhysicsObject;
-import de.junkerjoerg12.map.Map;
 
 public abstract class Character extends PhysicsObject {
 
-    private long lastTick;
-
-    public Character(double acceleration, Map map) {
-        super(acceleration, map);
+    public Character(double acceleration, Game game) {
+        super(acceleration, game);
     }
 
     @Override
-    public void calculatePosition() {
+    public void calculatePosition() { // gefühlt gibt es beim Springen minimale Abweichungen
         // berechnet anhand der Geschindigkeiten und der Vergangenen Zeit die Positin
         // des Objekts
 
         velocityVertically = calculateVerticalVelocity();
 
-        long now = System.currentTimeMillis();
+        // auch mit berechneten, nicht gemessenene Zeiten berechnen
+        int distanceHorizontal = (int) (velocityHorizontally * (game.getNow() - game.getLastTick()) / 1000);
+        int distanceVertical = (int) (velocityVertically * (game.getNow() - game.getLastTick()) / 1000);
 
-        int distanceHorizontal = (int) (velocityHorizontally * (now - lastTick) / 1000);
-        int distanceVertical = (int) (velocityVertically * (now - lastTick) / 1000);
-        
-        ArrayList<PhysicsObject> list = map.getAllObjects();
+        ArrayList<PhysicsObject> list = game.getMap().getAllObjects();
 
         this.setLocation(
                 (this.getX() + distanceHorizontal),
                 (this.getY() + distanceVertical));
 
         // kann und sollte warscheinlich auch noch mal überarbeitet werden
-        if (collision(list)){
+        if (collision(list)) {
 
             // pixel für pixel bewegen, damit die bewegung gestoppt werden kann, sobald die
             // KOlision stattfindet
@@ -47,12 +44,12 @@ public abstract class Character extends PhysicsObject {
 
             for (int i = 0; i < Math.max(Math.abs(distanceVertical), Math.abs(distanceHorizontal)); i++) {
                 if (movedHorizontal != distanceHorizontal) {
-                    if (distanceHorizontal > 0) {//nach rechts
-                        if (!this.collisionRight(list)){
+                    if (distanceHorizontal > 0) {// nach rechts
+                        if (!this.collisionRight(list)) {
                             this.setLocation(this.getX() + 1, this.getY());
                             movedHorizontal++;
                         }
-                    } else {//nach links
+                    } else {// nach links
                         if (!this.collisionLeft(list)) {
                             this.setLocation(this.getX() - 1, this.getY());
                             movedHorizontal--;
@@ -62,12 +59,14 @@ public abstract class Character extends PhysicsObject {
 
                 // vertikal
                 if (movedVertical != distanceVertical) {
-                    if (distanceVertical > 0) {//nach unten
+                    if (distanceVertical > 0) {// nach unten
                         if (!this.collisionBottom(list)) {
                             this.setLocation(this.getX(), this.getY() + 1);
                             movedVertical++;
+                        } else {
+                            lastTimeInTouchWithFloor = System.currentTimeMillis();
                         }
-                    } else {//nach oben
+                    } else {// nach oben
                         if (!this.collisionTop(list)) {
                             this.setLocation(this.getX(), this.getY() - 1);
                             movedVertical--;
@@ -78,7 +77,6 @@ public abstract class Character extends PhysicsObject {
                 }
             }
         }
-        this.lastTick = System.currentTimeMillis();
     }
 
     public void walk(int velocity) {
@@ -87,7 +85,7 @@ public abstract class Character extends PhysicsObject {
 
     public void jump() {
         jump = true;
-        velocityVertically = -100;
+        velocityVertically = -250;
         lastTimeInTouchWithFloor = System.currentTimeMillis();
     }
 }
