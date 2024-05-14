@@ -13,6 +13,7 @@ public abstract class Character extends PhysicsObject {
     public boolean walkLeft;
 
     protected int jumpHeight = 1000; // nicht die Tatsächliche höhe des Sprungs, aber höhere Zahl = höherer Sprung
+
     public Character(double acceleration, Game game) {
         super(acceleration, game);
     }
@@ -23,7 +24,7 @@ public abstract class Character extends PhysicsObject {
     }
 
     @Override
-    public void calculatePosition() { 
+    public void calculatePosition() {
 
         velocityVertically = calculateVerticalVelocity();
         velocityHorizontally = calculateHorizontalVelocity();

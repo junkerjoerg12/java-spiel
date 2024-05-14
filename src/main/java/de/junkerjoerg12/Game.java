@@ -4,7 +4,9 @@ import de.junkerjoerg12.map.Map;
 import de.junkerjoerg12.tools.Console;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -23,7 +25,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 
     // auf welchem Monitor das Spiel angezeigt werden soll
     // nur während entwicklung wichtig
-    byte monitor = 1;
+    private byte monitor = 1;
 
     private MainMenu mainMenu;
     private Map map;
@@ -38,16 +40,22 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     // misst die Zeit, die das Spiel Läuft
     private double upTime;
 
+    private boolean autostart = true;// ob sich das Spiel gleich startet oder man erst ins Main Menue kommt
+
     public Game() {
         delayBetweenFrames = Math.round(1.0 / targetFPS * 1000);
 
         this.setResizable(false);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        // this.setUndecorated(true);
+        if (Toolkit.getDefaultToolkit().getScreenSize().equals(new Dimension(1920, 1080))) {
+            this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        } else {
+            this.setSize(1920, 1080);
+        }
+        this.setUndecorated(true);
         this.setLayout(new BorderLayout());
 
-        // öffnet spiel auf gewnschtem monitor
+        // öffnet spiel auf gewünschtem Monitor
         this.setLocation(GraphicsEnvironment
                 .getLocalGraphicsEnvironment()
                 .getScreenDevices()[monitor - 1]
@@ -63,9 +71,9 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 
         this.addKeyListener(this);
 
-        this.setFocusable(true);
-        // sodass ich nicht immer irgendwelche knöpfe drücken muss
-        start();
+        if (autostart) {
+            start();
+        }
     }
 
     private void mainMenu() {
@@ -96,12 +104,10 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        // wird immer wieder vom Timer aufgerufen, ist quasi die Gameloop
         if (e.getSource() == timer) {
-            // raus am besten
             tick();
-
         }
-
     }
 
     private void tick() {
@@ -120,9 +126,6 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         // }
     }
 
-    /*!!!
-        fragen, warum ich die breaks nicht weglassen kann, bzw warum sonst die Konsole erscheint
-    !!!*/
     @Override
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {

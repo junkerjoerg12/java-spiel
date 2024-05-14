@@ -6,8 +6,6 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
-import de.junkerjoerg12.map.Map;
-
 public abstract class PhysicsObject extends JPanel {
 
     // in pixeln/sekunde²
@@ -97,7 +95,7 @@ public abstract class PhysicsObject extends JPanel {
             deltaTSinceInTouchWithFloor += game.getDelaybetweenFrames();
             double v = velocityVertically + (int) Math.round((acceleration) * game.getDelaybetweenFrames());
             // double v = velocityVertically + (int) Math.round((acceleration
-            //         * ((deltaTSinceInTouchWithFloor) / 1000.0)));
+            // * ((deltaTSinceInTouchWithFloor) / 1000.0)));
             return v;
         } else {
             return 0;

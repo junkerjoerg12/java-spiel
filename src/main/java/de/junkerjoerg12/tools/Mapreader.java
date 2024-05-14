@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import de.junkerjoerg12.Game;
-import de.junkerjoerg12.map.Map;
 import de.junkerjoerg12.map.mapElements.Floor;
 import de.junkerjoerg12.map.mapElements.MapElement;
 import de.junkerjoerg12.map.mapElements.Wall;
@@ -16,13 +15,10 @@ import de.junkerjoerg12.map.mapElements.Wall;
 public class Mapreader {
 
     private BufferedReader reader;
-    Map map;
-    Game game;
+    private Game game;
 
     public Mapreader(Game game) {
         this.game = game;
-        this.map = game.getMap();
-
     }
     public void setFilepath(String filepath) throws FileNotFoundException {
         if (new File(filepath).exists()) {
@@ -40,7 +36,6 @@ public class Mapreader {
                 elements.add(process(line));
             }
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return elements;

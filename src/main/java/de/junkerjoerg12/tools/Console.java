@@ -10,7 +10,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import de.junkerjoerg12.Game;
-import de.junkerjoerg12.map.Map;
 
 public class Console extends JFrame {
 
@@ -27,13 +26,11 @@ public class Console extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        // Create the output area
         outputArea = new JTextArea();
         outputArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(outputArea);
         add(scrollPane, BorderLayout.CENTER);
 
-        // Create the input field
         inputField = new JTextField();
         inputField.addKeyListener(new KeyAdapter() {
             @Override
@@ -44,7 +41,7 @@ public class Console extends JFrame {
                     inputField.setText("");
                 } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
                     // evtl irgendwas um die arbeit zu erleichtern, z.B. Ausgewähltes Objekt wird
-                    // automatisch rot umrandet
+                    // automatisch rot umrandet o.ä.
                 }
             }
         });
@@ -64,7 +61,6 @@ public class Console extends JFrame {
     }
 
     private void processInput(String input) {
-        // Process the user input here
         print(input);
         input = input.toLowerCase();
         if (input.equals("highlight player")) {
@@ -74,9 +70,6 @@ public class Console extends JFrame {
         } else if (input.equals("hide")) {
             setVisible(false);
         } else if (input.matches("set fps \\d+$")) {
-            // game.getMap().getGame().setFPSTarget(Integer.parseInt(input.replaceAll("[a-z]",
-            // "").trim()));
-            // } else {
             print("Der Befehl " + input + " ist entweder falsch geschrieben oder konnte nicht gefunden werden.");
         }
     }
