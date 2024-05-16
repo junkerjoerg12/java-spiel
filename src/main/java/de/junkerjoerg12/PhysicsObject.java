@@ -1,12 +1,11 @@
 package de.junkerjoerg12;
 
 import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 
-import javax.swing.JPanel;
 
-public abstract class PhysicsObject extends JPanel {
+public abstract class PhysicsObject {
 
     // in pixeln/sekunde²
     protected double acceleration;
@@ -22,26 +21,45 @@ public abstract class PhysicsObject extends JPanel {
 
     protected Game game;
 
+    protected int x;
+    protected int y;
+    protected int width;
+    protected int height;
+
     private boolean highlighted;
 
     public PhysicsObject(double acceleration, Game game) {
         this.acceleration = acceleration;
         this.game = game;
 
-        this.setBackground(Color.CYAN);
-
         lastTimeInTouchWithFloor = 0;// brauche ich
-
     }
 
     public boolean collision(ArrayList<PhysicsObject> list) {
+        int rect1BottomRightX = this.x + this.width;
+        int rect1BottomRightY = this.y + this.height;
+
         for (PhysicsObject p : list) {
-            if (this.getBounds().intersects(p.getBounds())) {
-                return true;
+            int rect2BottomRightX = p.x + p.width;
+            int rect2BottomRightY = p.y + p.height;
+
+            // Check if one rectangle is entirely to the left of the other
+            if (rect1BottomRightX <= p.x || rect2BottomRightX <= p.x) {
+                continue; // Skip to the next rectangle in the list
             }
+
+            // Check if one rectangle is entirely above the other
+            if (rect1BottomRightY <= p.y || rect2BottomRightY <= p.y) {
+                continue; // Skip to the next rectangle in the list
+            }
+
+            // If neither of the above conditions is true, the rectangles overlap
+            return true;
         }
         return false;
     }
+
+    
 
     public boolean collisionLeft(ArrayList<PhysicsObject> list) {
         for (PhysicsObject p : list) {
@@ -105,19 +123,49 @@ public abstract class PhysicsObject extends JPanel {
     public void highlight() {
         for (PhysicsObject p : game.getMap().getAllObjects()) {
             p.highlighted = false;
-            p.repaint();
         }
         highlighted = !highlighted;
-        repaint();
     }
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
+    protected void draw(Graphics2D g) {
         if (highlighted) {
             g.setColor(Color.RED);
-            g.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
+            g.drawRect(x, y, width - 1, height - 1);
         }
+    }
+
+    public void setBounds(int x, int y, int width, int height) {
+        setLocation(x, y);
+        setSize(width, height);
+
+    }
+
+    public void setSize(int width, int height) {
+        this.width = width;
+        this.height = height;
+    }
+
+    public void setLocation(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+
+    public int getWidth() {
+        return width;
+    }
+
+
+    public int getHeight() {
+        return height;
     }
 
     protected abstract void calculatePosition();

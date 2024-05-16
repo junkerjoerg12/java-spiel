@@ -58,4 +58,16 @@ public class Map extends JPanel {
     public Game getGame() {
         return game;
     }
+
+    public void add(Player p) {
+        this.player = p;
+    }
+
+    public void add(MapElement m) {
+        allObjects.add(m);
+    }
+
+    public void add(Enemy e) {
+        enemies.add(e);
+    }
 }

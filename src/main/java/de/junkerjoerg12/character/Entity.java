@@ -1,11 +1,12 @@
 package de.junkerjoerg12.character;
 
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 import de.junkerjoerg12.Game;
 import de.junkerjoerg12.PhysicsObject;
 
-public abstract class Character extends PhysicsObject {
+public abstract class Entity extends PhysicsObject {
 
     protected int maxHorizontalSpeed = 250;
     protected double horizontalAccelleration = 40;
@@ -14,11 +15,11 @@ public abstract class Character extends PhysicsObject {
 
     protected int jumpHeight = 1000; // nicht die Tatsächliche höhe des Sprungs, aber höhere Zahl = höherer Sprung
 
-    public Character(double acceleration, Game game) {
+    public Entity(double acceleration, Game game) {
         super(acceleration, game);
     }
 
-    public Character(double acceleration, Game game, double horizontalAccelleration) {
+    public Entity(double acceleration, Game game, double horizontalAccelleration) {
         this(acceleration, game);
         this.horizontalAccelleration = horizontalAccelleration;
     }
@@ -113,5 +114,10 @@ public abstract class Character extends PhysicsObject {
         jump = true;
         velocityVertically = -jumpHeight;
         lastTimeInTouchWithFloor = game.getUptime();
+    }
+
+    @Override
+    public void draw(Graphics2D g){
+        super.draw(g);
     }
 }
