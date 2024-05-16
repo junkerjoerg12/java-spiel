@@ -7,5 +7,4 @@ public class Enemy extends Entity{
     public Enemy(double acceleration, Game game) {
         super(acceleration, game);
     }
-
 }

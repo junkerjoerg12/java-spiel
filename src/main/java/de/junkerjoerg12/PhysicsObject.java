@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
-
 public abstract class PhysicsObject {
 
     // in pixeln/sekunde²
@@ -13,11 +12,7 @@ public abstract class PhysicsObject {
     protected double velocityHorizontally;
     protected double velocityVertically;
 
-    public double lastTimeInTouchWithFloor;
-    public double deltaTSinceInTouchWithFloor;
-
-    protected boolean jump;
-    // vielleicht noch was besseres überlegen
+    public double deltaTSinceVelicityZero;
 
     protected Game game;
 
@@ -32,7 +27,6 @@ public abstract class PhysicsObject {
         this.acceleration = acceleration;
         this.game = game;
 
-        lastTimeInTouchWithFloor = 0;// brauche ich
     }
 
     public boolean collision(ArrayList<PhysicsObject> list) {
@@ -58,8 +52,6 @@ public abstract class PhysicsObject {
         }
         return false;
     }
-
-    
 
     public boolean collisionLeft(ArrayList<PhysicsObject> list) {
         for (PhysicsObject p : list) {
@@ -104,13 +96,8 @@ public abstract class PhysicsObject {
     protected double calculateVerticalVelocity() {
         // bin mir nicht sicher, ob das realistisch ist, es sieht aber ganz gut aus
 
-        if (jump) {// ist nicht schön, funktioniert aber, also vielleicht mal noch was anderes
-                   // überlegen
-            jump = false;
-            deltaTSinceInTouchWithFloor = 0;
-            return velocityVertically;
-        } else if (!collisionBottom(game.getMap().getAllObjects())) {
-            deltaTSinceInTouchWithFloor += game.getDelaybetweenFrames();
+        if (!collisionBottom(game.getMap().getAllObjects())) {
+            deltaTSinceVelicityZero += game.getDelaybetweenFrames();
             double v = velocityVertically + (int) Math.round((acceleration) * game.getDelaybetweenFrames());
             // double v = velocityVertically + (int) Math.round((acceleration
             // * ((deltaTSinceInTouchWithFloor) / 1000.0)));
@@ -158,11 +145,9 @@ public abstract class PhysicsObject {
         return y;
     }
 
-
     public int getWidth() {
         return width;
     }
-
 
     public int getHeight() {
         return height;
