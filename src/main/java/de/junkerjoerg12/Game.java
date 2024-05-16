@@ -40,7 +40,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     // misst die Zeit, die das Spiel Läuft
     private double upTime;
 
-    private boolean autostart = true;// ob sich das Spiel gleich startet oder man erst ins Main Menue kommt
+    private boolean autostart = false;// ob sich das Spiel gleich startet oder man erst ins Main Menue kommt
 
     public Game() {
         delayBetweenFrames = Math.round(1.0 / targetFPS * 1000);
@@ -112,7 +112,8 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 
     private void tick() {
         upTime += delayBetweenFrames;
-        map.getPlayer().calculatePosition();
+        map.update();
+        map.draw();
     }
 
     @Override

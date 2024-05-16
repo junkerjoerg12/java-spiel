@@ -127,7 +127,7 @@ public abstract class PhysicsObject {
         highlighted = !highlighted;
     }
 
-    protected void draw(Graphics2D g) {
+    public void draw(Graphics2D g) {
         if (highlighted) {
             g.setColor(Color.RED);
             g.drawRect(x, y, width - 1, height - 1);
@@ -169,4 +169,6 @@ public abstract class PhysicsObject {
     }
 
     protected abstract void calculatePosition();
+
+    public abstract void update();
 }

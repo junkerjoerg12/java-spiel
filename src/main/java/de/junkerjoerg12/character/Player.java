@@ -21,7 +21,7 @@ public class Player extends Entity {
     public void draw(Graphics2D g) {
         super.draw(g);
         g.setColor(Color.PINK);
-        g.drawRect(x, y, width, height);
+        g.fillRect(x, y, width, height);
     }
 
 }

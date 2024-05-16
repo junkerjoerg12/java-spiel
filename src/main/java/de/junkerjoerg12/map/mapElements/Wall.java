@@ -14,6 +14,6 @@ public class Wall extends MapElement {
     public void draw(Graphics2D g){
         super.draw(g);
         g.setColor(Color.BLACK);
-        g.drawRect(x, y, width, height);
+        g.fillRect(x, y, width, height);
     }
 }

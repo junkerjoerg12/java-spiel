@@ -116,8 +116,13 @@ public abstract class Entity extends PhysicsObject {
         lastTimeInTouchWithFloor = game.getUptime();
     }
 
+    public void update() {
+        calculatePosition();
+    }
+
     @Override
-    public void draw(Graphics2D g){
+    public void draw(Graphics2D g) {
         super.draw(g);
     }
+
 }

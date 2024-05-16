@@ -10,6 +10,9 @@ public abstract class MapElement extends PhysicsObject {
     }
 
     public void calculatePosition() {
+    }
 
+    public void update() {
+        calculatePosition();
     }
 }
