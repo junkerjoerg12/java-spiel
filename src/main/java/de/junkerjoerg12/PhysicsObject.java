@@ -114,6 +114,7 @@ public abstract class PhysicsObject {
         highlighted = !highlighted;
     }
 
+    //hier mus das Objekt gerendert werden
     public void draw(Graphics2D g) {
         if (highlighted) {
             g.setColor(Color.RED);

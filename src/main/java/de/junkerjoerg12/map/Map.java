@@ -29,6 +29,7 @@ public class Map extends JPanel {
         this.game = game;
         this.setBackground(Color.GRAY);
         this.setLayout(null);
+        this.setDoubleBuffered(true);
         mapreader = new Mapreader(game);
         build();
     }
