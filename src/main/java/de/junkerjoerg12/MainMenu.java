@@ -16,9 +16,9 @@ import java.io.File;
 
 public class MainMenu extends JPanel implements ActionListener {
 
-    JButton start;
-    JButton settings;
-    JButton quit;
+    private JButton start;
+    private JButton settings;
+    private JButton quit;
 
     private Image backgroundImage;
 
