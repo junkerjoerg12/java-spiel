@@ -7,10 +7,12 @@ public abstract class MapElement extends PhysicsObject {
 
     public MapElement(Game game) {
         super(0, game);
-        this.setVisible(true);
     }
 
     public void calculatePosition() {
+    }
 
+    public void update() {
+        calculatePosition();
     }
 }

@@ -1,6 +1,8 @@
 package de.junkerjoerg12.map;
 
 import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
@@ -27,6 +29,7 @@ public class Map extends JPanel {
         this.game = game;
         this.setBackground(Color.GRAY);
         this.setLayout(null);
+        this.setDoubleBuffered(true);
         mapreader = new Mapreader(game);
         build();
     }
@@ -47,6 +50,33 @@ public class Map extends JPanel {
         }
     }
 
+    public void update() {
+        for (PhysicsObject p : allObjects) {
+            p.update();
+        }
+        for (Enemy e : enemies) {
+            e.update();
+        }
+        player.update();
+    }
+
+    public void draw() {
+        repaint();
+    }
+
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        Graphics2D g2D = (Graphics2D) g;
+        for (PhysicsObject p : allObjects) {
+            p.draw(g2D);
+        }
+        for (Enemy e : enemies) {
+            e.draw(g2D);
+        }
+        player.draw(g2D);;
+
+    }
+
     public ArrayList<PhysicsObject> getAllObjects() {
         return allObjects;
     }
@@ -57,5 +87,17 @@ public class Map extends JPanel {
 
     public Game getGame() {
         return game;
+    }
+
+    public void add(Player p) {
+        this.player = p;
+    }
+
+    public void add(MapElement m) {
+        allObjects.add(m);
+    }
+
+    public void add(Enemy e) {
+        enemies.add(e);
     }
 }

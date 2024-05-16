@@ -1,24 +1,30 @@
 package de.junkerjoerg12.character;
 
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 import de.junkerjoerg12.Game;
 import de.junkerjoerg12.PhysicsObject;
 
-public abstract class Character extends PhysicsObject {
+public abstract class Entity extends PhysicsObject {
 
     protected int maxHorizontalSpeed = 250;
     protected double horizontalAccelleration = 40;
     public boolean walkRight;
     public boolean walkLeft;
+    public boolean jump;
 
-    protected int jumpHeight = 1000; // nicht die Tatsächliche höhe des Sprungs, aber höhere Zahl = höherer Sprung
+    protected int jumpVelocity = 1000; // glaube nicht 1:1 die Geschwindigkeit, aber mehr ist mehr
 
-    public Character(double acceleration, Game game) {
+    public double lastTimeInTouchWithFloor;
+
+
+    public Entity(double acceleration, Game game) {
         super(acceleration, game);
+        lastTimeInTouchWithFloor = 0;// brauche ich
     }
 
-    public Character(double acceleration, Game game, double horizontalAccelleration) {
+    public Entity(double acceleration, Game game, double horizontalAccelleration) {
         this(acceleration, game);
         this.horizontalAccelleration = horizontalAccelleration;
     }
@@ -109,9 +115,34 @@ public abstract class Character extends PhysicsObject {
         return 0;
     }
 
-    public void jump() {
-        jump = true;
-        velocityVertically = -jumpHeight;
-        lastTimeInTouchWithFloor = game.getUptime();
+    public double calculateVerticalVelocity() {
+        // bin mir nicht sicher, ob das realistisch ist, es sieht aber ganz gut aus
+
+        if (jump && collisionBottom(game.getMap().getAllObjects())) {// ist nicht schön, funktioniert aber, also
+                                                                     // vielleicht mal noch was anderes
+            // überlegen
+            deltaTSinceVelicityZero = 0;
+            lastTimeInTouchWithFloor = game.getUptime();
+            velocityVertically = -jumpVelocity;
+            return velocityVertically;
+        } else if (!collisionBottom(game.getMap().getAllObjects())) {
+            deltaTSinceVelicityZero += game.getDelaybetweenFrames();
+            double v = velocityVertically + (int) Math.round((acceleration) * game.getDelaybetweenFrames());
+            // double v = velocityVertically + (int) Math.round((acceleration
+            // * ((deltaTSinceInTouchWithFloor) / 1000.0)));
+            return v;
+        } else {
+            return 0;
+        }
     }
+
+    public void update() {
+        calculatePosition();
+    }
+
+    @Override
+    public void draw(Graphics2D g) {
+        super.draw(g);
+    }
+
 }

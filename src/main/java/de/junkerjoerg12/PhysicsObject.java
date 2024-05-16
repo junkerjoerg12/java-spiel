@@ -1,12 +1,10 @@
 package de.junkerjoerg12;
 
 import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 
-import javax.swing.JPanel;
-
-public abstract class PhysicsObject extends JPanel {
+public abstract class PhysicsObject {
 
     // in pixeln/sekunde²
     protected double acceleration;
@@ -14,13 +12,14 @@ public abstract class PhysicsObject extends JPanel {
     protected double velocityHorizontally;
     protected double velocityVertically;
 
-    public double lastTimeInTouchWithFloor;
-    public double deltaTSinceInTouchWithFloor;
-
-    protected boolean jump;
-    // vielleicht noch was besseres überlegen
+    public double deltaTSinceVelicityZero;
 
     protected Game game;
+
+    protected int x;
+    protected int y;
+    protected int width;
+    protected int height;
 
     private boolean highlighted;
 
@@ -28,17 +27,28 @@ public abstract class PhysicsObject extends JPanel {
         this.acceleration = acceleration;
         this.game = game;
 
-        this.setBackground(Color.CYAN);
-
-        lastTimeInTouchWithFloor = 0;// brauche ich
-
     }
 
     public boolean collision(ArrayList<PhysicsObject> list) {
+        int rect1BottomRightX = this.x + this.width;
+        int rect1BottomRightY = this.y + this.height;
+
         for (PhysicsObject p : list) {
-            if (this.getBounds().intersects(p.getBounds())) {
-                return true;
+            int rect2BottomRightX = p.x + p.width;
+            int rect2BottomRightY = p.y + p.height;
+
+            // Check if one rectangle is entirely to the left of the other
+            if (rect1BottomRightX <= p.x || rect2BottomRightX <= p.x) {
+                continue; // Skip to the next rectangle in the list
             }
+
+            // Check if one rectangle is entirely above the other
+            if (rect1BottomRightY <= p.y || rect2BottomRightY <= p.y) {
+                continue; // Skip to the next rectangle in the list
+            }
+
+            // If neither of the above conditions is true, the rectangles overlap
+            return true;
         }
         return false;
     }
@@ -86,13 +96,8 @@ public abstract class PhysicsObject extends JPanel {
     protected double calculateVerticalVelocity() {
         // bin mir nicht sicher, ob das realistisch ist, es sieht aber ganz gut aus
 
-        if (jump) {// ist nicht schön, funktioniert aber, also vielleicht mal noch was anderes
-                   // überlegen
-            jump = false;
-            deltaTSinceInTouchWithFloor = 0;
-            return velocityVertically;
-        } else if (!collisionBottom(game.getMap().getAllObjects())) {
-            deltaTSinceInTouchWithFloor += game.getDelaybetweenFrames();
+        if (!collisionBottom(game.getMap().getAllObjects())) {
+            deltaTSinceVelicityZero += game.getDelaybetweenFrames();
             double v = velocityVertically + (int) Math.round((acceleration) * game.getDelaybetweenFrames());
             // double v = velocityVertically + (int) Math.round((acceleration
             // * ((deltaTSinceInTouchWithFloor) / 1000.0)));
@@ -105,20 +110,51 @@ public abstract class PhysicsObject extends JPanel {
     public void highlight() {
         for (PhysicsObject p : game.getMap().getAllObjects()) {
             p.highlighted = false;
-            p.repaint();
         }
         highlighted = !highlighted;
-        repaint();
     }
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
+    //hier mus das Objekt gerendert werden
+    public void draw(Graphics2D g) {
         if (highlighted) {
             g.setColor(Color.RED);
-            g.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
+            g.drawRect(x, y, width - 1, height - 1);
         }
+    }
+
+    public void setBounds(int x, int y, int width, int height) {
+        setLocation(x, y);
+        setSize(width, height);
+
+    }
+
+    public void setSize(int width, int height) {
+        this.width = width;
+        this.height = height;
+    }
+
+    public void setLocation(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 
     protected abstract void calculatePosition();
+
+    public abstract void update();
 }
