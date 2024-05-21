@@ -24,9 +24,11 @@ public class Map extends JPanel {
 
     private Player player;
     private Game game;
+    private String filepath;
 
-    public Map(Game game) {
+    public Map(Game game, String filepath) {
         this.game = game;
+        this.filepath = filepath;
         this.setBackground(Color.GRAY);
         this.setLayout(null);
         this.setDoubleBuffered(true);
@@ -39,7 +41,7 @@ public class Map extends JPanel {
         this.add(player);
 
         try {
-            mapreader.setFilepath("maps\\level1\\map1.txt");
+            mapreader.setFilepath(filepath);        //"maps\\level1\\map1.txt"
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

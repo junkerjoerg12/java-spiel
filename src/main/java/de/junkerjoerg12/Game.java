@@ -30,6 +30,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     private MainMenu mainMenu;
     private Map map;
     private Console console;
+    private Lvlauswahl lvlauswahl;
 
     private final int targetFPS = 60;
 
@@ -81,10 +82,9 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         this.add(mainMenu, BorderLayout.CENTER);
     }
 
-    public void start() {
+    public void addmap(String filepath){
         remove(mainMenu);
-
-        map = new Map(this);
+        map = new Map(this, filepath);
         map.setVisible(true);
         this.add(map, BorderLayout.CENTER);
         revalidate();
@@ -92,6 +92,17 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         this.requestFocus();
         timer.start();
     }
+
+    public void start() { 
+        lvlauswahl = new Lvlauswahl(this);
+        remove(mainMenu);
+        this.add(lvlauswahl, BorderLayout.CENTER);
+        revalidate();
+        repaint();
+        this.requestFocus();
+    }
+
+    
 
     public void pause() {
         // pausiert das Spiel
