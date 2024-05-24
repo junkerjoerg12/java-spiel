@@ -63,13 +63,16 @@ public class Console extends JFrame {
     private void processInput(String input) {
         print(input);
         input = input.toLowerCase();
+        System.out.println(input);
         if (input.equals("highlight player")) {
             game.getMap().getPlayer().highlight();
-        } else if (input.matches("^highlight mapelement \\d+$")) {
+        } else if (input.matches("highlight mapelement \\d+$")) {
             game.getMap().getAllObjects().get(Integer.parseInt(input.replaceAll("[a-z]", "").trim())).highlight();
         } else if (input.equals("hide")) {
             setVisible(false);
-        } else if (input.matches("set fps \\d+$")) {
+        } else if (input.matches("^new mapelement [a-zA-Z0-9,; ]*$")) {
+            game.getMap().getMapwriter().addMapElement(input);
+        } else {
             print("Der Befehl " + input + " ist entweder falsch geschrieben oder konnte nicht gefunden werden.");
         }
     }

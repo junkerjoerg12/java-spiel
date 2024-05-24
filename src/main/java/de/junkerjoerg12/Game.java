@@ -25,7 +25,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 
     // auf welchem Monitor das Spiel angezeigt werden soll
     // nur während entwicklung wichtig
-    private byte monitor = 1;
+    private byte monitor = 2;
 
     private MainMenu mainMenu;
     private Map map;
@@ -83,7 +83,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     }
 
     public void addmap(String filepath){
-        remove(mainMenu);
+        remove(lvlauswahl);
         map = new Map(this, filepath);
         map.setVisible(true);
         this.add(map, BorderLayout.CENTER);

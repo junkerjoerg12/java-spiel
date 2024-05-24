@@ -14,13 +14,16 @@ import de.junkerjoerg12.character.Enemy;
 import de.junkerjoerg12.character.Player;
 import de.junkerjoerg12.map.mapElements.MapElement;
 import de.junkerjoerg12.tools.Mapreader;
+import de.junkerjoerg12.tools.Mapwriter;
 
 public class Map extends JPanel {
     // wenn irgendetwas keien Kollision haben soll einfach noch iene andere Liste
     // machen, die auf kollision überprüft wird und die hier nicht mehr überprüfen
     private ArrayList<PhysicsObject> allObjects = new ArrayList<>();
     private ArrayList<Enemy> enemies = new ArrayList<>();
+
     private Mapreader mapreader;
+    private Mapwriter mapwriter;
 
     private Player player;
     private Game game;
@@ -29,22 +32,26 @@ public class Map extends JPanel {
     public Map(Game game, String filepath) {
         this.game = game;
         this.filepath = filepath;
-        this.setBackground(Color.GRAY);
+        this.setBackground(Color.YELLOW);
         this.setLayout(null);
         this.setDoubleBuffered(true);
         mapreader = new Mapreader(game);
+        mapwriter = new Mapwriter(game);
         build();
     }
 
     private void build() {
         player = new Player(game);
         this.add(player);
+        System.out.println("building");
 
-        mapreader.setFilepath(filepath);        //"maps\\level1\\map1.txt"
+        mapreader.setFilepath(filepath); // "maps\\level1\\map1.txt"
+        mapwriter.setFilepath(filepath);
 
         for (MapElement m : mapreader.read()) {
             this.add(m);
             allObjects.add(m);
+            System.out.println("adding mapelement");
         }
     }
 
@@ -71,7 +78,8 @@ public class Map extends JPanel {
         for (Enemy e : enemies) {
             e.draw(g2D);
         }
-        player.draw(g2D);;
+        player.draw(g2D);
+        ;
 
     }
 
@@ -99,7 +107,21 @@ public class Map extends JPanel {
         enemies.add(e);
     }
 
+    public void addNew(Enemy e) {
+        enemies.add(e);
+        // mapwriter.addMApElement(e);
+
+    }
+
+    public void addNew(String m) {
+        mapwriter.addMapElement(m);
+    }
+
     public Mapreader getMapreader() {
         return mapreader;
+    }
+
+    public Mapwriter getMapwriter() {
+        return mapwriter;
     }
 }
