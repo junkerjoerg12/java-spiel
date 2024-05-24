@@ -23,6 +23,8 @@ public abstract class PhysicsObject {
 
     private boolean highlighted;
 
+    protected ArrayList<String> imageFilepath = new ArrayList<>();
+
     public PhysicsObject(double acceleration, Game game) {
         this.acceleration = acceleration;
         this.game = game;
@@ -152,6 +154,10 @@ public abstract class PhysicsObject {
 
     public int getHeight() {
         return height;
+    }
+
+    public ArrayList<String> getImageFilepath(){
+        return imageFilepath;
     }
 
     protected abstract void calculatePosition();

@@ -7,10 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import java.awt.GridBagConstraints;
 
-import javax.swing.JButton;
-import javax.swing.JButton;
 import javax.swing.JPanel;
-import java.awt.BorderLayout;
 import java.awt.Color;
 
 public class Lvlauswahl extends JPanel implements ActionListener{
@@ -22,7 +19,7 @@ public class Lvlauswahl extends JPanel implements ActionListener{
         this.game = game;
         this.setLayout(new GridBagLayout());
         this.setVisible(true);
-       
+
         this.setBackground(Color.GRAY);
 
         button.addActionListener(this);
@@ -35,7 +32,7 @@ public class Lvlauswahl extends JPanel implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-       game.addmap("maps\\level1\\map1.txt");
+        game.addmap("maps\\level1\\map1.txt");
     }
 
 

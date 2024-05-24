@@ -197,6 +197,6 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     }
 
     public static void main(String[] args) {
-        new Game();
+        Game g = new Game();
     }
 }

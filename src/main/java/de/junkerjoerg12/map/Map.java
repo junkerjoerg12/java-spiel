@@ -40,11 +40,7 @@ public class Map extends JPanel {
         player = new Player(game);
         this.add(player);
 
-        try {
-            mapreader.setFilepath(filepath);        //"maps\\level1\\map1.txt"
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        mapreader.setFilepath(filepath);        //"maps\\level1\\map1.txt"
 
         for (MapElement m : mapreader.read()) {
             this.add(m);
@@ -101,5 +97,9 @@ public class Map extends JPanel {
 
     public void add(Enemy e) {
         enemies.add(e);
+    }
+
+    public Mapreader getMapreader() {
+        return mapreader;
     }
 }
