@@ -43,15 +43,12 @@ public class Map extends JPanel {
     private void build() {
         player = new Player(game);
         this.add(player);
-        System.out.println("building");
 
         mapreader.setFilepath(filepath); // "maps\\level1\\map1.txt"
         mapwriter.setFilepath(filepath);
 
         for (MapElement m : mapreader.read()) {
-            this.add(m);
             allObjects.add(m);
-            System.out.println("adding mapelement");
         }
     }
 
@@ -123,5 +120,9 @@ public class Map extends JPanel {
 
     public Mapwriter getMapwriter() {
         return mapwriter;
+    }
+
+    public void repalceMapelement(int index, MapElement newElement) {
+        allObjects.set(index, newElement);
     }
 }

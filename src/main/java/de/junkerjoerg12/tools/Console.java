@@ -13,6 +13,15 @@ import de.junkerjoerg12.Game;
 
 public class Console extends JFrame {
 
+    // modes:
+    private boolean build;
+    private boolean settings;
+    /*
+     * .
+     * .
+     * .
+     */
+
     private JTextArea outputArea;
     private JTextField inputField;
     private String userInput = "";
@@ -63,17 +72,45 @@ public class Console extends JFrame {
     private void processInput(String input) {
         print(input);
         input = input.toLowerCase();
-        System.out.println(input);
-        if (input.equals("highlight player")) {
+        if (settings) {
+            /* settigns hier einfügen */
+            if (true) {
+                print("keine Einstellugen vorhanden");
+            } else {
+                error(input);
+            }
+        } else if (build) {
+            if (game.getMap() == null) {
+                print("erst ein Level Starten");
+            } else if (input.matches("^-n [a-zA-Z0-9,; ]*$")) { // neues Element hinzufügen
+                game.getMap().getMapwriter().addMapElement(input.replaceAll("-n ", ""));
+            } else if (input.matches("^-m \\d+\\s*,\\s*\\d+\\s*,\\s*\\d+")) { // schon bestehendes Element bewegen
+                game.getMap().getMapwriter().changeMapelementPosition(input.replaceAll("-m ", ""));
+            } else if (input.matches("-cd \\d+\\s*,\\s*\\d+\\s*,\\s*\\d+")) {  //größe eine schon bestehenden elements verändern
+                game.getMap().getMapwriter().changeMapelementDimension(input.replaceAll("-cd ", ""));
+            }
+            /* alle weiteren befehle, die zum bauen benötigt werden hier einfügen */
+            else {
+                error(input);
+            }
+        } else if (input.equals("highlight player")) {
             game.getMap().getPlayer().highlight();
         } else if (input.matches("highlight mapelement \\d+$")) {
             game.getMap().getAllObjects().get(Integer.parseInt(input.replaceAll("[a-z]", "").trim())).highlight();
         } else if (input.equals("hide")) {
             setVisible(false);
-        } else if (input.matches("^new mapelement [a-zA-Z0-9,; ]*$")) {
-            game.getMap().getMapwriter().addMapElement(input);
+        } else if (input.equals("build")) { // auswahl der Verschiedenen Modi
+            build = true;
+            settings = false;
+        } else if (input.equals("settings")) {
+            settings = true;
+            build = false;
         } else {
-            print("Der Befehl " + input + " ist entweder falsch geschrieben oder konnte nicht gefunden werden.");
+            error(input);
         }
+    }
+
+    private void error(String input) {
+        print("Der Befehl " + input + " ist entweder falsch geschrieben oder konnte nicht gefunden werden.");
     }
 }

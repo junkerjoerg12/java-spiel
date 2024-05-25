@@ -2,6 +2,7 @@ package de.junkerjoerg12;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.util.ArrayList;
 
 public abstract class PhysicsObject {
@@ -24,6 +25,7 @@ public abstract class PhysicsObject {
     private boolean highlighted;
 
     protected ArrayList<String> imageFilepath = new ArrayList<>();
+    protected ArrayList<Image> images = new ArrayList<>();
 
     public PhysicsObject(double acceleration, Game game) {
         this.acceleration = acceleration;
