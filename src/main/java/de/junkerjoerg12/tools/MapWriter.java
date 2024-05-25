@@ -51,7 +51,6 @@ public class Mapwriter extends Thread {
             writer = new BufferedWriter(new FileWriter(filepath));
             writer.write(map.toString());
             writer.close();
-            System.out.println("Writes: " + map);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -124,11 +124,5 @@ public class Map extends JPanel {
 
     public void repalceMapelement(int index, MapElement newElement) {
         allObjects.set(index, newElement);
-        System.out.println(allObjects.size());
-
-        for (PhysicsObject physicsObject : allObjects) {
-            System.out.println(physicsObject);
-        }
-        repaint();
     }
 }
