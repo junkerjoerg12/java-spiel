@@ -1,7 +1,6 @@
 package de.junkerjoerg12.tools;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -25,7 +24,6 @@ public class Mapreader {
         try {
             reader = new BufferedReader(new FileReader(filepath));
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -48,7 +46,7 @@ public class Mapreader {
 
         MapElement mapelement;
 
-        if (objectSomething[0].equals("Floor")) {
+        if (objectSomething[0].equals("floor")) {
             mapelement = new Floor(game);
         } else {
             mapelement = new Wall(game);
