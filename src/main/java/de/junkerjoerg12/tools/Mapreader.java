@@ -45,7 +45,6 @@ public class Mapreader {
         String[] objectSomething = line.split(";");
 
         MapElement mapelement;
-
         if (objectSomething[0].equals("floor")) {
             mapelement = new Floor(game);
         } else {

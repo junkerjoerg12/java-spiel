@@ -3,7 +3,6 @@ package de.junkerjoerg12.map;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
@@ -17,8 +16,11 @@ import de.junkerjoerg12.tools.Mapreader;
 import de.junkerjoerg12.tools.Mapwriter;
 
 public class Map extends JPanel {
-    // wenn irgendetwas keien Kollision haben soll einfach noch iene andere Liste
-    // machen, die auf kollision überprüft wird und die hier nicht mehr überprüfen
+    /*
+    * wenn irgendetwas keien Kollision haben soll einfach noch iene andere Liste
+    * machen, die auf kollision überprüft wird und die hier nicht mehr überprüfen
+    * oder noch nen boolean "kollision" machen, und wenn der false ist wird das Stück in der Schlife übergangen
+    */
     private ArrayList<PhysicsObject> allObjects = new ArrayList<>();
     private ArrayList<Enemy> enemies = new ArrayList<>();
 
