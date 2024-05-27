@@ -1,6 +1,5 @@
 package de.junkerjoerg12.character;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.io.File;
 import java.io.IOException;
@@ -17,7 +16,6 @@ public class Player extends Entity {
         try {
             images.add(ImageIO.read(new File("src\\main\\resources\\assets\\rsz_character.png")));
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 

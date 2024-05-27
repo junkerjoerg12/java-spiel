@@ -10,6 +10,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import de.junkerjoerg12.Game;
+import de.junkerjoerg12.Exceptions.NoSuchCommandException;
 
 public class Console extends JFrame {
 
@@ -84,8 +85,12 @@ public class Console extends JFrame {
                 print("erst ein Level Starten");
             } else if (input.matches("^-n [a-zA-Z0-9,; ]*$")) { // neues Element hinzufügen
                 game.getMap().getMapwriter().addMapElement(input.replaceAll("-n ", ""));
-            } else if (input.matches("^-m \\d+\\s*,\\s*\\d+\\s*,\\s*\\d+")) { // schon bestehendes Element bewegen
-                game.getMap().getMapwriter().changeMapelementPosition(input.replaceAll("-m ", ""));
+            } else if (input.contains("-m")) { // schon bestehendes Element bewegen
+                try {
+                    game.getMap().getMapwriter().changeMapelementPosition(input.replaceAll("-m ", ""));
+                } catch (NoSuchCommandException e) {
+                    error(e.getMessage());
+                }
             } else if (input.matches("-cd \\d+\\s*,\\s*\\d+\\s*,\\s*\\d+")) {  //größe eine schon bestehenden elements verändern
                 game.getMap().getMapwriter().changeMapelementDimension(input.replaceAll("-cd ", ""));
             }
