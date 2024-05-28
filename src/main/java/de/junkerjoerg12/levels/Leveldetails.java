@@ -16,7 +16,7 @@ public class Leveldetails extends JPanel implements ActionListener {
     private Game game;
     private JButton back = new JButton("back");
     private String source;
-    private JButton start = new JButton("start") ;
+    private JButton start = new JButton("start");
 
     public Leveldetails(Game game, String source) {
         this.game = game;
@@ -40,10 +40,13 @@ public class Leveldetails extends JPanel implements ActionListener {
         if (e.getSource() == back) {
             game.remove(this);
             game.start();
-             }else if(e.getSource() == start){
-                game.addmap(source);
-             }
-        
+        } else if (e.getSource() == start) {
+            game.remove(this);
+            game.addmap(source);
+            game.revalidate();
+            game.repaint();
+            game.requestFocus();
+        }
 
     }
 }
