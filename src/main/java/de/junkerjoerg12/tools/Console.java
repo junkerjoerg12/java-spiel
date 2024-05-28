@@ -106,6 +106,7 @@ public class Console extends JFrame {
             setVisible(false);
         } else if (input.equals("build")) { // auswahl der Verschiedenen Modi
             build = true;
+            game.buildMode = true;
             settings = false;
         } else if (input.equals("settings")) {
             settings = true;

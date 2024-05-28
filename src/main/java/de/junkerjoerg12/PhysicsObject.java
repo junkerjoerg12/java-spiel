@@ -1,5 +1,6 @@
 package de.junkerjoerg12;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -118,11 +119,15 @@ public abstract class PhysicsObject {
         highlighted = !highlighted;
     }
 
-    //hier mus das Objekt gerendert werden
+    // hier mus das Objekt gerendert werden
     public void draw(Graphics2D g) {
         if (highlighted) {
             g.setColor(Color.RED);
             g.drawRect(x, y, width - 1, height - 1);
+        }
+        if (game.buildMode) {
+            g.setColor(Color.RED);
+            g.drawString(game.getMap().getAllObjects().indexOf(this) + "", x + width / 2, y + height / 2);
         }
     }
 
@@ -158,7 +163,7 @@ public abstract class PhysicsObject {
         return height;
     }
 
-    public ArrayList<String> getImageFilepath(){
+    public ArrayList<String> getImageFilepath() {
         return imageFilepath;
     }
 

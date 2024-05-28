@@ -90,26 +90,27 @@ public class Mapwriter extends Thread {
         game.getMap().repalceMapelement(element, stringToElement(lines[element]));
     }
 
-    public void changeMapelementPosition(String s) throws NoSuchCommandException{
+    public void changeMapelementPosition(String s) throws NoSuchCommandException {
 
-        s.replaceAll("-m ","");
-        
+        s.replaceAll("-m ", "");
+
         if (s.matches("^\\d+\\s*,\\s*\\d+\\s*,\\s*\\d+")) {
             replaceMapelement(s);
-        }else if(s.matches("^\\s*\\d+\\s*,\\s*x\\s*[+-]\\s*\\d+")){
+        } else if (s.matches("^\\s*\\d+\\s*,\\s*x\\s*[+-]\\s*\\d+")) {
             changeX(s);
-            System.out.println("changeX aufgerufen");
-        }else if (s.matches("^\\s*\\d+\\s*,\\s*y\\s*[+-]\\s*\\d+")){
-            changeY(s);  
-            System.out.println("changeY aufgerufen");
-        }else {
+        } else if (s.matches("^\\s*\\d+\\s*,\\s*y\\s*[+-]\\s*\\d+")) {
+            changeY(s);
+        } else {
             throw new NoSuchCommandException("-m " + s);
         }
     }
 
     private void changeX(String s) {
         s = s.replaceAll("x", "").replaceAll(" ", "");
-        /*sollte jetzt nur noch "{index des Objekts},+/_{zahl, um die verschoben werden soll}" enthalten */
+        /*
+         * sollte jetzt nur noch
+         * "{index des Objekts},+/_{zahl, um die verschoben werden soll}" enthalten
+         */
         String[] sArr = s.split(",");
         int element = Integer.parseInt(sArr[0]);
         int xDifference = Integer.parseInt(sArr[1]);
@@ -120,7 +121,7 @@ public class Mapwriter extends Thread {
         String[] position = targetLine[1].split(", ");
         lines[element] = targetLine[0] + "; " + (xDifference + Integer.parseInt(position[0])) + ", " + position[1]
                 + "; " + targetLine[2];
-        
+
         mapString.setLength(0);
         for (String string : lines) {
             mapString.append(string);
@@ -132,7 +133,10 @@ public class Mapwriter extends Thread {
 
     private void changeY(String s) {
         s = s.replaceAll("y", "").replaceAll(" ", "");
-        /*sollte jetzt nur noch "{index des Objekts},+/_{zahl, um die verschoben werden soll}" enthalten */
+        /*
+         * sollte jetzt nur noch
+         * "{index des Objekts},+/_{zahl, um die verschoben werden soll}" enthalten
+         */
         String[] sArr = s.split(",");
         int element = Integer.parseInt(sArr[0]);
         int yDifference = Integer.parseInt(sArr[1]);
@@ -141,9 +145,10 @@ public class Mapwriter extends Thread {
 
         String[] targetLine = lines[element].split("; ");
         String[] position = targetLine[1].split(", ");
-        lines[element] = targetLine[0] + "; " + position[0] + ", " + (yDifference + Integer.parseInt(position[1])) + ", " 
+        lines[element] = targetLine[0] + "; " + position[0] + ", " + (yDifference + Integer.parseInt(position[1]))
+                + ", "
                 + "; " + targetLine[2];
-        
+
         mapString.setLength(0);
         for (String string : lines) {
             mapString.append(string);

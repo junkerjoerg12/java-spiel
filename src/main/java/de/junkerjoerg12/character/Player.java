@@ -27,8 +27,8 @@ public class Player extends Entity {
 
     @Override
     public void draw(Graphics2D g) {
-        super.draw(g);
         g.drawImage(images.get(0), x, y, null);
+        super.draw(g);
     }
 
 }
