@@ -1,5 +1,7 @@
 package de.junkerjoerg12;
 
+import de.junkerjoerg12.levels.Leveldetails;
+import de.junkerjoerg12.levels.Lvlauswahl;
 import de.junkerjoerg12.map.Map;
 import de.junkerjoerg12.tools.Console;
 
@@ -25,12 +27,13 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 
     // auf welchem Monitor das Spiel angezeigt werden soll
     // nur während entwicklung wichtig
-    private byte monitor = 2;
+    private byte monitor = 1;
 
     private MainMenu mainMenu;
     private Map map;
     private Console console;
     private Lvlauswahl lvlauswahl;
+    private Leveldetails leveldetails;
 
     private final int targetFPS = 60;
 
@@ -97,6 +100,15 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         lvlauswahl = new Lvlauswahl(this);
         remove(mainMenu);
         this.add(lvlauswahl, BorderLayout.CENTER);
+        revalidate();
+        repaint();
+        this.requestFocus();
+    }
+
+    public void addLeveldetails(String source){
+        remove(lvlauswahl);
+        leveldetails = new Leveldetails(this, source);
+        this.add(leveldetails, BorderLayout.CENTER);
         revalidate();
         repaint();
         this.requestFocus();
@@ -197,6 +209,6 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     }
 
     public static void main(String[] args) {
-        Game g = new Game();
+        new Game();
     }
 }
