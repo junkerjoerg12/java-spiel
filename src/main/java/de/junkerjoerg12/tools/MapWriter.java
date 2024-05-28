@@ -69,30 +69,23 @@ public class Mapwriter extends Thread {
         return game.getMap().getMapreader().process(s);
     }
 
-    public void changeMapelementDimension(String s) {
+    public void changeMapelementDimension(String s) throws NoSuchCommandException {
         /* s sollte die Form "{nummer des Elements}, {width}, {height}" haben */
-        String[] newDimension = s.split(", ");
-        int element = Integer.parseInt(newDimension[0]);
-        int width = Integer.parseInt(newDimension[1]);
-        int height = Integer.parseInt(newDimension[2]);
-        StringBuffer mapString = readMap();
-        String[] lines = mapString.toString().split("\n");
-
-        String[] targetLine = lines[element].split("; ");
-        lines[element] = targetLine[0] + "; " + targetLine[1] + "; " + width + ", " + height;
-
-        mapString.setLength(0);
-        for (String string : lines) {
-            mapString.append(string);
-            mapString.append("\n");
+        System.out.println(s);
+        if (s.matches("^\\s*\\d+\\s*,\\s*\\d+\\s*,\\s*\\d+")) {
+            resizeMapelement(s);
+        } else if (s.matches("^\\s*\\d+\\s*,\\s*w\\s*[+-]\\s*\\d+")) {
+            System.out.println("irgendwas");
+            changeWidth(s);
+        } else if (s.matches("^\\s*\\d+\\s*,\\s*h\\s*[+-]\\s*\\d+")) {
+            System.out.println("irgendwas anderes");
+            changeHeight(s);
+        } else {
+            throw new NoSuchCommandException("-cd " + s);
         }
-        writeMap(mapString.toString());
-        game.getMap().repalceMapelement(element, stringToElement(lines[element]));
     }
 
     public void changeMapelementPosition(String s) throws NoSuchCommandException {
-
-        s.replaceAll("-m ", "");
 
         if (s.matches("^\\d+\\s*,\\s*\\d+\\s*,\\s*\\d+")) {
             replaceMapelement(s);
@@ -104,6 +97,58 @@ public class Mapwriter extends Thread {
             throw new NoSuchCommandException("-m " + s);
         }
     }
+
+    private void changeWidth(String s) {
+        s = s.replaceAll("w", "").replaceAll(" ", "");
+        /*
+         * Form: {index des Objekts},+/-{Zahl, um die Height geändert werden soll}
+         */
+        String[] sArr = s.split(",");
+        int element = Integer.parseInt(sArr[0]);
+        int widthDifference = Integer.parseInt(sArr[1]);
+        StringBuffer mapString = readMap();
+        String[] lines = mapString.toString().split("\n");
+
+        String[] targetLine = lines[element].split("; ");
+        String[] dimension = targetLine[2].split(", ");
+        lines[element] = targetLine[0] + "; " + targetLine[1]
+                + "; " + (widthDifference + Integer.parseInt(dimension[0])) + ", " + (dimension[1]);
+
+        mapString.setLength(0);
+        for (String string : lines) {
+            mapString.append(string);
+            mapString.append("\n");
+        }
+        game.getMap().repalceMapelement(element, stringToElement(lines[element]));
+        writeMap(mapString.toString());
+    }
+
+    private void changeHeight(String s) {
+        s = s.replaceAll("h", "").replaceAll(" ", "");
+        /*
+         * Form: {index des Objekts},+/-{Zahl, um die Height geändert werden soll}
+         */
+        String[] sArr = s.split(",");
+        int element = Integer.parseInt(sArr[0]);
+        int heightDifference = Integer.parseInt(sArr[1]);
+        StringBuffer mapString = readMap();
+        String[] lines = mapString.toString().split("\n");
+
+        String[] targetLine = lines[element].split("; ");
+        String[] dimension = targetLine[2].split(", ");
+        lines[element] = targetLine[0] + "; " + targetLine[1]
+                + "; " + dimension[0] + ", " + (heightDifference + Integer.parseInt(dimension[1]));
+
+        mapString.setLength(0);
+        for (String string : lines) {
+            mapString.append(string);
+            mapString.append("\n");
+        }
+        game.getMap().repalceMapelement(element, stringToElement(lines[element]));
+        writeMap(mapString.toString());
+    }
+
+    
 
     private void changeX(String s) {
         s = s.replaceAll("x", "").replaceAll(" ", "");
@@ -156,7 +201,26 @@ public class Mapwriter extends Thread {
         }
         game.getMap().repalceMapelement(element, stringToElement(lines[element]));
         writeMap(mapString.toString());
+    }
 
+    private void resizeMapelement(String s) {
+        String[] newDimension = s.split(", ");
+        int element = Integer.parseInt(newDimension[0]);
+        int width = Integer.parseInt(newDimension[1]);
+        int height = Integer.parseInt(newDimension[2]);
+        StringBuffer mapString = readMap();
+        String[] lines = mapString.toString().split("\n");
+
+        String[] targetLine = lines[element].split("; ");
+        lines[element] = targetLine[0] + "; " + targetLine[1] + "; " + width + ", " + height;
+
+        mapString.setLength(0);
+        for (String string : lines) {
+            mapString.append(string);
+            mapString.append("\n");
+        }
+        writeMap(mapString.toString());
+        game.getMap().repalceMapelement(element, stringToElement(lines[element]));
     }
 
     private void replaceMapelement(String s) {

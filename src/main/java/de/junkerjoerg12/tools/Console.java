@@ -87,12 +87,16 @@ public class Console extends JFrame {
                 game.getMap().getMapwriter().addMapElement(input.replaceAll("-n ", ""));
             } else if (input.contains("-m")) { // schon bestehendes Element bewegen
                 try {
-                    game.getMap().getMapwriter().changeMapelementPosition(input.replaceAll("-m ", ""));
+                    game.getMap().getMapwriter().changeMapelementPosition(input.replaceAll("\\s*-m\\s*", ""));
                 } catch (NoSuchCommandException e) {
                     error(e.getMessage());
                 }
-            } else if (input.matches("-cd \\d+\\s*,\\s*\\d+\\s*,\\s*\\d+")) {  //größe eine schon bestehenden elements verändern
-                game.getMap().getMapwriter().changeMapelementDimension(input.replaceAll("-cd ", ""));
+            } else if (input.contains("-cd")) {  //größe eine schon bestehenden elements verändern
+                try {
+                    game.getMap().getMapwriter().changeMapelementDimension(input.replaceAll("\\s*-cd\\s*", ""));
+                } catch (NoSuchCommandException e) {
+                    error(e.getMessage());
+                }
             }
             /* alle weiteren befehle, die zum bauen benötigt werden hier einfügen */
             else {
