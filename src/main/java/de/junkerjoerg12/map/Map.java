@@ -110,7 +110,10 @@ public class Map extends JPanel {
     public void addNew(Enemy e) {
         enemies.add(e);
         // mapwriter.addMApElement(e);
+    }
 
+    public void removeMapelement(int index) {
+        allObjects.remove(index);
     }
 
     public void addNew(String m) {
