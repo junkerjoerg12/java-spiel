@@ -110,6 +110,15 @@ public class Console extends JFrame {
                 } catch (InvalidIndexException e) {
                     indexError(e.getMessage());
                 } /* alle weiteren befehle, die zum bauen benötigt werden hier einfügen */
+            } else if (input.matches("\\s*help\\s*")) {
+                print("-n {art des MapObjects}; {x-Koordinate}, {y.Koordinate}; {Breite}, {Hoehe}       Erzeugt ein neues MapObjet an gegebener Stelle\n" + 
+                        "-m {index des Objekts}, {x-Koordinate}, {y-Koordinate}                         Bewegt Objekt mit index zu gegebenen Koorinaten\n"+ 
+                        "-m {index des Objekts}, x{+ oder - zu Verschiebener Weg}                       Bewegt da Objet um übergebenen Wert auf der x_Achse\n"+
+                        "-m {index des Objekts}, y{+ oder - zu verschiebener Weg}                       Bewegt das Objekt um übegebene wert auf der y-Achse\n"+
+                        "-cd {index des Objekts}, {nueue Breite}, {neue Hoehe}                          Setzt Breite und Hoehe auf übergebene werte\n"+
+                        "-cd {indes des Objekts}, w{+ oder - um was die Breite geänder werden soll}     Ändert die Breite es Pbjekts um übergebenen Wert\n"+
+                        "-cd {indes des Objekts}, w{+ oder - um was die Hoehe geänder werden soll}      Ändert die Hoehe es Pbjekts um übergebenen Wert\n"+
+                        "-rm {index des Objekts}                                                        Löscht Objekt");
             } else if (input.matches("^\\s*exit\\s*")) {
                 build = false;
                 game.buildMode = false;
@@ -132,6 +141,7 @@ public class Console extends JFrame {
         } else if (input.equals("settings")) {
             settings = true;
             build = false;
+        
         } else {
             inputError(input);
         }

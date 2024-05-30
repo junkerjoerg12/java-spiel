@@ -283,16 +283,30 @@ public class Mapwriter extends Thread {
 
     public void removeMapelement(String string) throws NoSuchCommandException, InvalidIndexException {
         string = string.trim();
-        try {
+
+        if (string.matches("^\\d+")) {
+
+            StringBuffer mapString = readMap();
+            String[] lines = mapString.toString().split("\n");
             int index = Integer.parseInt(string);
+            mapString.setLength(0);
             try {
+                for (int i = 0; i < lines.length; i++) {
+                    if (i != index) {
+                        mapString.append(lines[i]);
+                        mapString.append("\n");
+                    }
+                }
                 game.getMap().removeMapelement(index);
+                writeMap(mapString.toString());
             } catch (IndexOutOfBoundsException e) {
                 throw new InvalidIndexException(index);
             }
-        } catch (NumberFormatException e) {
-            throw new NoSuchCommandException("-rm " + string);
+
+        } else {
+            throw new NoSuchCommandException(string);
         }
+
     }
 
 }
