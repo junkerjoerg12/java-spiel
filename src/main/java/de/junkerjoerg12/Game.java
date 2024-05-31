@@ -15,6 +15,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.Timer;
 
 public class Game extends JFrame implements ActionListener, KeyListener {
@@ -107,13 +109,12 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         this.requestFocus();
     }
 
-    public void addLeveldetails(String source) {
-        remove(lvlauswahl);
-        leveldetails = new Leveldetails(this, source);
-        this.add(leveldetails, BorderLayout.CENTER);
+    public void switchwindow(JPanel oldpanel, JPanel newpanel) { // sollte bspw Settings removen und lvlauswahl adden
+        remove(oldpanel);
+        add(newpanel, BorderLayout.CENTER);
         revalidate();
         repaint();
-        this.requestFocus();
+        requestFocus();
     }
 
     public void pause() {
