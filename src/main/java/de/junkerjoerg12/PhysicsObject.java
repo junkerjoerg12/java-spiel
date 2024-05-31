@@ -2,6 +2,7 @@ package de.junkerjoerg12;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.util.ArrayList;
@@ -127,7 +128,13 @@ public abstract class PhysicsObject {
         }
         if (game.buildMode) {
             g.setColor(Color.RED);
+            g.setFont(new Font("Serif", Font.PLAIN, 20));
             g.drawString(game.getMap().getAllObjects().indexOf(this) + "", x + width / 2, y + height / 2);
+            g.drawRect(x, y, width, height);
+            g.setFont(new Font("Serif", Font.PLAIN, 10));
+            g.drawString((x + " | " + y), x, y + 10);
+            g.drawString("w: " + width, x + width/2 , y + 10);
+            g.drawString("h: " + height, x + 10, y + height/2);
         }
     }
 
