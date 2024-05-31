@@ -129,14 +129,10 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     public void actionPerformed(ActionEvent e) {
         // wird immer wieder vom Timer aufgerufen, ist quasi die Gameloop
         if (e.getSource() == timer) {
-            tick();
+            upTime += delayBetweenFrames;
+            map.update();
+            map.draw();
         }
-    }
-
-    private void tick() {
-        upTime += delayBetweenFrames;
-        map.update();
-        map.draw();
     }
 
     @Override
