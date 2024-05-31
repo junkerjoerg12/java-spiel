@@ -27,7 +27,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 
     // auf welchem Monitor das Spiel angezeigt werden soll
     // nur während entwicklung wichtig
-    private byte monitor = 1;
+    private byte monitor = 2;
 
     private MainMenu mainMenu;
     private Map map;
@@ -46,7 +46,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 
     private boolean autostart = true;// ob sich das Spiel gleich startet oder man erst ins Main Menue kommt
 
-    public boolean buildMode = true;
+    public boolean buildMode;
 
     public Game() {
         delayBetweenFrames = Math.round(1.0 / targetFPS * 1000);
@@ -87,7 +87,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         this.add(mainMenu, BorderLayout.CENTER);
     }
 
-    public void addmap(String filepath){
+    public void addmap(String filepath) {
         remove(lvlauswahl);
         map = new Map(this, filepath);
         map.setVisible(true);
@@ -98,7 +98,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         timer.start();
     }
 
-    public void start() { 
+    public void start() {
         lvlauswahl = new Lvlauswahl(this);
         remove(mainMenu);
         this.add(lvlauswahl, BorderLayout.CENTER);
@@ -107,7 +107,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         this.requestFocus();
     }
 
-    public void addLeveldetails(String source){
+    public void addLeveldetails(String source) {
         remove(lvlauswahl);
         leveldetails = new Leveldetails(this, source);
         this.add(leveldetails, BorderLayout.CENTER);
@@ -115,8 +115,6 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         repaint();
         this.requestFocus();
     }
-
-    
 
     public void pause() {
         // pausiert das Spiel
@@ -131,14 +129,10 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     public void actionPerformed(ActionEvent e) {
         // wird immer wieder vom Timer aufgerufen, ist quasi die Gameloop
         if (e.getSource() == timer) {
-            tick();
+            upTime += delayBetweenFrames;
+            map.update();
+            map.draw();
         }
-    }
-
-    private void tick() {
-        upTime += delayBetweenFrames;
-        map.update();
-        map.draw();
     }
 
     @Override

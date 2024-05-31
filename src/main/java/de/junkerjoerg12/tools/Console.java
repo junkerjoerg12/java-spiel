@@ -8,8 +8,10 @@ import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
 
 import de.junkerjoerg12.Game;
+import de.junkerjoerg12.Exceptions.InvalidIndexException;
 import de.junkerjoerg12.Exceptions.NoSuchCommandException;
 
 public class Console extends JFrame {
@@ -17,11 +19,6 @@ public class Console extends JFrame {
     // modes:
     private boolean build;
     private boolean settings;
-    /*
-     * .
-     * .
-     * .
-     */
 
     private JTextArea outputArea;
     private JTextField inputField;
@@ -47,14 +44,17 @@ public class Console extends JFrame {
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     userInput = inputField.getText();
+                    if (build) {
+                        inputField.setText("build ");
+                        e.consume();
+                    } else {
+                        inputField.setText("");
+                    }
                     processInput(userInput);
-                    inputField.setText("");
-                } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-                    // evtl irgendwas um die arbeit zu erleichtern, z.B. Ausgewähltes Objekt wird
-                    // automatisch rot umrandet o.ä.
                 }
             }
         });
+
         add(inputField, BorderLayout.SOUTH);
 
         setLocationRelativeTo(null);
@@ -78,9 +78,10 @@ public class Console extends JFrame {
             if (true) {
                 print("keine Einstellugen vorhanden");
             } else {
-                error(input);
+                inputError(input);
             }
         } else if (build) {
+            input = input.replaceAll("build\\s*", "");
             if (game.getMap() == null) {
                 print("erst ein Level Starten");
             } else if (input.matches("^-n [a-zA-Z0-9,; ]*$")) { // neues Element hinzufügen
@@ -89,18 +90,41 @@ public class Console extends JFrame {
                 try {
                     game.getMap().getMapwriter().changeMapelementPosition(input.replaceAll("\\s*-m\\s*", ""));
                 } catch (NoSuchCommandException e) {
-                    error(e.getMessage());
+                    inputError(e.getMessage());
+                } catch (InvalidIndexException e) {
+                    indexError(e.getMessage());
                 }
-            } else if (input.contains("-cd")) {  //größe eine schon bestehenden elements verändern
+            } else if (input.contains("-cd")) { // größe eine schon bestehenden elements verändern
                 try {
                     game.getMap().getMapwriter().changeMapelementDimension(input.replaceAll("\\s*-cd\\s*", ""));
                 } catch (NoSuchCommandException e) {
-                    error(e.getMessage());
+                    inputError(e.getMessage());
+                } catch (InvalidIndexException e) {
+                    indexError(e.getMessage());
                 }
-            }
-            /* alle weiteren befehle, die zum bauen benötigt werden hier einfügen */
-            else {
-                error(input);
+            } else if (input.contains("-rm")) {
+                try {
+                    game.getMap().getMapwriter().removeMapelement(input.replaceAll("\\s*-rm\\s*", ""));
+                } catch (NoSuchCommandException e) {
+                    inputError(e.getMessage());
+                } catch (InvalidIndexException e) {
+                    indexError(e.getMessage());
+                } /* alle weiteren befehle, die zum bauen benötigt werden hier einfügen */
+            } else if (input.matches("\\s*help\\s*")) {
+                print("-n {art des MapObjects}; {x-Koordinate}, {y.Koordinate}; {Breite}, {Hoehe}       Erzeugt ein neues MapObjet an gegebener Stelle\n" + 
+                        "-m {index des Objekts}, {x-Koordinate}, {y-Koordinate}                         Bewegt Objekt mit index zu gegebenen Koorinaten\n"+ 
+                        "-m {index des Objekts}, x{+ oder - zu Verschiebener Weg}                       Bewegt da Objet um übergebenen Wert auf der x_Achse\n"+
+                        "-m {index des Objekts}, y{+ oder - zu verschiebener Weg}                       Bewegt das Objekt um übegebene wert auf der y-Achse\n"+
+                        "-cd {index des Objekts}, {nueue Breite}, {neue Hoehe}                          Setzt Breite und Hoehe auf übergebene werte\n"+
+                        "-cd {indes des Objekts}, w{+ oder - um was die Breite geänder werden soll}     Ändert die Breite es Pbjekts um übergebenen Wert\n"+
+                        "-cd {indes des Objekts}, w{+ oder - um was die Hoehe geänder werden soll}      Ändert die Hoehe es Pbjekts um übergebenen Wert\n"+
+                        "-rm {index des Objekts}                                                        Löscht Objekt");
+            } else if (input.matches("^\\s*exit\\s*")) {
+                build = false;
+                game.buildMode = false;
+                inputField.setText("");
+            } else {
+                inputError(input);
             }
         } else if (input.equals("highlight player")) {
             game.getMap().getPlayer().highlight();
@@ -111,16 +135,23 @@ public class Console extends JFrame {
         } else if (input.equals("build")) { // auswahl der Verschiedenen Modi
             build = true;
             game.buildMode = true;
+            game.buildMode = true;
             settings = false;
+            inputField.setText("build ");
         } else if (input.equals("settings")) {
             settings = true;
             build = false;
+        
         } else {
-            error(input);
+            inputError(input);
         }
     }
 
-    private void error(String input) {
+    private void inputError(String input) {
         print("Der Befehl " + input + " ist entweder falsch geschrieben oder konnte nicht gefunden werden.");
+    }
+
+    private void indexError(String input) {
+        print("Der Index " + input + " existiert nicht");
     }
 }
