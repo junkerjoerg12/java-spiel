@@ -29,7 +29,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 
     // auf welchem Monitor das Spiel angezeigt werden soll
     // nur während entwicklung wichtig
-    private byte monitor = 2;
+    private byte monitor = 1;
 
     private MainMenu mainMenu;
     private Map map;
@@ -46,7 +46,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     // misst die Zeit, die das Spiel Läuft
     private double upTime;
 
-    private boolean autostart = true;// ob sich das Spiel gleich startet oder man erst ins Main Menue kommt
+    private boolean autostart = false;// ob sich das Spiel gleich startet oder man erst ins Main Menue kommt
 
     public boolean buildMode;
 

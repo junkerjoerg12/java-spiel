@@ -73,6 +73,8 @@ public class MainMenu extends JPanel implements ActionListener {
             game.start();
         } else if (e.getSource() == settings) {
             System.out.println("Einstellungen öffnen");
+            Settings settings = new Settings(game);
+            game.switchwindow(this, settings);
         }
     }
 }
