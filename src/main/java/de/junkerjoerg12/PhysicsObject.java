@@ -39,7 +39,9 @@ public abstract class PhysicsObject {
         int rect1BottomRightX = this.x + this.width;
         int rect1BottomRightY = this.y + this.height;
 
-        for (PhysicsObject p : list) {
+        int size = list.size();
+        for (int i = 0; i < size; i++) {
+            PhysicsObject p = list.get(i);
             int rect2BottomRightX = p.x + p.width;
             int rect2BottomRightY = p.y + p.height;
 
@@ -60,7 +62,9 @@ public abstract class PhysicsObject {
     }
 
     public boolean collisionLeft(ArrayList<PhysicsObject> list) {
-        for (PhysicsObject p : list) {
+        int size = list.size();
+        for (int i = 0; i < size; i++) {
+            PhysicsObject p = list.get(i);
             if (this.getX() == p.getX() + p.getWidth() && this.getY() < p.getY() + p.getHeight()
                     && this.getY() + this.getHeight() > p.getY()) {
                 return true;
@@ -70,7 +74,9 @@ public abstract class PhysicsObject {
     }
 
     public boolean collisionRight(ArrayList<PhysicsObject> list) {
-        for (PhysicsObject p : list) {
+        int size = list.size();
+        for (int i = 0; i < size;  i++) {
+            PhysicsObject p = list.get(i);
             if (this.getX() + this.getWidth() == p.getX() && this.getY() < p.getY() + p.getHeight()
                     && this.getY() + this.getHeight() > p.getY()) {
                 return true;
@@ -80,7 +86,9 @@ public abstract class PhysicsObject {
     }
 
     public boolean collisionTop(ArrayList<PhysicsObject> list) {
-        for (PhysicsObject p : list) {
+        int size = list.size();
+        for (int i = 0; i < size; i++) {
+            PhysicsObject p = list.get(i);
             if (this.getY() == p.getY() + p.getHeight() && this.getX() < p.getX() + p.getWidth()
                     && this.getX() + this.getWidth() > p.getX()) {
                 return true;
@@ -90,7 +98,9 @@ public abstract class PhysicsObject {
     }
 
     public boolean collisionBottom(ArrayList<PhysicsObject> list) {
-        for (PhysicsObject p : list) {
+        int size = list.size();
+        for (int i = 0; i < size; i++) {
+            PhysicsObject p = list.get(i);
             if (this.getY() + this.getHeight() == p.getY() && this.getX() < p.getX() + p.getWidth()
                     && this.getX() + this.getWidth() > p.getX()) {
                 return true;
@@ -113,9 +123,11 @@ public abstract class PhysicsObject {
         }
     }
 
-    public void highlight() {
-        for (PhysicsObject p : game.getMap().getAllObjects()) {
-            p.highlighted = false;
+    public void highlight() { 
+        ArrayList<PhysicsObject> list = game.getMap().getAllObjects();//enthighlightet alle anderen Objekte
+        int size = list.size();
+        for (int i = 0; i< size; i++) {
+            list.get(i).highlighted = false;
         }
         highlighted = !highlighted;
     }

@@ -3,6 +3,7 @@ package de.junkerjoerg12;
 import de.junkerjoerg12.levels.Leveldetails;
 import de.junkerjoerg12.levels.Lvlauswahl;
 import de.junkerjoerg12.map.Map;
+import de.junkerjoerg12.map.mapElements.Floor;
 import de.junkerjoerg12.tools.Console;
 
 import java.awt.BorderLayout;
@@ -13,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -207,5 +209,33 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 
     public static void main(String[] args) {
         new Game();
+        // ArrayList<Floor> l1 = new ArrayList<>();
+        // ArrayList<Floor> l2 = new ArrayList<>();
+        // long start;
+
+        // for (int i = 0; i < 50; i++) {
+        //     l1.add(new Floor(null));
+        //     l2.add(new Floor(null));
+        // }
+
+        // start = System.nanoTime();
+        // int size = l2.size();
+        // for (int i = 0; i < size; i++) {
+        //     l2.get(i).calculatePosition();
+        // }
+        // System.out.println(System.nanoTime() - start);
+
+        // start = System.nanoTime();
+        // for (int i = 0; i < l2.size(); i++) {
+        //     l2.get(i).calculatePosition();
+        // }
+        // System.out.println(System.nanoTime() - start);
+
+        // start = System.nanoTime();
+        // for (Floor floor : l1) {
+        //     floor.calculatePosition();
+        // }
+        // System.out.println(System.nanoTime() - start);
+
     }
 }

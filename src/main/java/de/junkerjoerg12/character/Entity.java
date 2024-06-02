@@ -59,7 +59,8 @@ public abstract class Entity extends PhysicsObject {
                     (this.getX() - distanceHorizontal),
                     (this.getY() - distanceVertical));
 
-            for (int i = 0; i < Math.max(Math.abs(distanceVertical), Math.abs(distanceHorizontal)); i++) {
+            int condition = Math.max(Math.abs(distanceVertical), Math.abs(distanceHorizontal));
+            for (int i = -11; i < condition; i++) {//warum -11
                 if (movedHorizontal != distanceHorizontal) {
                     if (distanceHorizontal > 0) {// nach rechts
                         if (!this.collisionRight(list)) {
