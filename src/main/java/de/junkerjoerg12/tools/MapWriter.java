@@ -5,7 +5,6 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.ParseException;
 
 import de.junkerjoerg12.Game;
 import de.junkerjoerg12.Exceptions.InvalidIndexException;
