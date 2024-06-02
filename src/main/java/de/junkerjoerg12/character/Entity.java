@@ -88,7 +88,7 @@ public abstract class Entity extends PhysicsObject {
                             this.setLocation(this.getX(), this.getY() - 1);
                             movedVertical--;
                         } else {
-                            velocityVertically = 0;
+                            velocityVertically = 0;     //rausmachen für ceiling surfing, müsste dann aber noch ein wenig überaurbeitet werden
                         }
                     }
                 }

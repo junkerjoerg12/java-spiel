@@ -1,7 +1,6 @@
 package de.junkerjoerg12.tools;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -20,11 +19,12 @@ public class Mapreader {
     public Mapreader(Game game) {
         this.game = game;
     }
-    public void setFilepath(String filepath) throws FileNotFoundException {
-        if (new File(filepath).exists()) {
+
+    public void setFilepath(String filepath) {
+        try {
             reader = new BufferedReader(new FileReader(filepath));
-        } else {
-            throw new FileNotFoundException();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
     }
 
@@ -41,21 +41,20 @@ public class Mapreader {
         return elements;
     }
 
-    private MapElement process(String line) {
-        String [] objectSomething = line.split(";");
-        
+    public MapElement process(String line) {
+        String[] objectSomething = line.split(";");
+
         MapElement mapelement;
-
-
-        if (objectSomething[0].equals("Floor")) {
+        if (objectSomething[0].equals("floor")) {
             mapelement = new Floor(game);
         } else {
             mapelement = new Wall(game);
-        }   
+        }
 
         String[] coordinates = objectSomething[1].split(",");
         String[] dimesnsions = objectSomething[2].split(",");
-        mapelement.setBounds(Integer.parseInt(coordinates[0].strip()), Integer.parseInt(coordinates[1].strip()), Integer.parseInt(dimesnsions[0].strip()), Integer.parseInt(dimesnsions[1].strip()));
+        mapelement.setBounds(Integer.parseInt(coordinates[0].strip()), Integer.parseInt(coordinates[1].strip()),
+                Integer.parseInt(dimesnsions[0].strip()), Integer.parseInt(dimesnsions[1].strip()));
 
         return mapelement;
     }

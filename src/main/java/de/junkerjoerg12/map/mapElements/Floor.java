@@ -13,8 +13,8 @@ public class Floor extends MapElement {
 
     @Override
     public void draw(Graphics2D g){
-        super.draw(g);
         g.setColor(Color.GREEN);
         g.fillRect(x, y, width, height);
+        super.draw(g);
     }
 }

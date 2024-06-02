@@ -3,7 +3,6 @@ package de.junkerjoerg12.map;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
@@ -14,23 +13,33 @@ import de.junkerjoerg12.character.Enemy;
 import de.junkerjoerg12.character.Player;
 import de.junkerjoerg12.map.mapElements.MapElement;
 import de.junkerjoerg12.tools.Mapreader;
+import de.junkerjoerg12.tools.Mapwriter;
 
 public class Map extends JPanel {
-    // wenn irgendetwas keien Kollision haben soll einfach noch iene andere Liste
-    // machen, die auf kollision überprüft wird und die hier nicht mehr überprüfen
+    /*
+    * wenn irgendetwas keien Kollision haben soll einfach noch iene andere Liste
+    * machen, die auf kollision überprüft wird und die hier nicht mehr überprüfen
+    * oder noch nen boolean "kollision" machen, und wenn der false ist wird das Stück in der Schlife übergangen
+    */
     private ArrayList<PhysicsObject> allObjects = new ArrayList<>();
     private ArrayList<Enemy> enemies = new ArrayList<>();
+
     private Mapreader mapreader;
+    private Mapwriter mapwriter;
 
     private Player player;
     private Game game;
+    private String filepath;
 
-    public Map(Game game) {
+    public Map(Game game, String filepath) {
         this.game = game;
-        this.setBackground(Color.GRAY);
+        this.filepath = filepath;
+        this.setBackground(Color.YELLOW);
         this.setLayout(null);
         this.setDoubleBuffered(true);
         mapreader = new Mapreader(game);
+        mapwriter = new Mapwriter(game);
+        mapwriter.start();
         build();
     }
 
@@ -38,14 +47,10 @@ public class Map extends JPanel {
         player = new Player(game);
         this.add(player);
 
-        try {
-            mapreader.setFilepath("maps\\level1\\map1.txt");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        mapreader.setFilepath(filepath); // "maps\\level1\\map1.txt"
+        mapwriter.setFilepath(filepath);
 
         for (MapElement m : mapreader.read()) {
-            this.add(m);
             allObjects.add(m);
         }
     }
@@ -73,7 +78,8 @@ public class Map extends JPanel {
         for (Enemy e : enemies) {
             e.draw(g2D);
         }
-        player.draw(g2D);;
+        player.draw(g2D);
+        ;
 
     }
 
@@ -99,5 +105,30 @@ public class Map extends JPanel {
 
     public void add(Enemy e) {
         enemies.add(e);
+    }
+
+    public void addNew(Enemy e) {
+        enemies.add(e);
+        // mapwriter.addMApElement(e);
+    }
+
+    public void removeMapelement(int index) {
+        allObjects.remove(index);
+    }
+
+    public void addNew(String m) {
+        mapwriter.addMapElement(m);
+    }
+
+    public Mapreader getMapreader() {
+        return mapreader;
+    }
+
+    public Mapwriter getMapwriter() {
+        return mapwriter;
+    }
+
+    public void repalceMapelement(int index, MapElement newElement) {
+        allObjects.set(index, newElement);
     }
 }

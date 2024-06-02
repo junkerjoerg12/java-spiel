@@ -1,5 +1,7 @@
 package de.junkerjoerg12;
 
+import de.junkerjoerg12.levels.Leveldetails;
+import de.junkerjoerg12.levels.Lvlauswahl;
 import de.junkerjoerg12.map.Map;
 import de.junkerjoerg12.tools.Console;
 
@@ -13,6 +15,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.Timer;
 
 public class Game extends JFrame implements ActionListener, KeyListener {
@@ -30,6 +34,8 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     private MainMenu mainMenu;
     private Map map;
     private Console console;
+    private Lvlauswahl lvlauswahl;
+    private Leveldetails leveldetails;
 
     private final int targetFPS = 60;
 
@@ -41,6 +47,8 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     private double upTime;
 
     private boolean autostart = false;// ob sich das Spiel gleich startet oder man erst ins Main Menue kommt
+
+    public boolean buildMode;
 
     public Game() {
         delayBetweenFrames = Math.round(1.0 / targetFPS * 1000);
@@ -81,16 +89,32 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         this.add(mainMenu, BorderLayout.CENTER);
     }
 
-    public void start() {
-        remove(mainMenu);
-
-        map = new Map(this);
+    public void addmap(String filepath) {
+        remove(lvlauswahl);
+        map = new Map(this, filepath);
         map.setVisible(true);
         this.add(map, BorderLayout.CENTER);
         revalidate();
         repaint();
         this.requestFocus();
         timer.start();
+    }
+
+    public void start() {
+        lvlauswahl = new Lvlauswahl(this);
+        remove(mainMenu);
+        this.add(lvlauswahl, BorderLayout.CENTER);
+        revalidate();
+        repaint();
+        this.requestFocus();
+    }
+
+    public void switchwindow(JPanel oldpanel, JPanel newpanel) { // sollte bspw Settings removen und lvlauswahl adden
+        remove(oldpanel);
+        add(newpanel, BorderLayout.CENTER);
+        revalidate();
+        repaint();
+        requestFocus();
     }
 
     public void pause() {
@@ -106,14 +130,10 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     public void actionPerformed(ActionEvent e) {
         // wird immer wieder vom Timer aufgerufen, ist quasi die Gameloop
         if (e.getSource() == timer) {
-            tick();
+            upTime += delayBetweenFrames;
+            map.update();
+            map.draw();
         }
-    }
-
-    private void tick() {
-        upTime += delayBetweenFrames;
-        map.update();
-        map.draw();
     }
 
     @Override

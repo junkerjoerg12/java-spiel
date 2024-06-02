@@ -1,7 +1,10 @@
 package de.junkerjoerg12;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.util.ArrayList;
 
 public abstract class PhysicsObject {
@@ -22,6 +25,9 @@ public abstract class PhysicsObject {
     protected int height;
 
     private boolean highlighted;
+
+    protected ArrayList<String> imageFilepath = new ArrayList<>();
+    protected ArrayList<Image> images = new ArrayList<>();
 
     public PhysicsObject(double acceleration, Game game) {
         this.acceleration = acceleration;
@@ -114,11 +120,21 @@ public abstract class PhysicsObject {
         highlighted = !highlighted;
     }
 
-    //hier mus das Objekt gerendert werden
+    // hier mus das Objekt gerendert werden
     public void draw(Graphics2D g) {
         if (highlighted) {
             g.setColor(Color.RED);
             g.drawRect(x, y, width - 1, height - 1);
+        }
+        if (game.buildMode) {
+            g.setColor(Color.RED);
+            g.setFont(new Font("Serif", Font.PLAIN, 20));
+            g.drawString(game.getMap().getAllObjects().indexOf(this) + "", x + width / 2, y + height / 2);
+            g.drawRect(x, y, width, height);
+            g.setFont(new Font("Serif", Font.PLAIN, 10));
+            g.drawString((x + " | " + y), x, y + 10);
+            g.drawString("w: " + width, x + width/2 , y + 10);
+            g.drawString("h: " + height, x + 10, y + height/2);
         }
     }
 
@@ -152,6 +168,10 @@ public abstract class PhysicsObject {
 
     public int getHeight() {
         return height;
+    }
+
+    public ArrayList<String> getImageFilepath() {
+        return imageFilepath;
     }
 
     protected abstract void calculatePosition();
