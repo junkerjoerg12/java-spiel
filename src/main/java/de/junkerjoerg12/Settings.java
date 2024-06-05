@@ -20,8 +20,18 @@ public class Settings extends JPanel implements ActionListener, KeyListener {
 
     private JButton back;
     private JButton changejumpbutton;
-    private JButton showscurrentjumpkey;
-    private JButton button3;
+    private JButton changerightbutton;
+    private JButton changeleftbutton;
+    private JButton changeconsolebutton;
+    private JLabel showscurrentjumpkey;
+    private JLabel showscurrentrightkey;
+    private JLabel showscurrentleftkey;
+    private JLabel showscurrentconsolekey;
+
+    private boolean jump = false;
+    private boolean right = false;
+    private boolean left = false;
+    private boolean console = false;
 
     private Image backgroundImage;
     private Game game;
@@ -44,13 +54,64 @@ public class Settings extends JPanel implements ActionListener, KeyListener {
         constraints.gridy = 0;
 
         changejumpbutton = new JButton("bind jump:");
-        this.add(changejumpbutton, constraints);
         changejumpbutton.addActionListener(this);
+        this.add(changejumpbutton, constraints);
 
         constraints.gridx = 1;
         constraints.gridy = 0;
 
-        showscurrentjumpkey = new JButton();
+        showscurrentjumpkey = new JLabel();
+        showscurrentjumpkey.setText(getthekey(game.getjumpkey()));
+        showscurrentjumpkey.setVisible(true);
+        this.add(showscurrentjumpkey, constraints);
+
+        constraints.gridx = 0;
+        constraints.gridy = 1;
+
+        changerightbutton = new JButton("bind move right:");
+        changerightbutton.addActionListener(this);
+        this.add(changerightbutton, constraints);
+
+        constraints.gridx = 1;
+        constraints.gridy = 1;
+
+        showscurrentrightkey = new JLabel();
+        showscurrentrightkey.setText(getthekey(game.getrightkey()));
+        showscurrentrightkey.setVisible(true);
+        this.add(showscurrentrightkey, constraints);
+
+        constraints.gridx = 0;
+        constraints.gridy = 2;
+
+        changeleftbutton = new JButton("bind move left:");
+        changeleftbutton.addActionListener(this);
+        this.add(changeleftbutton, constraints);
+
+        constraints.gridx = 1;
+        constraints.gridy = 2;
+
+        showscurrentleftkey = new JLabel();
+        showscurrentleftkey.setText(getthekey(game.getleftkey()));
+        showscurrentleftkey.setVisible(true);
+        this.add(showscurrentleftkey, constraints);
+
+        constraints.gridx = 0;
+        constraints.gridy = 3;
+
+        changeconsolebutton = new JButton("bind console key:");
+        changeconsolebutton.addActionListener(this);
+        this.add(changeconsolebutton, constraints);
+
+        constraints.gridx = 1;
+        constraints.gridy = 3;
+
+        showscurrentconsolekey = new JLabel();
+        showscurrentconsolekey.setText(getthekey(game.getconsolekey()));
+        showscurrentconsolekey.setVisible(true);
+        this.add(showscurrentconsolekey, constraints);
+
+        constraints.gridx = 0;
+        constraints.gridy = 5;
 
         back = new JButton("return to main menu");
         this.add(back, constraints);
@@ -59,17 +120,7 @@ public class Settings extends JPanel implements ActionListener, KeyListener {
     }
 
     private String getthekey(int key) { // https://stackoverflow.com/questions/15313469/java-keyboard-keycodes-list
-        String a = null;
-        switch (key) {
-            case 8:
-                a = "backspace";
-                break;
-
-            default:
-
-                break;
-        }
-        return a;
+        return java.awt.event.KeyEvent.getKeyText(key);
     }
 
     @Override
@@ -80,11 +131,12 @@ public class Settings extends JPanel implements ActionListener, KeyListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == changejumpbutton) {
-
-        } else if (e.getSource() == back) {
+        if (e.getSource() == back) {
             game.remove(this);
             game.mainMenu();
+        } else if (e.getSource() == changejumpbutton) {
+            showscurrentjumpkey.setText("please press any key");
+
         }
     }
 
@@ -96,7 +148,7 @@ public class Settings extends JPanel implements ActionListener, KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        // TODO Auto-generated method stub
+
         throw new UnsupportedOperationException("Unimplemented method 'keyPressed'");
     }
 
