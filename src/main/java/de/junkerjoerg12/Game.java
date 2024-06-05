@@ -84,9 +84,12 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         }
     }
 
-    private void mainMenu() {
+    public void mainMenu() {
         this.mainMenu = new MainMenu(this);
         this.add(mainMenu, BorderLayout.CENTER);
+        revalidate();
+        repaint();
+        requestFocus();
     }
 
     public void addmap(String filepath) {
@@ -203,6 +206,22 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 
     public double getDelaybetweenFrames() {
         return delayBetweenFrames;
+    }
+
+    public int getjumpkey() {
+        return keyJump;
+    }
+
+    public int getleftkey() {
+        return keyLeft;
+    }
+
+    public int getrightkey() {
+        return keyRight;
+    }
+
+    public int getconsolekey() {
+        return keyConsole;
     }
 
     public static void main(String[] args) {

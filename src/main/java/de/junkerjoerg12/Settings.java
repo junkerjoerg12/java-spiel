@@ -18,8 +18,9 @@ import java.awt.GridBagConstraints;
 
 public class Settings extends JPanel implements ActionListener, KeyListener {
 
+    private JButton back;
     private JButton changejumpbutton;
-    private JButton button2;
+    private JButton showscurrentjumpkey;
     private JButton button3;
 
     private Image backgroundImage;
@@ -39,13 +40,36 @@ public class Settings extends JPanel implements ActionListener, KeyListener {
             e.printStackTrace();
         }
         GridBagConstraints constraints = new GridBagConstraints();
-        constraints.gridx = 1;
-        constraints.gridy = 1;
+        constraints.gridx = 0;
+        constraints.gridy = 0;
 
         changejumpbutton = new JButton("bind jump:");
         this.add(changejumpbutton, constraints);
         changejumpbutton.addActionListener(this);
 
+        constraints.gridx = 1;
+        constraints.gridy = 0;
+
+        showscurrentjumpkey = new JButton();
+
+        back = new JButton("return to main menu");
+        this.add(back, constraints);
+        back.addActionListener(this);
+
+    }
+
+    private String getthekey(int key) { // https://stackoverflow.com/questions/15313469/java-keyboard-keycodes-list
+        String a = null;
+        switch (key) {
+            case 8:
+                a = "backspace";
+                break;
+
+            default:
+
+                break;
+        }
+        return a;
     }
 
     @Override
@@ -58,6 +82,9 @@ public class Settings extends JPanel implements ActionListener, KeyListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == changejumpbutton) {
 
+        } else if (e.getSource() == back) {
+            game.remove(this);
+            game.mainMenu();
         }
     }
 
