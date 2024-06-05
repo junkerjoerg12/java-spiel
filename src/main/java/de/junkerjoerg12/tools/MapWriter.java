@@ -281,7 +281,7 @@ public class Mapwriter extends Thread {
     }
 
     public void removeMapelement(String string) throws NoSuchCommandException, InvalidIndexException {
-        string = string.trim();
+        string = string.replaceAll(" ", "");
 
         if (string.matches("^\\d+")) {
 

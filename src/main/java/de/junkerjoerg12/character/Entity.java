@@ -18,7 +18,6 @@ public abstract class Entity extends PhysicsObject {
 
     public double lastTimeInTouchWithFloor;
 
-
     public Entity(double acceleration, Game game) {
         super(acceleration, game);
         lastTimeInTouchWithFloor = 0;// brauche ich
@@ -48,6 +47,8 @@ public abstract class Entity extends PhysicsObject {
         // kann und sollte warscheinlich auch noch mal überarbeitet werden
         if (collision(list)) {
 
+            System.out.println("der langsame teil");
+
             // pixel für pixel bewegen, damit die bewegung gestoppt werden kann, sobald die
             // KOlision stattfindet
             // und die Objekte sich nicht mehr überschneiden
@@ -60,7 +61,7 @@ public abstract class Entity extends PhysicsObject {
                     (this.getY() - distanceVertical));
 
             int condition = Math.max(Math.abs(distanceVertical), Math.abs(distanceHorizontal));
-            for (int i = -11; i < condition; i++) {//warum -11
+            for (int i = 0; i < condition; i++) {// warum -11
                 if (movedHorizontal != distanceHorizontal) {
                     if (distanceHorizontal > 0) {// nach rechts
                         if (!this.collisionRight(list)) {
@@ -89,7 +90,8 @@ public abstract class Entity extends PhysicsObject {
                             this.setLocation(this.getX(), this.getY() - 1);
                             movedVertical--;
                         } else {
-                            velocityVertically = 0;     //rausmachen für ceiling surfing, müsste dann aber noch ein wenig überaurbeitet werden
+                            velocityVertically = 0; // rausmachen für ceiling surfing, müsste dann aber noch ein wenig
+                                                    // überaurbeitet werden
                         }
                     }
                 }
@@ -128,10 +130,7 @@ public abstract class Entity extends PhysicsObject {
             return velocityVertically;
         } else if (!collisionBottom(game.getMap().getAllObjects())) {
             deltaTSinceVelicityZero += game.getDelaybetweenFrames();
-            double v = velocityVertically + (int) Math.round((acceleration) * game.getDelaybetweenFrames());
-            // double v = velocityVertically + (int) Math.round((acceleration
-            // * ((deltaTSinceInTouchWithFloor) / 1000.0)));
-            return v;
+            return velocityVertically + (int) Math.round((acceleration) * game.getDelaybetweenFrames());
         } else {
             return 0;
         }

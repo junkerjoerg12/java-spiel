@@ -65,14 +65,14 @@ public class Map extends JPanel {
     }
 
     public void update() {
-        int sizeAllObjects = allObjects.size();
-        for (int i = 0; i < sizeAllObjects; i++) {
-            allObjects.get(i).update();
-        }
-        int sizeEnemies = enemies.size();
-        for (int i = 0; i < sizeEnemies; i++) {
-            enemies.get(i).update();
-        }
+        // int sizeAllObjects = allObjects.size();
+        // for (int i = 0; i < sizeAllObjects; i++) {
+        //     allObjects.get(i).update();
+        // }
+        // int sizeEnemies = enemies.size();
+        // for (int i = 0; i < sizeEnemies; i++) {
+        //     enemies.get(i).update();
+        // }
         player.update();
     }
 //Die beiden Methoden vielleicht zusammenlegen, fpr einen loopdurchgang weniger
@@ -88,7 +88,8 @@ public class Map extends JPanel {
             enemies.get(i).draw(g2D);
         }
         player.draw(g2D);
-        ;
+        g.setColor(Color.BLACK);
+        g.drawString("timer", 1800, 100);//timer anzeigen
     }
 
     public ArrayList<PhysicsObject> getAllObjects() {
