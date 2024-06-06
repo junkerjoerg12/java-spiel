@@ -62,7 +62,6 @@ public class Map extends JPanel {
 
     public void draw() {
         repaint();
-        game.draws++;
     }
 
     public void update() {
@@ -90,6 +89,7 @@ public class Map extends JPanel {
             enemies.get(i).draw(g2D);
         }
         player.draw(g2D);
+        // g2D.drawRect(player.getX(), player.getY(), player.getWidth(), player.getHeight());
         g.setColor(Color.BLACK);
         g.drawString("timer", 1800, 100);//timer anzeigen
     }
