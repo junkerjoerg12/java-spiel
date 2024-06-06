@@ -47,6 +47,5 @@ public class Leveldetails extends JPanel implements ActionListener {
             game.repaint();
             game.requestFocus();
         }
-
     }
 }

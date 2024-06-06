@@ -47,8 +47,6 @@ public abstract class Entity extends PhysicsObject {
         // kann und sollte warscheinlich auch noch mal überarbeitet werden
         if (collision(list)) {
 
-            System.out.println("der langsame teil");
-
             // pixel für pixel bewegen, damit die bewegung gestoppt werden kann, sobald die
             // KOlision stattfindet
             // und die Objekte sich nicht mehr überschneiden
@@ -61,14 +59,14 @@ public abstract class Entity extends PhysicsObject {
                     (this.getY() - distanceVertical));
 
             int condition = Math.max(Math.abs(distanceVertical), Math.abs(distanceHorizontal));
-            for (int i = 0; i < condition; i++) {// warum -11
+            for (int i = 0; i < condition; i++) {
                 if (movedHorizontal != distanceHorizontal) {
                     if (distanceHorizontal > 0) {// nach rechts
                         if (!this.collisionRight(list)) {
                             this.setLocation(this.getX() + 1, this.getY());
                             movedHorizontal++;
                         }
-                    } else {// nach links
+                    } else if(distanceHorizontal < 0){// nach links
                         if (!this.collisionLeft(list)) {
                             this.setLocation(this.getX() - 1, this.getY());
                             movedHorizontal--;
@@ -85,7 +83,7 @@ public abstract class Entity extends PhysicsObject {
                         } else {
                             lastTimeInTouchWithFloor = game.getUptime();
                         }
-                    } else {// nach oben
+                    } else if(distanceVertical < 0){// nach oben
                         if (!this.collisionTop(list)) {
                             this.setLocation(this.getX(), this.getY() - 1);
                             movedVertical--;

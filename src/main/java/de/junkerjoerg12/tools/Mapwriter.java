@@ -5,6 +5,7 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.ParseException;
 
 import de.junkerjoerg12.Game;
 import de.junkerjoerg12.Exceptions.InvalidIndexException;
@@ -281,7 +282,7 @@ public class Mapwriter extends Thread {
     }
 
     public void removeMapelement(String string) throws NoSuchCommandException, InvalidIndexException {
-        string = string.replaceAll(" ", "");
+        string = string.trim();
 
         if (string.matches("^\\d+")) {
 

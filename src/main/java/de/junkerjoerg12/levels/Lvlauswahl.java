@@ -3,6 +3,7 @@ package de.junkerjoerg12.levels;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.nio.file.Paths;
 
 import javax.swing.JButton;
 import java.awt.GridBagConstraints;
@@ -36,8 +37,8 @@ public class Lvlauswahl extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == buttonlvl1) {
-            Leveldetails lvldetails = new Leveldetails(game, "maps\\level1\\map1.txt");
-            game.switchwindow(this, lvldetails);
+            Leveldetails lvldetails = new Leveldetails(game, Paths.get("maps", "level1", "map1.txt").toString());
+            game.switchScene(this, lvldetails);
         }
 
     }

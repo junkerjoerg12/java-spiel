@@ -62,6 +62,7 @@ public class Map extends JPanel {
 
     public void draw() {
         repaint();
+        game.draws++;
     }
 
     public void update() {
@@ -74,6 +75,7 @@ public class Map extends JPanel {
         //     enemies.get(i).update();
         // }
         player.update();
+        game.updates++;
     }
 //Die beiden Methoden vielleicht zusammenlegen, fpr einen loopdurchgang weniger
     public void paintComponent(Graphics g) {
@@ -91,7 +93,6 @@ public class Map extends JPanel {
         g.setColor(Color.BLACK);
         g.drawString("timer", 1800, 100);//timer anzeigen
     }
-
     public ArrayList<PhysicsObject> getAllObjects() {
         return allObjects;
     }
@@ -140,4 +141,6 @@ public class Map extends JPanel {
     public void repalceMapelement(int index, MapElement newElement) {
         allObjects.set(index, newElement);
     }
+
+    
 }

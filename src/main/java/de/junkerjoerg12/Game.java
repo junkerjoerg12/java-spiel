@@ -18,7 +18,12 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-public class Game extends JFrame implements ActionListener, KeyListener {
+public class Game extends JFrame implements ActionListener, KeyListener{
+
+
+    // auf welchem Monitor das Spiel angezeigt werden soll
+    // nur während entwicklung wichtig
+    private byte monitor = 1;
 
     // keybinds
     private final int keyRight = 68;
@@ -26,13 +31,11 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     private final int keyJump = 32;
     private final int keyConsole = 130;
 
-    // auf welchem Monitor das Spiel angezeigt werden soll
-    // nur während entwicklung wichtig
-    private byte monitor = 1;
+
 
     private MainMenu mainMenu;
     private Map map;
-    private Console console;
+    public Console console;
     private Lvlauswahl lvlauswahl;
     private Leveldetails leveldetails;
 
@@ -49,9 +52,18 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 
     public boolean buildMode;
 
-    public Game() {
-        delayBetweenFrames = Math.round(1.0 / targetFPS * 1000);
+    // test
+    Timer timerm;
+    int frames = 0;
+    public int updates = 0;
+    public int draws = 0;
 
+    public Game() {
+        delayBetweenFrames = Math.floor(1.0 / targetFPS * 1000);
+          timerm = new Timer(1000, this);
+          timerm.setRepeats(true);
+          timerm.start();
+          
         this.setResizable(false);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         if (Toolkit.getDefaultToolkit().getScreenSize().equals(new Dimension(1920, 1080))) {
@@ -73,6 +85,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         mainMenu();
         this.setVisible(true);
 
+        
         timer = new Timer((int) delayBetweenFrames, this);
         timer.setRepeats(true);
 
@@ -95,8 +108,12 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         this.add(map, BorderLayout.CENTER);
         revalidate();
         repaint();
+        
         this.requestFocus();
+        // run();
+
         timer.start();
+        
     }
 
     public void start() {
@@ -108,13 +125,38 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         this.requestFocus();
     }
 
-    public void switchwindow(JPanel oldpanel, JPanel newpanel) { // sollte bspw Settings removen und lvlauswahl adden
+    public void switchScene(JPanel oldpanel, JPanel newpanel) { // sollte bspw Settings removen und lvlauswahl adden
         remove(oldpanel);
         add(newpanel, BorderLayout.CENTER);
         revalidate();
         repaint();
-        requestFocus();
+        this.requestFocus();
     }
+
+    /*alternative nicht fertige game loop
+    private void run() {
+        double drawInterval = 1000000000 / targetFPS;
+        double nextDrawtime = System.nanoTime() + drawInterval;
+
+        while (true) {
+            upTime += delayBetweenFrames;
+            map.update();
+            map.draw();
+            try {
+                double remainingTime = nextDrawtime - System.nanoTime();
+                remainingTime = remainingTime / 100000;
+                if (remainingTime < 0) {
+                    remainingTime = 0;
+                }
+                Thread.sleep((long) remainingTime);
+
+                nextDrawtime += drawInterval;
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }*/
 
     public void pause() {
         // pausiert das Spiel
@@ -132,10 +174,18 @@ public class Game extends JFrame implements ActionListener, KeyListener {
             upTime += delayBetweenFrames;
             map.update();
             map.draw();
+            frames++;
+        } else if (e.getSource() == timerm) {
+            System.out.println("frames: "+ frames);
+            System.out.println("drwas: " + draws);
+            System.out.println("updates: "  + updates);
+            frames = 0;
+            updates = 0;
+            draws = 0;
         }
     }
 
-    @Override
+@Override
     public void keyTyped(KeyEvent e) {
         // if (e.getKeyCode() == keyConsole) {
         // if (console == null) {
@@ -191,6 +241,10 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         }
     }
 
+
+
+    
+
     public double getUptime() {
         return upTime;
     }
@@ -210,26 +264,26 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         // long start;
 
         // for (int i = 0; i < 50; i++) {
-        //     l1.add(new Floor(null));
-        //     l2.add(new Floor(null));
+        // l1.add(new Floor(null));
+        // l2.add(new Floor(null));
         // }
 
         // start = System.nanoTime();
         // int size = l2.size();
         // for (int i = 0; i < size; i++) {
-        //     l2.get(i).calculatePosition();
+        // l2.get(i).calculatePosition();
         // }
         // System.out.println(System.nanoTime() - start);
 
         // start = System.nanoTime();
         // for (int i = 0; i < l2.size(); i++) {
-        //     l2.get(i).calculatePosition();
+        // l2.get(i).calculatePosition();
         // }
         // System.out.println(System.nanoTime() - start);
 
         // start = System.nanoTime();
         // for (Floor floor : l1) {
-        //     floor.calculatePosition();
+        // floor.calculatePosition();
         // }
         // System.out.println(System.nanoTime() - start);
 
