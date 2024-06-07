@@ -57,6 +57,9 @@ public class Game extends JFrame implements ActionListener, KeyListener{
     int frames = 0;
     public int updates = 0;
     public int draws = 0;
+    long start = 0;
+    long afterUpdate = 0;
+    long fertig;
 
     public Game() {
         delayBetweenFrames = Math.floor(1.0 / targetFPS * 1000);
@@ -172,13 +175,20 @@ public class Game extends JFrame implements ActionListener, KeyListener{
         // wird immer wieder vom Timer aufgerufen, ist quasi die Gameloop
         if (e.getSource() == timer) {
             upTime += delayBetweenFrames;
+            start = System.currentTimeMillis();
             map.update();
+            afterUpdate = System.currentTimeMillis();
             map.draw();
+            fertig = System.currentTimeMillis();
+
+
             frames++;
         } else if (e.getSource() == timerm) {
             System.out.println("frames: "+ frames);
             System.out.println("drwas: " + draws);
             System.out.println("updates: "  + updates);
+            System.out.println("update Time: " + (afterUpdate - start));
+            System.out.println("drawTime: " + (fertig - afterUpdate));
             frames = 0;
             updates = 0;
             draws = 0;

@@ -39,7 +39,6 @@ public class Map extends JPanel {
         this.setDoubleBuffered(true);
         mapreader = new Mapreader(game);
         mapwriter = new Mapwriter(game);
-        mapwriter.start();
         build();
     }
 
