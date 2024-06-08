@@ -3,7 +3,7 @@ package de.junkerjoerg12;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
-import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public abstract class PhysicsObject {
@@ -25,8 +25,8 @@ public abstract class PhysicsObject {
 
     private boolean highlighted;
 
-    protected ArrayList<String> imageFilepath = new ArrayList<>();
-    protected ArrayList<Image> images = new ArrayList<>();
+    protected ArrayList<BufferedImage> images = new ArrayList<>();
+    protected BufferedImage imageToDisplay;
 
     private Font font1 = new Font("Serif", Font.PLAIN, 20);
     private Font font2 = new Font("Serif", Font.PLAIN, 10);
@@ -192,10 +192,6 @@ public abstract class PhysicsObject {
 
     public int getHeight() {
         return height;
-    }
-
-    public ArrayList<String> getImageFilepath() {
-        return imageFilepath;
     }
 
     protected abstract void calculatePosition();
