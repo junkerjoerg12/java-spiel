@@ -39,7 +39,6 @@ public class Map extends JPanel {
         this.setDoubleBuffered(true);
         mapreader = new Mapreader(game);
         mapwriter = new Mapwriter(game);
-        mapwriter.start();
         build();
     }
 
@@ -49,40 +48,51 @@ public class Map extends JPanel {
 
         mapreader.setFilepath(filepath); // "maps\\level1\\map1.txt"
         mapwriter.setFilepath(filepath);
+        
+        ArrayList<MapElement> list = mapreader.read();
 
-        for (MapElement m : mapreader.read()) {
-            allObjects.add(m);
+        int size = list.size();
+        for (int i = 0; i < size; i++) {
+            allObjects.add(list.get(i));
         }
     }
 
-    public void update() {
-        for (PhysicsObject p : allObjects) {
-            p.update();
-        }
-        for (Enemy e : enemies) {
-            e.update();
-        }
-        player.update();
-    }
+    
 
     public void draw() {
         repaint();
+        // repaint(player.getX(), player.getY(), player.getWidth(), player.getHeight());    macht die perfromace auch nicht besser
     }
 
+    public void update() {
+        int sizeAllObjects = allObjects.size();
+        for (int i = 0; i < sizeAllObjects; i++) {
+            allObjects.get(i).update();
+        }
+        int sizeEnemies = enemies.size();
+        for (int i = 0; i < sizeEnemies; i++) {
+            enemies.get(i).update();
+        }
+        player.update();
+        game.updates++;
+    }
+//Die beiden Methoden vielleicht zusammenlegen, fpr einen loopdurchgang weniger
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2D = (Graphics2D) g;
-        for (PhysicsObject p : allObjects) {
-            p.draw(g2D);
+        int sizeAllObjects = allObjects.size();
+        for (int i = 0; i < sizeAllObjects; i++) {
+            allObjects.get(i).draw(g2D);
         }
-        for (Enemy e : enemies) {
-            e.draw(g2D);
+        int sizeEnemies = enemies.size();
+        for (int i = 0; i < sizeEnemies; i++) {
+            enemies.get(i).draw(g2D);
         }
         player.draw(g2D);
-        ;
-
+        // g2D.drawRect(player.getX(), player.getY(), player.getWidth(), player.getHeight());
+        g.setColor(Color.BLACK);
+        g.drawString("timer", 1800, 100);//timer anzeigen
     }
-
     public ArrayList<PhysicsObject> getAllObjects() {
         return allObjects;
     }
@@ -131,4 +141,6 @@ public class Map extends JPanel {
     public void repalceMapelement(int index, MapElement newElement) {
         allObjects.set(index, newElement);
     }
+
+    
 }

@@ -129,7 +129,7 @@ public class Console extends JFrame {
         } else if (input.equals("highlight player")) {
             game.getMap().getPlayer().highlight();
         } else if (input.matches("highlight mapelement \\d+$")) {
-            game.getMap().getAllObjects().get(Integer.parseInt(input.replaceAll("[a-z]", "").trim())).highlight();
+            game.getMap().getAllObjects().get(Integer.parseInt(input.replaceAll("[a-z]", "").replaceAll(" ", ""))).highlight();
         } else if (input.equals("hide")) {
             setVisible(false);
         } else if (input.equals("build")) { // auswahl der Verschiedenen Modi

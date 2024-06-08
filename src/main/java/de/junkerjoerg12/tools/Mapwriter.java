@@ -5,14 +5,13 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.ParseException;
 
 import de.junkerjoerg12.Game;
 import de.junkerjoerg12.Exceptions.InvalidIndexException;
 import de.junkerjoerg12.Exceptions.NoSuchCommandException;
 import de.junkerjoerg12.map.mapElements.MapElement;
 
-public class Mapwriter extends Thread {
+public class Mapwriter {
 
     private Game game;
     private String filepath;
@@ -23,8 +22,6 @@ public class Mapwriter extends Thread {
         this.game = game;
     }
 
-    public void run() {
-    }
 
     public void setFilepath(String fielpath) {
         this.filepath = fielpath;
