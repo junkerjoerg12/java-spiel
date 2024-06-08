@@ -44,15 +44,18 @@ public class MainMenu extends JPanel implements ActionListener {
         constraints.gridy = 1;
 
         start = new JButton("Start Game");
+        start.setFocusable(false);
         this.add(start, constraints);
         start.addActionListener(this);
 
         constraints.gridy = 2;
         settings = new JButton("Settings");
+        settings.setFocusable(false);
         this.add(settings, constraints);
         settings.addActionListener(this);
 
         quit = new JButton("Quit");
+        quit.setFocusable(false);
         constraints.gridy = 3;
         this.add(quit, constraints);
         quit.addActionListener(this);
