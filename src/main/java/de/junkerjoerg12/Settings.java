@@ -42,13 +42,15 @@ public class Settings extends JPanel implements ActionListener, KeyListener {
         this.setLayout(new GridBagLayout());
         this.setVisible(true);
         this.setBackground(Color.GRAY);
-
+        this.setFocusable(true); // Make the panel focusable
+        this.addKeyListener(this);
         try {
             backgroundImage = ImageIO.read(new File(
                     "src\\main\\resources\\MainMenu-Background.png"));
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.gridx = 0;
         constraints.gridy = 0;
@@ -116,10 +118,15 @@ public class Settings extends JPanel implements ActionListener, KeyListener {
         back = new JButton("return to main menu");
         this.add(back, constraints);
         back.addActionListener(this);
-
     }
 
-    private String getthekey(int key) { // https://stackoverflow.com/questions/15313469/java-keyboard-keycodes-list
+    @Override
+    public void addNotify() {
+        super.addNotify();
+        requestFocusInWindow(); // Request focus when the panel is added to its parent container
+    }
+
+    private String getthekey(int key) {
         return java.awt.event.KeyEvent.getKeyText(key);
     }
 
@@ -136,26 +143,80 @@ public class Settings extends JPanel implements ActionListener, KeyListener {
             game.mainMenu();
         } else if (e.getSource() == changejumpbutton) {
             showscurrentjumpkey.setText("please press any key");
-
+            jump = true;
+            requestFocusInWindow(); // Ensure the panel has focus when waiting for key input
+        } else if (e.getSource() == changerightbutton) {
+            showscurrentrightkey.setText("please press any key");
+            right = true;
+            requestFocusInWindow();
+        } else if (e.getSource() == changeleftbutton) {
+            showscurrentleftkey.setText("please press any key");
+            left = true;
+            requestFocusInWindow();
+        } else if (e.getSource() == changeconsolebutton) {
+            showscurrentconsolekey.setText("please press any key");
+            console = true;
+            requestFocusInWindow();
         }
     }
 
     @Override
     public void keyTyped(KeyEvent e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'keyTyped'");
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
 
-        throw new UnsupportedOperationException("Unimplemented method 'keyPressed'");
+        if (jump) {
+            if (game.alreadybound(e.getKeyCode()) == false) {
+                game.setjumpkey(e.getKeyCode());
+                showscurrentjumpkey.setText(getthekey(game.getjumpkey()));
+                jump = false;
+            } else {
+                game.setjumpkey(32);
+                showscurrentjumpkey.setText("this key is already bound to another action(reverted to space)");
+                jump = false;
+            }
+
+        } else if (right) {
+            if (game.alreadybound(e.getKeyCode()) == false) {
+                game.setrightkey(e.getKeyCode());
+                showscurrentrightkey.setText(getthekey(game.getrightkey()));
+                right = false;
+            } else {
+                game.setrightkey(68);
+                showscurrentrightkey.setText("this key is already bound to another action(reverted to d)");
+                jump = false;
+            }
+
+        } else if (left) {
+            if (game.alreadybound(e.getKeyCode()) == false) {
+                game.setleftkey(e.getKeyCode());
+                showscurrentleftkey.setText(getthekey(game.getleftkey()));
+                left = false;
+            } else {
+                game.setleftkey(65);
+                showscurrentleftkey.setText("this key is already bound to another action(reverted to a)");
+                jump = false;
+            }
+
+        } else if (console) {
+            if (game.alreadybound(e.getKeyCode()) == false) {
+                game.setconsolekey(e.getKeyCode());
+                showscurrentconsolekey.setText(getthekey(game.getconsolekey()));
+                console = false;
+            } else {
+                game.setleftkey(130);
+                showscurrentconsolekey
+                        .setText("this key is already bound to another action(reverted to Dead Circumflex)");
+                jump = false;
+            }
+
+        }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'keyReleased'");
     }
 
 }
