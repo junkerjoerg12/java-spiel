@@ -61,17 +61,18 @@ public class Map extends JPanel {
 
     public void draw() {
         repaint();
+        // repaint(player.getX(), player.getY(), player.getWidth(), player.getHeight());    macht die perfromace auch nicht besser
     }
 
     public void update() {
-        // int sizeAllObjects = allObjects.size();
-        // for (int i = 0; i < sizeAllObjects; i++) {
-        //     allObjects.get(i).update();
-        // }
-        // int sizeEnemies = enemies.size();
-        // for (int i = 0; i < sizeEnemies; i++) {
-        //     enemies.get(i).update();
-        // }
+        int sizeAllObjects = allObjects.size();
+        for (int i = 0; i < sizeAllObjects; i++) {
+            allObjects.get(i).update();
+        }
+        int sizeEnemies = enemies.size();
+        for (int i = 0; i < sizeEnemies; i++) {
+            enemies.get(i).update();
+        }
         player.update();
         game.updates++;
     }

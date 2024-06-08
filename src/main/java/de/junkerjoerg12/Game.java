@@ -18,20 +18,17 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-public class Game extends JFrame implements ActionListener, KeyListener{
-
+public class Game extends JFrame implements ActionListener, KeyListener {
 
     // auf welchem Monitor das Spiel angezeigt werden soll
     // nur während entwicklung wichtig
-    private byte monitor = 1;
+    private byte monitor = 2;
 
     // keybinds
     private final int keyRight = 68;
     private final int keyLeft = 65;
     private final int keyJump = 32;
     private final int keyConsole = 130;
-
-
 
     private MainMenu mainMenu;
     private Map map;
@@ -44,6 +41,8 @@ public class Game extends JFrame implements ActionListener, KeyListener{
     private double delayBetweenFrames; // in Millisekunden
 
     private Timer timer;
+    private Gameloop gameloop;
+    // private Thread timer;
 
     // misst die Zeit, die das Spiel Läuft
     private double upTime;
@@ -54,7 +53,7 @@ public class Game extends JFrame implements ActionListener, KeyListener{
 
     // test
     Timer timerm;
-    int frames = 0;
+    int calls = 0;
     public int updates = 0;
     public int draws = 0;
     long start = 0;
@@ -63,10 +62,10 @@ public class Game extends JFrame implements ActionListener, KeyListener{
 
     public Game() {
         delayBetweenFrames = Math.floor(1.0 / targetFPS * 1000);
-          timerm = new Timer(1000, this);
-          timerm.setRepeats(true);
-          timerm.start();
-          
+        timerm = new Timer(1000, this);
+        timerm.setRepeats(true);
+        timerm.start();
+
         this.setResizable(false);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         if (Toolkit.getDefaultToolkit().getScreenSize().equals(new Dimension(1920, 1080))) {
@@ -88,9 +87,10 @@ public class Game extends JFrame implements ActionListener, KeyListener{
         mainMenu();
         this.setVisible(true);
 
-        
-        timer = new Timer((int) delayBetweenFrames, this);
-        timer.setRepeats(true);
+        gameloop = new Gameloop((long) delayBetweenFrames, this);
+        // timer = new Timer((int) delayBetweenFrames, this);
+        // timer.setRepeats(true);
+        // timer = new Thread();
 
         this.addKeyListener(this);
 
@@ -111,12 +111,12 @@ public class Game extends JFrame implements ActionListener, KeyListener{
         this.add(map, BorderLayout.CENTER);
         revalidate();
         repaint();
-        
+
         this.requestFocus();
+        // timer.start();
+        gameloop.start();
         // run();
 
-        timer.start();
-        
     }
 
     public void start() {
@@ -136,30 +136,32 @@ public class Game extends JFrame implements ActionListener, KeyListener{
         this.requestFocus();
     }
 
-    /*alternative nicht fertige game loop
-    private void run() {
-        double drawInterval = 1000000000 / targetFPS;
-        double nextDrawtime = System.nanoTime() + drawInterval;
+    // alterrnative unfetrige game loop
+    // private void run() {
+    // double drawInterval = 1000000000 / targetFPS;
+    // double nextDrawtime = System.nanoTime() + drawInterval;
+    // System.out.println("test");
 
-        while (true) {
-            upTime += delayBetweenFrames;
-            map.update();
-            map.draw();
-            try {
-                double remainingTime = nextDrawtime - System.nanoTime();
-                remainingTime = remainingTime / 100000;
-                if (remainingTime < 0) {
-                    remainingTime = 0;
-                }
-                Thread.sleep((long) remainingTime);
+    // while (true) {
+    // upTime += delayBetweenFrames;
+    // map.update();
+    // map.draw();
+    // try {
+    // // double remainingTime = nextDrawtime - System.nanoTime();
+    // // remainingTime = remainingTime / 100000;
+    // // if (remainingTime < 0) {
+    // // remainingTime = 0;
+    // // }
 
-                nextDrawtime += drawInterval;
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+    // timer.sleep((long) delayBetweenFrames);
 
-    }*/
+    // nextDrawtime += drawInterval;
+    // } catch (InterruptedException e) {
+    // e.printStackTrace();
+    // }
+    // }
+
+    // }
 
     public void pause() {
         // pausiert das Spiel
@@ -174,28 +176,29 @@ public class Game extends JFrame implements ActionListener, KeyListener{
     public void actionPerformed(ActionEvent e) {
         // wird immer wieder vom Timer aufgerufen, ist quasi die Gameloop
         if (e.getSource() == timer) {
-            upTime += delayBetweenFrames;
-            start = System.currentTimeMillis();
-            map.update();
-            afterUpdate = System.currentTimeMillis();
-            map.draw();
-            fertig = System.currentTimeMillis();
-
-
-            frames++;
         } else if (e.getSource() == timerm) {
-            System.out.println("frames: "+ frames);
+            System.out.println("calls: " + calls);
+            System.out.println("updates: " + updates);
             System.out.println("drwas: " + draws);
-            System.out.println("updates: "  + updates);
-            System.out.println("update Time: " + (afterUpdate - start));
-            System.out.println("drawTime: " + (fertig - afterUpdate));
-            frames = 0;
+            // System.out.println("update Time: " + (afterUpdate - start));
+            // System.out.println("drawTime: " + (fertig - afterUpdate));
+            calls = 0;
             updates = 0;
             draws = 0;
         }
     }
 
-@Override
+    public void tick() {
+        calls++;
+        upTime += delayBetweenFrames;
+        start = System.currentTimeMillis();
+        map.update();
+        afterUpdate = System.currentTimeMillis();
+        map.draw();
+        fertig = System.currentTimeMillis();
+    }
+
+    @Override
     public void keyTyped(KeyEvent e) {
         // if (e.getKeyCode() == keyConsole) {
         // if (console == null) {
@@ -250,10 +253,6 @@ public class Game extends JFrame implements ActionListener, KeyListener{
                 break;
         }
     }
-
-
-
-    
 
     public double getUptime() {
         return upTime;
