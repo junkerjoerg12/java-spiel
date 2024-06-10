@@ -11,7 +11,6 @@ import de.junkerjoerg12.Game;
 import de.junkerjoerg12.PhysicsObject;
 import de.junkerjoerg12.character.Enemy;
 import de.junkerjoerg12.character.Player;
-import de.junkerjoerg12.map.mapElements.MapElement;
 import de.junkerjoerg12.tools.Mapreader;
 import de.junkerjoerg12.tools.Mapwriter;
 

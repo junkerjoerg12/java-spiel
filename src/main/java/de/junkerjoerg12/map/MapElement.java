@@ -1,7 +1,9 @@
-package de.junkerjoerg12.map.mapElements;
+package de.junkerjoerg12.map;
 
 import de.junkerjoerg12.Game;
 import de.junkerjoerg12.PhysicsObject;
+import de.junkerjoerg12.map.mapElements.Water;
+
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.lang.reflect.Field;
@@ -19,7 +21,11 @@ public abstract class MapElement extends PhysicsObject {
         calculatePosition();
     }
 
-    public abstract void draw(Graphics2D g);
+    // public abstract void draw(Graphics2D g);
+
+    public void draw(Graphics2D g) {
+        super.draw(g);
+    }
 
     public void draw(Graphics2D g, Class<? extends MapElement> myclass) {
         Field img = null;
@@ -42,7 +48,7 @@ public abstract class MapElement extends PhysicsObject {
         // this.height - iteratorHeight * height);
         for (int i = 0; i < iteratorWidth; i++) {
             for (int j = 0; j < iteratorHeight; j++) {
-                g.drawImage(Water.imageToDisplay, x + width * i, y + height * j, null);
+                g.drawImage(imageToDisplay, x + width * i, y + height * j, null);
             }
         }
 
@@ -65,7 +71,6 @@ public abstract class MapElement extends PhysicsObject {
             for (int i = 0; i < iteratorWidth; i++) {
                 g.drawImage(subImage, x + width * i, y, null);
             }
-            System.out.println();
 
             // zeichent die untere rechte ecke des Objektes
             if (heightSub > 0 && widthSub > 0) {

@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import de.junkerjoerg12.Game;
+import de.junkerjoerg12.map.MapElement;
 
 public class Floor extends MapElement {
 
@@ -15,6 +16,6 @@ public class Floor extends MapElement {
     public void draw(Graphics2D g){
         g.setColor(Color.GREEN);
         g.fillRect(x, y, width, height);
-        super.draw(g, this.getClass());
+        super.draw(g);
     }
 }

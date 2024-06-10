@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 import de.junkerjoerg12.Game;
+import de.junkerjoerg12.map.MapElement;
 
 public class Water extends MapElement {
     public static ArrayList<BufferedImage> images = new ArrayList<>();//müssen immer und auch in allen anderen Klassen, die MapElement extenden public sein, weil Mapelement auch drauf zugreift
