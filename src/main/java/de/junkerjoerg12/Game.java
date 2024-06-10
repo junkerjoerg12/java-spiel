@@ -3,6 +3,7 @@ package de.junkerjoerg12;
 import de.junkerjoerg12.levels.Leveldetails;
 import de.junkerjoerg12.levels.Lvlauswahl;
 import de.junkerjoerg12.map.Map;
+import de.junkerjoerg12.map.mapElements.Water;
 import de.junkerjoerg12.tools.Console;
 
 import java.awt.BorderLayout;
@@ -42,6 +43,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 
     private Timer timer;
     private Gameloop gameloop;
+    private Timer imageSwitcher;
     // private Thread timer;
 
     // misst die Zeit, die das Spiel Läuft
@@ -49,7 +51,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 
     private boolean autostart = false;// ob sich das Spiel gleich startet oder man erst ins Main Menue kommt
 
-    public boolean buildMode;
+    public boolean buildMode = true;
 
     // test
     Timer timerm;
@@ -62,9 +64,10 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 
     public Game() {
         delayBetweenFrames = Math.floor(1.0 / targetFPS * 1000);
+        
         timerm = new Timer(1000, this);
-        timerm.setRepeats(true);
-        timerm.start();
+        imageSwitcher = new Timer(700, this);
+        gameloop = new Gameloop((long) delayBetweenFrames, this);
 
         this.setResizable(false);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -87,7 +90,6 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         mainMenu();
         this.setVisible(true);
 
-        gameloop = new Gameloop((long) delayBetweenFrames, this);
         // timer = new Timer((int) delayBetweenFrames, this);
         // timer.setRepeats(true);
         // timer = new Thread();
@@ -118,6 +120,8 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         this.requestFocus();
         // timer.start();
         gameloop.start();
+        imageSwitcher.start();
+        timerm.start();
         // run();
 
     }
@@ -139,33 +143,6 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         this.requestFocus();
     }
 
-    // alterrnative unfetrige game loop
-    // private void run() {
-    // double drawInterval = 1000000000 / targetFPS;
-    // double nextDrawtime = System.nanoTime() + drawInterval;
-    // System.out.println("test");
-
-    // while (true) {
-    // upTime += delayBetweenFrames;
-    // map.update();
-    // map.draw();
-    // try {
-    // // double remainingTime = nextDrawtime - System.nanoTime();
-    // // remainingTime = remainingTime / 100000;
-    // // if (remainingTime < 0) {
-    // // remainingTime = 0;
-    // // }
-
-    // timer.sleep((long) delayBetweenFrames);
-
-    // nextDrawtime += drawInterval;
-    // } catch (InterruptedException e) {
-    // e.printStackTrace();
-    // }
-    // }
-
-    // }
-
     public void pause() {
         // pausiert das Spiel
     }
@@ -180,14 +157,17 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         // wird immer wieder vom Timer aufgerufen, ist quasi die Gameloop
         if (e.getSource() == timer) {
         } else if (e.getSource() == timerm) {
-            System.out.println("calls: " + calls);
-            System.out.println("updates: " + updates);
-            System.out.println("drwas: " + draws);
+            // System.out.println("calls: " + calls);
+            // System.out.println("updates: " + updates);
+            // System.out.println("drwas: " + draws);
             // System.out.println("update Time: " + (afterUpdate - start));
             // System.out.println("drawTime: " + (fertig - afterUpdate));
             calls = 0;
             updates = 0;
             draws = 0;
+        } else if (e.getSource() == imageSwitcher) {
+            //switch image methode von jeder Mapobjekt klasse aufrufen
+            Water.switchImage();
         }
     }
 

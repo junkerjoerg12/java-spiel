@@ -15,6 +15,6 @@ public class Floor extends MapElement {
     public void draw(Graphics2D g){
         g.setColor(Color.GREEN);
         g.fillRect(x, y, width, height);
-        super.draw(g);
+        super.draw(g, this.getClass());
     }
 }

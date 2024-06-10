@@ -1,6 +1,7 @@
 package de.junkerjoerg12.character;
 
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import de.junkerjoerg12.Game;
@@ -13,6 +14,11 @@ public abstract class Entity extends PhysicsObject {
     public boolean walkRight;
     public boolean walkLeft;
     public boolean jump;
+
+    protected ArrayList<BufferedImage> images = new ArrayList<>();
+    protected BufferedImage imageToDisplay;
+
+
 
     protected int jumpVelocity = 1000; // glaube nicht 1:1 die Geschwindigkeit, aber mehr ist mehr
 

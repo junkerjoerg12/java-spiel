@@ -7,9 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import de.junkerjoerg12.Game;
-import de.junkerjoerg12.map.mapElements.Floor;
-import de.junkerjoerg12.map.mapElements.MapElement;
-import de.junkerjoerg12.map.mapElements.Wall;
+import de.junkerjoerg12.map.mapElements.*;
 
 public class Mapreader {
 
@@ -46,9 +44,9 @@ public class Mapreader {
 
         MapElement mapelement;
         if (objectSomething[0].equals("floor")) {
-            mapelement = new Floor(game);
+            mapelement = new Water(game);
         } else {
-            mapelement = new Wall(game);
+            mapelement = new Water(game);
         }
 
         String[] coordinates = objectSomething[1].split(",");
