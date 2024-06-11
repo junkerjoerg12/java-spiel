@@ -16,10 +16,11 @@ import de.junkerjoerg12.tools.Mapwriter;
 
 public class Map extends JPanel {
     /*
-    * wenn irgendetwas keien Kollision haben soll einfach noch iene andere Liste
-    * machen, die auf kollision überprüft wird und die hier nicht mehr überprüfen
-    * oder noch nen boolean "kollision" machen, und wenn der false ist wird das Stück in der Schlife übergangen
-    */
+     * wenn irgendetwas keien Kollision haben soll einfach noch iene andere Liste
+     * machen, die auf kollision überprüft wird und die hier nicht mehr überprüfen
+     * oder noch nen boolean "kollision" machen, und wenn der false ist wird das
+     * Stück in der Schlife übergangen
+     */
     private ArrayList<PhysicsObject> allObjects = new ArrayList<>();
     private ArrayList<Enemy> enemies = new ArrayList<>();
 
@@ -47,7 +48,7 @@ public class Map extends JPanel {
 
         mapreader.setFilepath(filepath); // "maps\\level1\\map1.txt"
         mapwriter.setFilepath(filepath);
-        
+
         ArrayList<MapElement> list = mapreader.read();
 
         int size = list.size();
@@ -56,11 +57,10 @@ public class Map extends JPanel {
         }
     }
 
-    
-
     public void draw() {
         repaint();
-        // repaint(player.getX(), player.getY(), player.getWidth(), player.getHeight());    macht die perfromace auch nicht besser
+        // repaint(player.getX(), player.getY(), player.getWidth(), player.getHeight());
+        // macht die perfromace auch nicht besser
     }
 
     public void update() {
@@ -75,7 +75,8 @@ public class Map extends JPanel {
         player.update();
         game.updates++;
     }
-//Die beiden Methoden vielleicht zusammenlegen, fpr einen loopdurchgang weniger
+
+    // Die beiden Methoden vielleicht zusammenlegen, für einen loopdurchgang weniger
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2D = (Graphics2D) g;
@@ -88,10 +89,12 @@ public class Map extends JPanel {
             enemies.get(i).draw(g2D);
         }
         player.draw(g2D);
-        // g2D.drawRect(player.getX(), player.getY(), player.getWidth(), player.getHeight());
+        // g2D.drawRect(player.getX(), player.getY(), player.getWidth(),
+        // player.getHeight());
         g.setColor(Color.BLACK);
-        g.drawString("timer", 1800, 100);//timer anzeigen
+        g.drawString("timer", 1800, 100);// timer anzeigen
     }
+
     public ArrayList<PhysicsObject> getAllObjects() {
         return allObjects;
     }
@@ -141,5 +144,4 @@ public class Map extends JPanel {
         allObjects.set(index, newElement);
     }
 
-    
 }
