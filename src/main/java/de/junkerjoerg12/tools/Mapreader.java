@@ -7,9 +7,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import de.junkerjoerg12.Game;
-import de.junkerjoerg12.map.mapElements.Floor;
-import de.junkerjoerg12.map.mapElements.MapElement;
-import de.junkerjoerg12.map.mapElements.Wall;
+import de.junkerjoerg12.map.MapElement;
+import de.junkerjoerg12.map.mapElements.*;
 
 public class Mapreader {
 
@@ -18,6 +17,7 @@ public class Mapreader {
 
     public Mapreader(Game game) {
         this.game = game;
+        new Water(null);
     }
 
     public void setFilepath(String filepath) {
@@ -44,17 +44,27 @@ public class Mapreader {
     public MapElement process(String line) {
         String[] objectSomething = line.split(";");
 
-        MapElement mapelement;
-        if (objectSomething[0].equals("floor")) {
-            mapelement = new Floor(game);
+        MapElement mapelement = null;
+        String name = objectSomething[0];
+        if(name.equals("water")){
+            mapelement = new Water(game);
+        } else if (name.equals("dirt")) {
+            mapelement = new Dirt(game);
+        } else if (name.equals("stone")) {
+            mapelement = new Stone(game);
+        } else if (name.equals("grass")) {
+            mapelement = new Grass(game);
         } else {
-            mapelement = new Wall(game);
+            mapelement = new Floor(game);
         }
 
         String[] coordinates = objectSomething[1].split(",");
         String[] dimesnsions = objectSomething[2].split(",");
+        if(mapelement != null){
+
         mapelement.setBounds(Integer.parseInt(coordinates[0].strip()), Integer.parseInt(coordinates[1].strip()),
                 Integer.parseInt(dimesnsions[0].strip()), Integer.parseInt(dimesnsions[1].strip()));
+        }
 
         return mapelement;
     }

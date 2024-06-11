@@ -9,9 +9,9 @@ import java.io.IOException;
 import de.junkerjoerg12.Game;
 import de.junkerjoerg12.Exceptions.InvalidIndexException;
 import de.junkerjoerg12.Exceptions.NoSuchCommandException;
-import de.junkerjoerg12.map.mapElements.MapElement;
+import de.junkerjoerg12.map.MapElement;
 
-public class Mapwriter extends Thread {
+public class Mapwriter {
 
     private Game game;
     private String filepath;
@@ -22,8 +22,6 @@ public class Mapwriter extends Thread {
         this.game = game;
     }
 
-    public void run() {
-    }
 
     public void setFilepath(String fielpath) {
         this.filepath = fielpath;

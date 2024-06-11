@@ -1,6 +1,7 @@
 package de.junkerjoerg12.character;
 
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import de.junkerjoerg12.Game;
@@ -14,10 +15,14 @@ public abstract class Entity extends PhysicsObject {
     public boolean walkLeft;
     public boolean jump;
 
+    protected ArrayList<BufferedImage> images = new ArrayList<>();
+    protected BufferedImage imageToDisplay;
+
+
+
     protected int jumpVelocity = 1000; // glaube nicht 1:1 die Geschwindigkeit, aber mehr ist mehr
 
     public double lastTimeInTouchWithFloor;
-
 
     public Entity(double acceleration, Game game) {
         super(acceleration, game);
@@ -59,14 +64,15 @@ public abstract class Entity extends PhysicsObject {
                     (this.getX() - distanceHorizontal),
                     (this.getY() - distanceVertical));
 
-            for (int i = 0; i < Math.max(Math.abs(distanceVertical), Math.abs(distanceHorizontal)); i++) {
+            int condition = Math.max(Math.abs(distanceVertical), Math.abs(distanceHorizontal));
+            for (int i = 0; i < condition; i++) {
                 if (movedHorizontal != distanceHorizontal) {
                     if (distanceHorizontal > 0) {// nach rechts
                         if (!this.collisionRight(list)) {
                             this.setLocation(this.getX() + 1, this.getY());
                             movedHorizontal++;
                         }
-                    } else {// nach links
+                    } else if(distanceHorizontal < 0){// nach links
                         if (!this.collisionLeft(list)) {
                             this.setLocation(this.getX() - 1, this.getY());
                             movedHorizontal--;
@@ -83,12 +89,13 @@ public abstract class Entity extends PhysicsObject {
                         } else {
                             lastTimeInTouchWithFloor = game.getUptime();
                         }
-                    } else {// nach oben
+                    } else if(distanceVertical < 0){// nach oben
                         if (!this.collisionTop(list)) {
                             this.setLocation(this.getX(), this.getY() - 1);
                             movedVertical--;
                         } else {
-                            velocityVertically = 0;     //rausmachen für ceiling surfing, müsste dann aber noch ein wenig überaurbeitet werden
+                            velocityVertically = 0; // rausmachen für ceiling surfing, müsste dann aber noch ein wenig
+                                                    // überaurbeitet werden
                         }
                     }
                 }
@@ -127,10 +134,7 @@ public abstract class Entity extends PhysicsObject {
             return velocityVertically;
         } else if (!collisionBottom(game.getMap().getAllObjects())) {
             deltaTSinceVelicityZero += game.getDelaybetweenFrames();
-            double v = velocityVertically + (int) Math.round((acceleration) * game.getDelaybetweenFrames());
-            // double v = velocityVertically + (int) Math.round((acceleration
-            // * ((deltaTSinceInTouchWithFloor) / 1000.0)));
-            return v;
+            return velocityVertically + (int) Math.round((acceleration) * game.getDelaybetweenFrames());
         } else {
             return 0;
         }

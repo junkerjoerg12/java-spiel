@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import de.junkerjoerg12.Game;
+import de.junkerjoerg12.map.MapElement;
 
 public class Floor extends MapElement {
 

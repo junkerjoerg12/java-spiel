@@ -1,10 +1,8 @@
 package de.junkerjoerg12;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.util.ArrayList;
 
 public abstract class PhysicsObject {
@@ -26,8 +24,9 @@ public abstract class PhysicsObject {
 
     private boolean highlighted;
 
-    protected ArrayList<String> imageFilepath = new ArrayList<>();
-    protected ArrayList<Image> images = new ArrayList<>();
+
+    private Font font1 = new Font("Serif", Font.PLAIN, 20);
+    private Font font2 = new Font("Serif", Font.PLAIN, 10);
 
     public PhysicsObject(double acceleration, Game game) {
         this.acceleration = acceleration;
@@ -35,32 +34,46 @@ public abstract class PhysicsObject {
 
     }
 
+    //intersection detectionalgorithm copied from the java.awt.Rectangle class
+    public boolean intersects(PhysicsObject r) {
+        int tw = this.width;
+        int th = this.height;
+        int rw = r.width;
+        int rh = r.height;
+        if (rw <= 0 || rh <= 0 || tw <= 0 || th <= 0) {
+            return false;
+        }
+        int tx = this.x;
+        int ty = this.y;
+        int rx = r.x;
+        int ry = r.y;
+        rw += rx;
+        rh += ry;
+        tw += tx;
+        th += ty;
+        // overflow || intersect
+        return ((rw < rx || rw > tx) &&
+                (rh < ry || rh > ty) &&
+                (tw < tx || tw > rx) &&
+                (th < ty || th > ry));
+    }
+
     public boolean collision(ArrayList<PhysicsObject> list) {
-        int rect1BottomRightX = this.x + this.width;
-        int rect1BottomRightY = this.y + this.height;
 
-        for (PhysicsObject p : list) {
-            int rect2BottomRightX = p.x + p.width;
-            int rect2BottomRightY = p.y + p.height;
-
-            // Check if one rectangle is entirely to the left of the other
-            if (rect1BottomRightX <= p.x || rect2BottomRightX <= p.x) {
-                continue; // Skip to the next rectangle in the list
+        int size = list.size();
+        for (int i = 0; i < size; i++) {
+            PhysicsObject p = list.get(i);
+            if (intersects(p)) {
+                return true;
             }
-
-            // Check if one rectangle is entirely above the other
-            if (rect1BottomRightY <= p.y || rect2BottomRightY <= p.y) {
-                continue; // Skip to the next rectangle in the list
-            }
-
-            // If neither of the above conditions is true, the rectangles overlap
-            return true;
         }
         return false;
     }
 
     public boolean collisionLeft(ArrayList<PhysicsObject> list) {
-        for (PhysicsObject p : list) {
+        int size = list.size();
+        for (int i = 0; i < size; i++) {
+            PhysicsObject p = list.get(i);
             if (this.getX() == p.getX() + p.getWidth() && this.getY() < p.getY() + p.getHeight()
                     && this.getY() + this.getHeight() > p.getY()) {
                 return true;
@@ -70,7 +83,9 @@ public abstract class PhysicsObject {
     }
 
     public boolean collisionRight(ArrayList<PhysicsObject> list) {
-        for (PhysicsObject p : list) {
+        int size = list.size();
+        for (int i = 0; i < size; i++) {
+            PhysicsObject p = list.get(i);
             if (this.getX() + this.getWidth() == p.getX() && this.getY() < p.getY() + p.getHeight()
                     && this.getY() + this.getHeight() > p.getY()) {
                 return true;
@@ -80,7 +95,9 @@ public abstract class PhysicsObject {
     }
 
     public boolean collisionTop(ArrayList<PhysicsObject> list) {
-        for (PhysicsObject p : list) {
+        int size = list.size();
+        for (int i = 0; i < size; i++) {
+            PhysicsObject p = list.get(i);
             if (this.getY() == p.getY() + p.getHeight() && this.getX() < p.getX() + p.getWidth()
                     && this.getX() + this.getWidth() > p.getX()) {
                 return true;
@@ -90,7 +107,9 @@ public abstract class PhysicsObject {
     }
 
     public boolean collisionBottom(ArrayList<PhysicsObject> list) {
-        for (PhysicsObject p : list) {
+        int size = list.size();
+        for (int i = 0; i < size; i++) {
+            PhysicsObject p = list.get(i);
             if (this.getY() + this.getHeight() == p.getY() && this.getX() < p.getX() + p.getWidth()
                     && this.getX() + this.getWidth() > p.getX()) {
                 return true;
@@ -114,8 +133,10 @@ public abstract class PhysicsObject {
     }
 
     public void highlight() {
-        for (PhysicsObject p : game.getMap().getAllObjects()) {
-            p.highlighted = false;
+        ArrayList<PhysicsObject> list = game.getMap().getAllObjects();// enthighlightet alle anderen Objekte
+        int size = list.size();
+        for (int i = 0; i < size; i++) {
+            list.get(i).highlighted = false;
         }
         highlighted = !highlighted;
     }
@@ -128,13 +149,13 @@ public abstract class PhysicsObject {
         }
         if (game.buildMode) {
             g.setColor(Color.RED);
-            g.setFont(new Font("Serif", Font.PLAIN, 20));
+            g.setFont(font1);
             g.drawString(game.getMap().getAllObjects().indexOf(this) + "", x + width / 2, y + height / 2);
             g.drawRect(x, y, width, height);
-            g.setFont(new Font("Serif", Font.PLAIN, 10));
+            g.setFont(font2);
             g.drawString((x + " | " + y), x, y + 10);
-            g.drawString("w: " + width, x + width/2 , y + 10);
-            g.drawString("h: " + height, x + 10, y + height/2);
+            g.drawString("w: " + width, x + width / 2, y + 10);
+            g.drawString("h: " + height, x + 10, y + height / 2);
         }
     }
 
@@ -168,10 +189,6 @@ public abstract class PhysicsObject {
 
     public int getHeight() {
         return height;
-    }
-
-    public ArrayList<String> getImageFilepath() {
-        return imageFilepath;
     }
 
     protected abstract void calculatePosition();

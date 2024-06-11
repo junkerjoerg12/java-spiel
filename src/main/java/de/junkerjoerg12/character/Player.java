@@ -1,8 +1,11 @@
 package de.junkerjoerg12.character;
 
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
@@ -12,13 +15,16 @@ public class Player extends Entity {
 
     public Player(double acceleration, Game game) {
         super(acceleration, game);
-        this.setBounds(300, 300, 50, 50);
+
         try {
-            images.add(ImageIO.read(new File("src\\main\\resources\\assets\\rsz_character.png")));
+            images.add(ImageIO
+                    .read(new File(Paths.get("src", "main", "resources", "assets", "characterRight.png").toString())));
+            images.add(ImageIO
+                    .read(new File(Paths.get("src", "main", "resources", "assets", "characterLeft.png").toString())));
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        this.setBounds(300, 300, images.get(0).getWidth(), images.get(0).getHeight());
     }
 
     public Player(Game game) {
@@ -26,8 +32,21 @@ public class Player extends Entity {
     }
 
     @Override
+    public void update() {
+        
+        if (walkRight && !walkLeft) {
+            imageToDisplay = images.get(0);
+        }
+        else if (walkLeft && !walkRight) {
+            imageToDisplay = images.get(1);
+        }
+        super.update();
+    }
+
+    @Override
     public void draw(Graphics2D g) {
-        g.drawImage(images.get(0), x, y, null);
+        g.drawImage(imageToDisplay, x, y, null);
+        game.draws++;
         super.draw(g);
     }
 

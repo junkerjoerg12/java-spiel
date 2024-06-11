@@ -7,12 +7,13 @@ import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import java.io.File;
+import java.nio.file.Paths;
 
 public class MainMenu extends JPanel implements ActionListener {
 
@@ -33,8 +34,8 @@ public class MainMenu extends JPanel implements ActionListener {
         this.game = game;
 
         try {
-            backgroundImage = ImageIO.read(new File(
-                    "src\\main\\resources\\MainMenu-Background.png"));
+            backgroundImage = ImageIO
+                    .read(new File(Paths.get("src", "main", "resources", "MainMenu-Background.png").toString()));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -77,7 +78,7 @@ public class MainMenu extends JPanel implements ActionListener {
         } else if (e.getSource() == settings) {
             System.out.println("Einstellungen öffnen");
             Settings settings = new Settings(game);
-            game.switchwindow(this, settings);
+            game.switchScene(this, settings);
         }
     }
 }
