@@ -1,11 +1,9 @@
 package de.junkerjoerg12.character;
 
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
@@ -21,6 +19,7 @@ public class Player extends Entity {
                     .read(new File(Paths.get("src", "main", "resources", "assets", "characterRight.png").toString())));
             images.add(ImageIO
                     .read(new File(Paths.get("src", "main", "resources", "assets", "characterLeft.png").toString())));
+            imageToDisplay = images.get(0);
         } catch (IOException e) {
             e.printStackTrace();
         }
