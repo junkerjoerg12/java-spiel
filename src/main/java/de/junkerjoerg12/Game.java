@@ -43,6 +43,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     private double delayBetweenFrames; // in Millisekunden
 
     private Timer timer;
+    private TimerForMap timerformap;
     private Gameloop gameloop;
     private Timer imageSwitcher;
     // private Thread timer;
@@ -115,6 +116,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         map = new Map(this, filepath);
         map.setVisible(true);
         this.add(map, BorderLayout.CENTER);
+        timerformap = new TimerForMap(this);
         revalidate();
         repaint();
 
@@ -192,6 +194,10 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         afterUpdate = System.currentTimeMillis();
         map.draw();
         fertig = System.currentTimeMillis();
+    }
+
+    public long getcurrents() {
+        return timerformap.calculatecurrenttime();
     }
 
     @Override

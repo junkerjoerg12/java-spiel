@@ -1,6 +1,7 @@
 package de.junkerjoerg12.map;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
@@ -92,7 +93,11 @@ public class Map extends JPanel {
         // g2D.drawRect(player.getX(), player.getY(), player.getWidth(),
         // player.getHeight());
         g.setColor(Color.BLACK);
-        g.drawString("timer", 1800, 100);// timer anzeigen
+
+        String strLong = Long.toString(game.getcurrents());
+        g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+        g.drawString("seconds in: " + strLong, 1700, 20);// timer anzeigen
+
     }
 
     public ArrayList<PhysicsObject> getAllObjects() {
