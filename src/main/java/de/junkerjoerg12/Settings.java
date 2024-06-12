@@ -67,6 +67,7 @@ public class Settings extends JPanel implements ActionListener, KeyListener {
 
         showscurrentjumpkey = new JLabel("", SwingConstants.CENTER);
         showscurrentjumpkey.setText(getthekey(game.getjumpkey()));
+        showscurrentjumpkey.setForeground(Color.WHITE);
         showscurrentjumpkey.setVisible(true);
         this.add(showscurrentjumpkey, constraints);
 
@@ -82,6 +83,7 @@ public class Settings extends JPanel implements ActionListener, KeyListener {
 
         showscurrentrightkey = new JLabel("", SwingConstants.CENTER);
         showscurrentrightkey.setText(getthekey(game.getrightkey()));
+        showscurrentrightkey.setForeground(Color.WHITE);
         showscurrentrightkey.setVisible(true);
         this.add(showscurrentrightkey, constraints);
 
@@ -97,6 +99,7 @@ public class Settings extends JPanel implements ActionListener, KeyListener {
 
         showscurrentleftkey = new JLabel("", SwingConstants.CENTER);
         showscurrentleftkey.setText(getthekey(game.getleftkey()));
+        showscurrentleftkey.setForeground(Color.WHITE);
         showscurrentleftkey.setVisible(true);
         this.add(showscurrentleftkey, constraints);
 
@@ -112,6 +115,7 @@ public class Settings extends JPanel implements ActionListener, KeyListener {
 
         showscurrentconsolekey = new JLabel("", SwingConstants.CENTER);
         showscurrentconsolekey.setText(getthekey(game.getconsolekey()));
+        showscurrentconsolekey.setForeground(Color.WHITE);
         showscurrentconsolekey.setVisible(true);
         this.add(showscurrentconsolekey, constraints);
 

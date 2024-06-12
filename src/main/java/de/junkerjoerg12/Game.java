@@ -197,7 +197,15 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     }
 
     public long getcurrents() {
-        return timerformap.calculatecurrenttime();
+        return timerformap.calculatecurrenttimeinS();
+    }
+
+    public long getcurrentms() {
+        return timerformap.calculatecurrenttimeinMS();
+    }
+
+    public long getcurrentmin() {
+        return timerformap.calculatecurrenttimeinMIN();
     }
 
     @Override

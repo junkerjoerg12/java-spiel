@@ -9,8 +9,16 @@ public class TimerForMap {
         startTime = System.currentTimeMillis();
     }
 
-    public long calculatecurrenttime() {
-        return (System.currentTimeMillis() - startTime) / 1000;
+    public long calculatecurrenttimeinMIN() {
+        return ((System.currentTimeMillis() - startTime) / 1000) / 60;
+    }
+
+    public long calculatecurrenttimeinS() {
+        return ((System.currentTimeMillis() - startTime) / 1000) % 60;
+    }
+
+    public long calculatecurrenttimeinMS() {
+        return ((System.currentTimeMillis() - startTime) % 1000) / 10;
     }
 
 }

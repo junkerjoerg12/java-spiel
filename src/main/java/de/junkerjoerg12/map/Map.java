@@ -94,9 +94,13 @@ public class Map extends JPanel {
         // player.getHeight());
         g.setColor(Color.BLACK);
 
-        String strLong = Long.toString(game.getcurrents());
+        String strLongs = Long.toString(game.getcurrents());
+        String strLongms = Long.toString(game.getcurrentms());
+        String strLongmin = Long.toString(game.getcurrentmin());
+
         g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-        g.drawString("seconds in: " + strLong, 1700, 20);// timer anzeigen
+
+        g.drawString("Time: " + strLongmin + ":" + strLongs + "," + strLongms, 1690, 20);// timer anzeigen
 
     }
 
