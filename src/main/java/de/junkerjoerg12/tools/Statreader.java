@@ -17,7 +17,7 @@ public class Statreader {
 
     public Statreader() {
         try {
-            reader = new BufferedReader(new FileReader("src//main//resources//stats.txt"));
+            reader = new BufferedReader(new FileReader(Paths.get("maps","level1", "stats.txt").toString()));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
