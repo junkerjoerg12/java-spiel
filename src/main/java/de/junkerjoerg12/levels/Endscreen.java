@@ -1,6 +1,8 @@
 package de.junkerjoerg12.levels;
 
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -14,13 +16,18 @@ import de.junkerjoerg12.Game;
 
 public class Endscreen extends JPanel implements ActionListener {
     private Game game;
-    private String time;
+    private Long min;
+    private Long seconds;
+    private Long ms;
+    private Font timerFont = new Font("TimesRoman", Font.PLAIN, 20);
     private JButton back = new JButton("back");
     private JTextField timeField;
 
-    public Endscreen(Game game, String time) {
+    public Endscreen(Game game, Long min, long seconds, Long ms) {
         this.game = game;
-        this.time = time;
+        this.min = min;
+        this.seconds = seconds;
+        this.ms = ms;
         this.setLayout(new GridBagLayout());
         this.setBackground(Color.ORANGE);
         back.addActionListener(this);
@@ -30,11 +37,6 @@ public class Endscreen extends JPanel implements ActionListener {
         constraints.gridy = 1;
         this.add(back, constraints);
 
-        timeField = new JTextField("Ihre Zeit: " + time);
-        constraints.gridy = 2;
-        this.add(timeField, constraints);
-
-        this.setVisible(true);
     }
 
     @Override

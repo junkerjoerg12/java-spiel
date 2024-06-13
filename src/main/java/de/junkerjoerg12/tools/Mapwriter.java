@@ -22,9 +22,8 @@ public class Mapwriter {
         this.game = game;
     }
 
-
-    public void setFilepath(String fielpath) {
-        this.filepath = fielpath;
+    public void setFilepath(String filepath) {
+        this.filepath = filepath;
     }
 
     public StringBuffer readMap() { // reads inn the Map file for further processign

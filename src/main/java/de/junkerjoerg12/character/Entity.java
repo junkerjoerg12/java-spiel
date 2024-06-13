@@ -18,8 +18,6 @@ public abstract class Entity extends PhysicsObject {
     protected ArrayList<BufferedImage> images = new ArrayList<>();
     protected BufferedImage imageToDisplay;
 
-
-
     protected int jumpVelocity = 1000; // glaube nicht 1:1 die Geschwindigkeit, aber mehr ist mehr
 
     public double lastTimeInTouchWithFloor;
@@ -56,7 +54,7 @@ public abstract class Entity extends PhysicsObject {
         if (collision(list)) {
 
             // pixel für pixel bewegen, damit die bewegung gestoppt werden kann, sobald die
-            // KOlision stattfindet
+            // Kollision stattfindet
             // und die Objekte sich nicht mehr überschneiden
             int movedHorizontal = 0;
             int movedVertical = 0;
@@ -74,7 +72,7 @@ public abstract class Entity extends PhysicsObject {
                             this.setLocation(this.getX() + 1, this.getY());
                             movedHorizontal++;
                         }
-                    } else if(distanceHorizontal < 0){// nach links
+                    } else if (distanceHorizontal < 0) {// nach links
                         if (!this.collisionLeft(list)) {
                             this.setLocation(this.getX() - 1, this.getY());
                             movedHorizontal--;
@@ -91,13 +89,13 @@ public abstract class Entity extends PhysicsObject {
                         } else {
                             lastTimeInTouchWithFloor = game.getUptime();
                         }
-                    } else if(distanceVertical < 0){// nach oben
+                    } else if (distanceVertical < 0) {// nach oben
                         if (!this.collisionTop(list)) {
                             this.setLocation(this.getX(), this.getY() - 1);
                             movedVertical--;
                         } else {
                             velocityVertically = 0; // rausmachen für ceiling surfing, müsste dann aber noch ein wenig
-                                                    // überaurbeitet werden
+                                                    // überarbeitet werden
                         }
                     }
                 }

@@ -154,17 +154,11 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 
     public void setEndscreen() {
         // hier zeit abfragen und an endscreen übergeben
-        endscreen = new Endscreen(this, "69:69");
+        endscreen = new Endscreen(this, getcurrentmin(), getcurrents(), getcurrentms());
         gameloop.pause();
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         // remove(map);
         // map = null;
         this.add(endscreen, BorderLayout.CENTER);
-        this.remove(map);
         endscreen.setVisible(true);
         revalidate();
         repaint();

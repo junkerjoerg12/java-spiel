@@ -1,10 +1,13 @@
 package de.junkerjoerg12.levels;
 
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.nio.file.Paths;
 
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import java.awt.GridBagConstraints;
 
@@ -13,11 +16,13 @@ import javax.swing.JPanel;
 import de.junkerjoerg12.Game;
 
 import java.awt.Color;
+import java.awt.Graphics;
 
 public class Lvlauswahl extends JPanel implements ActionListener {
 
     private JButton buttonlvl1;
     private JButton back;
+    private Image backgroundImage;
     private Game game;
 
     public Lvlauswahl(Game game) {
@@ -25,7 +30,13 @@ public class Lvlauswahl extends JPanel implements ActionListener {
         this.setLayout(new GridBagLayout());
         this.setVisible(true);
 
-        this.setBackground(Color.GRAY);
+        this.setBackground(Color.ORANGE);
+        try {
+            backgroundImage = ImageIO.read(new File(
+                    "src\\main\\resources\\MainMenu-Background.png"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         buttonlvl1 = new JButton("lvl1");
         back = new JButton("back to main menu");
 
@@ -37,8 +48,11 @@ public class Lvlauswahl extends JPanel implements ActionListener {
         constraints.gridx = 0;
         constraints.gridy = 1;
         constraints.fill = GridBagConstraints.BOTH;
-        this.add(back);
+
         this.add(buttonlvl1, constraints);
+        constraints.gridx = 0;
+        constraints.gridy = 2;
+        this.add(back, constraints);
 
     }
 
@@ -53,4 +67,11 @@ public class Lvlauswahl extends JPanel implements ActionListener {
         }
 
     }
+
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.drawImage(backgroundImage, 0, 0, this);
+    }
+
 }

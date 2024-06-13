@@ -13,7 +13,10 @@ import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import de.junkerjoerg12.tools.Statreader;
+
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 public class MainMenu extends JPanel implements ActionListener {
 
@@ -35,7 +38,8 @@ public class MainMenu extends JPanel implements ActionListener {
 
         try {
             backgroundImage = ImageIO
-                    .read(new File(Paths.get("src", "main", "resources", "assets","MainMenu-Background.png").toString()));
+                    .read(new File(
+                            Paths.get("src", "main", "resources", "assets", "MainMenu-Background.png").toString()));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -71,6 +75,12 @@ public class MainMenu extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == quit) {
+            Statreader s = new Statreader();
+            ArrayList<String> time = new ArrayList<>();
+            time = s.getbest();
+            for (int i = 0; i < time.size(); i++) {
+                System.out.println(time.get(i));
+            }
             System.exit(0);
         } else if (e.getSource() == start) {
             System.out.println("Spiel starten");
