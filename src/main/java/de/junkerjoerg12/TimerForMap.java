@@ -2,10 +2,8 @@ package de.junkerjoerg12;
 
 public class TimerForMap {
     private long startTime;
-    private Game game;
 
-    public TimerForMap(Game game) {
-        this.game = game;
+    public TimerForMap() {
         startTime = System.currentTimeMillis();
     }
 

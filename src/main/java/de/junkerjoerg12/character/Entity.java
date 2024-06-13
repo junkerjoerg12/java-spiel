@@ -38,7 +38,6 @@ public abstract class Entity extends PhysicsObject {
         velocityVertically = calculateVerticalVelocity();
         velocityHorizontally = calculateHorizontalVelocity();
 
-        // auch mit berechneten, nicht gemessenene Zeiten berechnen
         int distanceHorizontal = (int) (velocityHorizontally * (game.getDelaybetweenFrames()) / 1000);
         int distanceVertical = (int) (velocityVertically * (game.getDelaybetweenFrames()) / 1000);
 
@@ -48,7 +47,7 @@ public abstract class Entity extends PhysicsObject {
                 (this.getX() + distanceHorizontal),
                 (this.getY() + distanceVertical));
 
-        // kann und sollte warscheinlich auch noch mal überarbeitet werden
+        //wenn der Spieler sich mit irgendeinem anderen objekt überschneidet
         if (collision(list)) {
 
             // pixel für pixel bewegen, damit die bewegung gestoppt werden kann, sobald die
@@ -123,9 +122,7 @@ public abstract class Entity extends PhysicsObject {
     public double calculateVerticalVelocity() {
         // bin mir nicht sicher, ob das realistisch ist, es sieht aber ganz gut aus
 
-        if (jump && collisionBottom(game.getMap().getAllObjects())) {// ist nicht schön, funktioniert aber, also
-                                                                     // vielleicht mal noch was anderes
-            // überlegen
+        if (jump && collisionBottom(game.getMap().getAllObjects())) {
             deltaTSinceVelicityZero = 0;
             lastTimeInTouchWithFloor = game.getUptime();
             velocityVertically = -jumpVelocity;

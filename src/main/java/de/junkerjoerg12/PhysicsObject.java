@@ -52,7 +52,6 @@ public abstract class PhysicsObject {
         rh += ry;
         tw += tx;
         th += ty;
-        // overflow || intersect
         return ((rw < rx || rw > tx) &&
                 (rh < ry || rh > ty) &&
                 (tw < tx || tw > rx) &&
@@ -125,8 +124,6 @@ public abstract class PhysicsObject {
         if (!collisionBottom(game.getMap().getAllObjects())) {
             deltaTSinceVelicityZero += game.getDelaybetweenFrames();
             double v = velocityVertically + (int) Math.round((acceleration) * game.getDelaybetweenFrames());
-            // double v = velocityVertically + (int) Math.round((acceleration
-            // * ((deltaTSinceInTouchWithFloor) / 1000.0)));
             return v;
         } else {
             return 0;

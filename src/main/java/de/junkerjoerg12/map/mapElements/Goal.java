@@ -33,11 +33,7 @@ public class Goal extends MapElement {
                         .read(new File(Paths.get("src", "main", "resources", "assets", "fire1.png").toString())));
                 Goal.images.add(ImageIO
                         .read(new File(Paths.get("src", "main", "resources", "assets", "fire3.png").toString())));
-                // Goal.images.add(ImageIO
-                //         .read(new File(Paths.get("src", "main", "resources", "assets", "fire3.png").toString())));
-                // Goal.images.add(ImageIO
-                //         .read(new File(Paths.get("src", "main", "resources", "assets", "fire2.png").toString())));
-                imageToDisplay = images.get(0);
+                                imageToDisplay = images.get(0);
                 this.width = imageToDisplay.getWidth();
                 this.height = imageToDisplay.getHeight();
             } catch (IOException e) {

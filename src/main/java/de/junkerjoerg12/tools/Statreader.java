@@ -7,8 +7,6 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-import de.junkerjoerg12.Game;
-import de.junkerjoerg12.map.MapElement;
 
 public class Statreader {
 

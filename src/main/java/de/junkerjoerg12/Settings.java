@@ -43,7 +43,7 @@ public class Settings extends JPanel implements ActionListener, KeyListener {
         this.setLayout(new GridBagLayout());
         this.setVisible(true);
         this.setBackground(Color.GRAY);
-        this.setFocusable(true); // Make the panel focusable
+        this.setFocusable(true); 
         this.addKeyListener(this);
         try {
             backgroundImage = ImageIO.read(new File(

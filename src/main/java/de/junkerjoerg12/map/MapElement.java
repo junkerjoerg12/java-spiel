@@ -20,7 +20,6 @@ public abstract class MapElement extends PhysicsObject {
         calculatePosition();
     }
 
-    // public abstract void draw(Graphics2D g);
 
     public void draw(Graphics2D g) {
         super.draw(g);

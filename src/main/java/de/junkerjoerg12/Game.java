@@ -30,7 +30,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 
     // auf welchem Monitor das Spiel angezeigt werden soll
     // nur während entwicklung wichtig
-    private byte monitor = 2;
+    private byte monitor = 1;
 
     private MainMenu mainMenu;
     private Map map;
@@ -46,7 +46,6 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     private TimerForMap timerformap;
     private Gameloop gameloop;
     private Timer imageSwitcher;
-    // private Thread timer;
 
     // misst die Zeit, die das Spiel Läuft
     private double upTime;
@@ -55,7 +54,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 
     public boolean buildMode;
 
-    // test
+    //Sachen zum testen von performance
     Timer timerm;
     int calls = 0;
     public int updates = 0;
@@ -91,10 +90,6 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         mainMenu();
         this.setVisible(true);
 
-        // timer = new Timer((int) delayBetweenFrames, this);
-        // timer.setRepeats(true);
-        // timer = new Thread();
-
         this.addKeyListener(this);
 
         if (autostart) {
@@ -119,7 +114,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         map.build();
         map.setVisible(true);
         this.add(map, BorderLayout.CENTER);
-        timerformap = new TimerForMap(this);
+        timerformap = new TimerForMap();
         revalidate();
         repaint();
 

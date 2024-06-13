@@ -75,10 +75,10 @@ public class Console extends JFrame {
         if (settings) {
             /* settigns hier einfügen */
             if (true) {
+                //hier einstellunge einfügen
                 print("keine Einstellugen vorhanden");
-            } else {
-                inputError(input);
             }
+
         } else if (build) {
             input = input.replaceAll("build\\s*", "");
             if (game.getMap() == null) {

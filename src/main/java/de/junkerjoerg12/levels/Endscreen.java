@@ -1,6 +1,5 @@
 package de.junkerjoerg12.levels;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
