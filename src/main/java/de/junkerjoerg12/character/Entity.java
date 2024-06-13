@@ -25,8 +25,6 @@ public abstract class Entity extends PhysicsObject {
     public Entity(double acceleration, Game game) {
         super(acceleration, game);
         lastTimeInTouchWithFloor = 0;// brauche ich
-        walkLeft = true;
-        walkRight = true;
     }
 
     public Entity(double acceleration, Game game, double horizontalAccelleration) {

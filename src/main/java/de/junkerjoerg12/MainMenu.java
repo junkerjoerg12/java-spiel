@@ -79,14 +79,11 @@ public class MainMenu extends JPanel implements ActionListener {
             ArrayList<String> time = new ArrayList<>();
             time = s.getbest();
             for (int i = 0; i < time.size(); i++) {
-                System.out.println(time.get(i));
             }
             System.exit(0);
         } else if (e.getSource() == start) {
-            System.out.println("Spiel starten");
             game.levelauswahl();
         } else if (e.getSource() == settings) {
-            System.out.println("Einstellungen öffnen");
             Settings settings = new Settings(game);
             game.switchScene(this, settings);
         }

@@ -11,7 +11,6 @@ public class Statwriter {
     private BufferedWriter writer;
 
     public Statwriter(String newpb) {
-        System.out.println("statwriter");
         try {
             writer = new BufferedWriter(new FileWriter(Paths.get("maps","level1", "stats.txt").toString()));
             writer.write(newpb);

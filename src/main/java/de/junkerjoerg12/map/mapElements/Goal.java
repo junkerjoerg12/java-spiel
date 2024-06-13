@@ -46,7 +46,6 @@ public class Goal extends MapElement {
         }
         Goal.player = game.getMap().getPlayer();
         playerlist.add(player);
-        System.out.println("width: " + width + " height: " + height);
     }
 
     public static void switchImages() {
@@ -61,7 +60,6 @@ public class Goal extends MapElement {
     public void update() {
         if (intersects(player) || collisionBottom(playerlist) || collisionLeft(playerlist) || collisionRight(playerlist)
                 || collisionTop(playerlist)) {
-            System.out.println("ende");
             game.setEndscreen();
         }
     }

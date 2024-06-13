@@ -23,7 +23,7 @@ public class Player extends Entity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        this.setBounds(300, 300, images.get(0).getWidth(), images.get(0).getHeight());
+        this.setBounds(968, 900, images.get(0).getWidth(), images.get(0).getHeight());
     }
 
     public Player(Game game) {
