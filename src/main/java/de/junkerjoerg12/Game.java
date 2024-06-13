@@ -69,7 +69,6 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 
         timerm = new Timer(1000, this);
         imageSwitcher = new Timer(700, this);
-        gameloop = new Gameloop((long) delayBetweenFrames, this);
 
         this.setResizable(false);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -104,6 +103,9 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     }
 
     public void mainMenu() {
+        if (map != null) {
+            remove(map);
+        }
         this.mainMenu = new MainMenu(this);
         this.add(mainMenu, BorderLayout.CENTER);
         revalidate();
@@ -122,7 +124,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         repaint();
 
         this.requestFocus();
-        // timer.start();
+        gameloop = new Gameloop((long) delayBetweenFrames, this);
         gameloop.start();
         imageSwitcher.start();
         timerm.start();
@@ -162,6 +164,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         // remove(map);
         // map = null;
         this.add(endscreen, BorderLayout.CENTER);
+        this.remove(map);
         endscreen.setVisible(true);
         revalidate();
         repaint();
@@ -188,25 +191,25 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     }
 
     public void tick() {
-            calls++;
-            upTime += delayBetweenFrames;
-            start = System.currentTimeMillis();
-            map.update();
-            afterUpdate = System.currentTimeMillis();
-            map.draw();
-            fertig = System.currentTimeMillis();
+        calls++;
+        upTime += delayBetweenFrames;
+        start = System.currentTimeMillis();
+        map.update();
+        afterUpdate = System.currentTimeMillis();
+        map.draw();
+        fertig = System.currentTimeMillis();
     }
 
     public long getcurrents() {
-        return timerformap.calculatecurrenttimeinS();
+        return timerformap.calculateCurrentTimeInS();
     }
 
     public long getcurrentms() {
-        return timerformap.calculatecurrenttimeinMS();
+        return timerformap.calculateCurrentTimeInMs();
     }
 
     public long getcurrentmin() {
-        return timerformap.calculatecurrenttimeinMIN();
+        return timerformap.calculateCurrentTimeInMin();
     }
 
     public boolean alreadybound(int key) {

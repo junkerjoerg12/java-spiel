@@ -43,6 +43,7 @@ public class Goal extends MapElement {
                 playerlist.add(player);
                 this.width = imageToDisplay.getWidth();
                 this.height = imageToDisplay.getHeight();
+                System.out.println("width: " + width + " height: " + height);
             } catch (IOException e) {
                 e.printStackTrace();
             }
