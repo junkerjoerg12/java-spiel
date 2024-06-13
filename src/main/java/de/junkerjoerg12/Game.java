@@ -1,9 +1,9 @@
 package de.junkerjoerg12;
 
 import de.junkerjoerg12.levels.Endscreen;
-import de.junkerjoerg12.levels.Leveldetails;
 import de.junkerjoerg12.levels.Lvlauswahl;
 import de.junkerjoerg12.map.Map;
+import de.junkerjoerg12.map.mapElements.Goal;
 import de.junkerjoerg12.map.mapElements.Water;
 import de.junkerjoerg12.tools.Console;
 
@@ -53,7 +53,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 
     private boolean autostart = false;// ob sich das Spiel gleich startet oder man erst ins Main Menue kommt
 
-    public boolean buildMode = true;
+    public boolean buildMode;
 
     // test
     Timer timerm;
@@ -114,6 +114,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     public void addmap(String filepath) {
         remove(lvlauswahl);
         map = new Map(this, filepath);
+        map.build();
         map.setVisible(true);
         this.add(map, BorderLayout.CENTER);
         timerformap = new TimerForMap(this);
@@ -183,6 +184,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         } else if (e.getSource() == imageSwitcher) {
             // switch image methode von jeder Mapobjekt klasse aufrufen
             Water.switchImage();
+            Goal.switchImages();
         }
     }
 

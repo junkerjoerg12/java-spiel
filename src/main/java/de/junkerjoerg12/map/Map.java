@@ -16,12 +16,6 @@ import de.junkerjoerg12.tools.Mapreader;
 import de.junkerjoerg12.tools.Mapwriter;
 
 public class Map extends JPanel {
-    /*
-     * wenn irgendetwas keien Kollision haben soll einfach noch iene andere Liste
-     * machen, die auf kollision überprüft wird und die hier nicht mehr überprüfen
-     * oder noch nen boolean "kollision" machen, und wenn der false ist wird das
-     * Stück in der Schlife übergangen
-     */
     private ArrayList<PhysicsObject> allObjects = new ArrayList<>();
     private ArrayList<Enemy> enemies = new ArrayList<>();
 
@@ -32,6 +26,7 @@ public class Map extends JPanel {
     private Game game;
     private String filepath;
 
+    private Font timerFont = new Font("TimesRoman", Font.PLAIN, 20);
     public Map(Game game, String filepath) {
         this.game = game;
         this.filepath = filepath;
@@ -40,10 +35,9 @@ public class Map extends JPanel {
         this.setDoubleBuffered(true);
         mapreader = new Mapreader(game);
         mapwriter = new Mapwriter(game);
-        build();
     }
 
-    private void build() {
+    public void build() {
         player = new Player(game);
         this.add(player);
 
@@ -98,7 +92,7 @@ public class Map extends JPanel {
         String strLongms = Long.toString(game.getcurrentms());
         String strLongmin = Long.toString(game.getcurrentmin());
 
-        g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+        g.setFont(timerFont);
 
         g.drawString("Time: " + strLongmin + ":" + strLongs + "," + strLongms, 1690, 20);// timer anzeigen
 
