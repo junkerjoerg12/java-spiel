@@ -55,7 +55,7 @@ public class Mapreader {
         } else if (name.equals("grass")) {
             mapelement = new Grass(game);
         } else if (name.equals("goal")) {
-            mapelement = Goal.getGoal(game);
+            mapelement = new Goal(game);
         } else {
             mapelement = new Floor(game);
         }

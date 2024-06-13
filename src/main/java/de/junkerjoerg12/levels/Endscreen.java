@@ -21,7 +21,7 @@ public class Endscreen extends JPanel implements ActionListener {
     private Font timerFont = new Font("TimesRoman", Font.PLAIN, 20);
     private JButton back = new JButton("back");
 
-    public Endscreen(Game game, Long min, long seconds, Long ms) {
+    public Endscreen(Game game, String time) {
         this.game = game;
         this.min = min;
         this.seconds = seconds;
@@ -38,20 +38,11 @@ public class Endscreen extends JPanel implements ActionListener {
 
     }
 
-    public void paintComponent(Graphics g) {
-        String strLongs = Long.toString(seconds);
-        String strLongms = Long.toString(ms);
-        String strLongmin = Long.toString(min);
-
-        g.setFont(timerFont);
-
-        g.drawString("Time: " + strLongmin + ":" + strLongs + "," + strLongms, 1690, 20);// timer anzeigen
-    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == back) {
-            game.switchScene(this, new Lvlauswahl(game));
+            game.remove(this);
+            //
         }
     }
 }
