@@ -7,8 +7,13 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -26,14 +31,22 @@ public class Endscreen extends JPanel implements ActionListener {
     private long sec;
     private long ms;
 
+    private BufferedImage background;
+
     public Endscreen(Game game, Long min, long seconds, Long ms) {
         this.game = game;
         this.min = min;
         this.sec = seconds;
         this.ms = ms;
         this.setLayout(new GridBagLayout());
-        this.setBackground(Color.ORANGE);
         back.addActionListener(this);
+
+        try {
+            background = ImageIO.read(new File(Paths.get("src", "main", "resources", "map1.png").toString()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.gridx = 1;
@@ -75,6 +88,7 @@ public class Endscreen extends JPanel implements ActionListener {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        g.drawImage(background, 0, 0, null);
         g.setFont(timerFont);
         g.drawString(time, 885, 600);
     }
