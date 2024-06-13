@@ -21,7 +21,7 @@ public class Endscreen extends JPanel implements ActionListener {
     private Font timerFont = new Font("TimesRoman", Font.PLAIN, 20);
     private JButton back = new JButton("back");
 
-    public Endscreen(Game game, String time) {
+    public Endscreen(Game game, Long min, long seconds, Long ms) {
         this.game = game;
         this.min = min;
         this.seconds = seconds;
