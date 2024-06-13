@@ -59,7 +59,7 @@ public class Leveldetails extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == back) {
             game.remove(this);
-            game.start();
+            game.levelauswahl();
         } else if (e.getSource() == start) {
             game.remove(this);
             game.addmap(source);

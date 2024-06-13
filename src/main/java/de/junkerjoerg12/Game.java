@@ -98,7 +98,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         this.addKeyListener(this);
 
         if (autostart) {
-            start();
+            levelauswahl();
         }
     }
 
@@ -131,7 +131,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 
     }
 
-    public void start() {
+    public void levelauswahl() {
         lvlauswahl = new Lvlauswahl(this);
         remove(mainMenu);
         this.add(lvlauswahl, BorderLayout.CENTER);
@@ -156,7 +156,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         // hier zeit abfragen und an endscreen übergeben
         endscreen = new Endscreen(this, getcurrentmin(), getcurrents(), getcurrentms());
         gameloop.pause();
-        // remove(map);
+        remove(map);
         // map = null;
         this.add(endscreen, BorderLayout.CENTER);
         endscreen.setVisible(true);

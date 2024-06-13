@@ -38,16 +38,15 @@ public class Goal extends MapElement {
                 Goal.images.add(ImageIO
                         .read(new File(Paths.get("src", "main", "resources", "assets", "fire2.png").toString())));
                 imageToDisplay = images.get(0);
-
-                Goal.player = game.getMap().getPlayer();
-                playerlist.add(player);
                 this.width = imageToDisplay.getWidth();
                 this.height = imageToDisplay.getHeight();
-                System.out.println("width: " + width + " height: " + height);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+        Goal.player = game.getMap().getPlayer();
+        playerlist.add(player);
+        System.out.println("width: " + width + " height: " + height);
     }
 
     public static void switchImages() {
@@ -62,14 +61,15 @@ public class Goal extends MapElement {
     public void update() {
         if (intersects(player) || collisionBottom(playerlist) || collisionLeft(playerlist) || collisionRight(playerlist)
                 || collisionTop(playerlist)) {
-            System.out.println("zu ende");
+            System.out.println("ende");
             game.setEndscreen();
         }
     }
 
     @Override
     public void draw(Graphics2D g) {
-        super.draw(g, this.getClass());
+        g.drawImage(imageToDisplay, x, y, null);
+        super.draw(g);
     }
 
     @Override

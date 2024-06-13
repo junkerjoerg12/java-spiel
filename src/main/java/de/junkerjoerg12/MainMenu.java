@@ -84,7 +84,7 @@ public class MainMenu extends JPanel implements ActionListener {
             System.exit(0);
         } else if (e.getSource() == start) {
             System.out.println("Spiel starten");
-            game.start();
+            game.levelauswahl();
         } else if (e.getSource() == settings) {
             System.out.println("Einstellungen öffnen");
             Settings settings = new Settings(game);
