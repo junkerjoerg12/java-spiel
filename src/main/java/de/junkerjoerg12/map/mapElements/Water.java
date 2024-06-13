@@ -13,8 +13,10 @@ import de.junkerjoerg12.Game;
 import de.junkerjoerg12.map.MapElement;
 
 public class Water extends MapElement {
-    public static ArrayList<BufferedImage> images = new ArrayList<>();//müssen immer und auch in allen anderen Klassen, die MapElement extenden public sein, weil Mapelement auch drauf zugreift
-    public  static BufferedImage imageToDisplay;
+    public static ArrayList<BufferedImage> images = new ArrayList<>();// müssen immer und auch in allen anderen Klassen,
+                                                                      // die MapElement extenden public sein, weil
+                                                                      // Mapelement auch drauf zugreift
+    public static BufferedImage imageToDisplay;
     public static int imageIndex;// the index of the Image currently displayed
 
     public Water(Game game) {
@@ -27,6 +29,8 @@ public class Water extends MapElement {
                         .read(new File(Paths.get("src", "main", "resources", "assets", "wasser2.png").toString())));
                 Water.images.add(ImageIO
                         .read(new File(Paths.get("src", "main", "resources", "assets", "wasser3.png").toString())));
+                Water.images.add(ImageIO
+                        .read(new File(Paths.get("src", "main", "resources", "assets", "wasser2.png").toString())));
                 Water.imageToDisplay = images.get(0);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -35,12 +39,11 @@ public class Water extends MapElement {
         collisionActive = false;
     }
 
-        public static void switchImage() {
-        if (imageIndex == 3) {
-            Water.imageToDisplay = images.get(imageIndex = 0);
-        }
-        else {
-            Water.imageToDisplay = images.get(imageIndex++);
+    public static void switchImage() {
+        if (imageIndex != images.size()) {
+            imageToDisplay = images.get(imageIndex++);
+        } else {
+            imageToDisplay = images.get(imageIndex = 0);
         }
     }
 
