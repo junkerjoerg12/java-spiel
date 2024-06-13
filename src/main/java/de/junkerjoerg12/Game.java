@@ -172,11 +172,11 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         // wird immer wieder vom Timer aufgerufen, ist quasi die Gameloop
         if (e.getSource() == timer) {
         } else if (e.getSource() == timerm) {
-            System.out.println("calls: " + calls);
-            System.out.println("updates: " + updates);
-            System.out.println("draws: " + draws);
-            System.out.println("update Time: " + (afterUpdate - start));
-            System.out.println("drawTime: " + (fertig - afterUpdate));
+            // System.out.println("calls: " + calls);
+            // System.out.println("updates: " + updates);
+            // System.out.println("draws: " + draws);
+            // System.out.println("update Time: " + (afterUpdate - start));
+            // System.out.println("drawTime: " + (fertig - afterUpdate));
             calls = 0;
             updates = 0;
             draws = 0;
