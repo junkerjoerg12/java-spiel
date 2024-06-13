@@ -22,8 +22,9 @@ public abstract class PhysicsObject {
     protected int width;
     protected int height;
 
-    private boolean highlighted;
+    protected boolean collisionActive = true;
 
+    private boolean highlighted;
 
     private Font font1 = new Font("Serif", Font.PLAIN, 20);
     private Font font2 = new Font("Serif", Font.PLAIN, 10);
@@ -34,7 +35,7 @@ public abstract class PhysicsObject {
 
     }
 
-    //intersection detectionalgorithm copied from the java.awt.Rectangle class
+    // intersection detectionalgorithm copied from the java.awt.Rectangle class
     public boolean intersects(PhysicsObject r) {
         int tw = this.width;
         int th = this.height;
@@ -63,7 +64,7 @@ public abstract class PhysicsObject {
         int size = list.size();
         for (int i = 0; i < size; i++) {
             PhysicsObject p = list.get(i);
-            if (intersects(p)) {
+            if (intersects(p) && p.collisionActive) {
                 return true;
             }
         }
@@ -75,7 +76,7 @@ public abstract class PhysicsObject {
         for (int i = 0; i < size; i++) {
             PhysicsObject p = list.get(i);
             if (this.getX() == p.getX() + p.getWidth() && this.getY() < p.getY() + p.getHeight()
-                    && this.getY() + this.getHeight() > p.getY()) {
+                    && this.getY() + this.getHeight() > p.getY() && p.collisionActive) {
                 return true;
             }
         }
@@ -87,7 +88,7 @@ public abstract class PhysicsObject {
         for (int i = 0; i < size; i++) {
             PhysicsObject p = list.get(i);
             if (this.getX() + this.getWidth() == p.getX() && this.getY() < p.getY() + p.getHeight()
-                    && this.getY() + this.getHeight() > p.getY()) {
+                    && this.getY() + this.getHeight() > p.getY() && p.collisionActive) {
                 return true;
             }
         }
@@ -99,7 +100,7 @@ public abstract class PhysicsObject {
         for (int i = 0; i < size; i++) {
             PhysicsObject p = list.get(i);
             if (this.getY() == p.getY() + p.getHeight() && this.getX() < p.getX() + p.getWidth()
-                    && this.getX() + this.getWidth() > p.getX()) {
+                    && this.getX() + this.getWidth() > p.getX() && p.collisionActive) {
                 return true;
             }
         }
@@ -111,7 +112,7 @@ public abstract class PhysicsObject {
         for (int i = 0; i < size; i++) {
             PhysicsObject p = list.get(i);
             if (this.getY() + this.getHeight() == p.getY() && this.getX() < p.getX() + p.getWidth()
-                    && this.getX() + this.getWidth() > p.getX()) {
+                    && this.getX() + this.getWidth() > p.getX() && p.collisionActive) {
                 return true;
             }
         }

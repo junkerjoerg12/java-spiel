@@ -32,6 +32,7 @@ public class Water extends MapElement {
                 e.printStackTrace();
             }
         }
+        collisionActive = false;
     }
 
         public static void switchImage() {
