@@ -33,8 +33,10 @@ public class Lvlauswahl extends JPanel implements ActionListener {
         back.addActionListener(this);
 
         GridBagConstraints constraints = new GridBagConstraints();
+        constraints.anchor = GridBagConstraints.LAST_LINE_START;
         constraints.gridx = 0;
         constraints.gridy = 1;
+        constraints.fill = GridBagConstraints.BOTH;
         this.add(back);
         this.add(buttonlvl1, constraints);
 

@@ -1,5 +1,6 @@
 package de.junkerjoerg12;
 
+import de.junkerjoerg12.levels.Endscreen;
 import de.junkerjoerg12.levels.Leveldetails;
 import de.junkerjoerg12.levels.Lvlauswahl;
 import de.junkerjoerg12.map.Map;
@@ -35,13 +36,14 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     private Map map;
     public Console console;
     private Lvlauswahl lvlauswahl;
-    private Leveldetails leveldetails;
+    private Endscreen endscreen;
 
     private final int targetFPS = 60;
 
     private double delayBetweenFrames; // in Millisekunden
 
     private Timer timer;
+    private TimerForMap timerformap;
     private Gameloop gameloop;
     private Timer imageSwitcher;
     // private Thread timer;
@@ -64,7 +66,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 
     public Game() {
         delayBetweenFrames = Math.floor(1.0 / targetFPS * 1000);
-        
+
         timerm = new Timer(1000, this);
         imageSwitcher = new Timer(700, this);
         gameloop = new Gameloop((long) delayBetweenFrames, this);
@@ -114,6 +116,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         map = new Map(this, filepath);
         map.setVisible(true);
         this.add(map, BorderLayout.CENTER);
+        timerformap = new TimerForMap(this);
         revalidate();
         repaint();
 
@@ -144,12 +147,24 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     }
 
     public void pause() {
-        // pausiert das Spiel
+
     }
 
-    public void quit() {
+    /*
+     * public void returntomainmenu() {
+     * remove(map);
+     * mainMenu();
+     * }
+     */
 
-        // kehrt in hauptmenue zurück
+    public void setEndscreen() {
+        // hier zeit abfragen und an endscreen übergeben
+        endscreen = new Endscreen(this, "hier sollte die gebrauchte Zeit hin");
+        remove(map);
+        add(endscreen, BorderLayout.CENTER);
+        revalidate();
+        repaint();
+        this.requestFocus();
     }
 
     @Override
@@ -159,14 +174,14 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         } else if (e.getSource() == timerm) {
             System.out.println("calls: " + calls);
             System.out.println("updates: " + updates);
-            System.out.println("drwas: " + draws);
+            System.out.println("draws: " + draws);
             System.out.println("update Time: " + (afterUpdate - start));
             System.out.println("drawTime: " + (fertig - afterUpdate));
             calls = 0;
             updates = 0;
             draws = 0;
         } else if (e.getSource() == imageSwitcher) {
-            //switch image methode von jeder Mapobjekt klasse aufrufen
+            // switch image methode von jeder Mapobjekt klasse aufrufen
             Water.switchImage();
         }
     }
@@ -179,6 +194,18 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         afterUpdate = System.currentTimeMillis();
         map.draw();
         fertig = System.currentTimeMillis();
+    }
+
+    public long getcurrents() {
+        return timerformap.calculatecurrenttimeinS();
+    }
+
+    public long getcurrentms() {
+        return timerformap.calculatecurrenttimeinMS();
+    }
+
+    public long getcurrentmin() {
+        return timerformap.calculatecurrenttimeinMIN();
     }
 
     @Override
@@ -216,6 +243,8 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         }
 
         /*
+         * // geht nur mit final modifier vor Keybinds (eigentlich unnötig, da es auch
+         * mit ifs geht aber man weiß ja nicht ob noch iwas kaputt geht)
          * switch (e.getKeyCode()) {
          * case keyRight:
          * if (!map.getPlayer().collisionRight(map.getAllObjects())) {
@@ -258,6 +287,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         }
 
         /*
+         * // geht nur mit final modifier vor Keybinds
          * switch (e.getKeyCode()) {
          * case keyRight:
          * map.getPlayer().walkRight = false;
