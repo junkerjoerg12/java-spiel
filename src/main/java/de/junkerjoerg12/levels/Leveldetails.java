@@ -30,20 +30,26 @@ public class Leveldetails extends JPanel implements ActionListener {
     public Leveldetails(Game game, String source) {
         this.game = game;
         this.source = source;
-        this.setLayout(null);
+        this.setLayout(new GridBagLayout());
         this.setVisible(true);
         this.setBackground(Color.CYAN);
         back.addActionListener(this);
         start.addActionListener(this);
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.fill = GridBagConstraints.BOTH;
+        constraints.gridx = 0;
+        constraints.gridy = 0;
+        // back.setBounds(50, 1000, 150, 40);
+        this.add(start, constraints);
 
-        back.setBounds(50, 1000, 150, 40);
-        this.add(back);
-        start.setBounds(1700, 1000, 150, 40);
-        this.add(start);
+        constraints.gridx = 0;
+        constraints.gridy = 1;
+        // start.setBounds(1700, 1000, 150, 40);
+        this.add(back, constraints);
 
         try {
             backgroundImage = ImageIO.read(new File(
-                    "src\\main\\resources\\1000x1000.png"));
+                    "src\\main\\resources\\map1.png"));
         } catch (Exception e) {
             e.printStackTrace();
         }
