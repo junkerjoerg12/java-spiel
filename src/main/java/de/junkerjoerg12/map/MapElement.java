@@ -2,7 +2,6 @@ package de.junkerjoerg12.map;
 
 import de.junkerjoerg12.Game;
 import de.junkerjoerg12.PhysicsObject;
-import de.junkerjoerg12.map.mapElements.Water;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
