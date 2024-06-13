@@ -17,8 +17,6 @@ import de.junkerjoerg12.map.MapElement;
 
 public class Goal extends MapElement {
 
-    private static Goal instance;
-
     public static ArrayList<BufferedImage> images = new ArrayList<>();
     public static BufferedImage imageToDisplay;
     public static int imageIndex = 0;
@@ -27,7 +25,7 @@ public class Goal extends MapElement {
 
     private ArrayList<PhysicsObject> playerlist = new ArrayList<>();
 
-    private Goal(Game game) {
+    public Goal(Game game) {
         super(game);
         if (images.size() == 0) {
             try {
@@ -51,13 +49,6 @@ public class Goal extends MapElement {
         }
     }
 
-    public static Goal getGoal(Game game) {
-        if (instance == null) {
-            instance = new Goal(game);
-        }
-        return instance;
-    }
-
     public static void switchImages() {
         if (imageIndex != images.size()) {
             imageToDisplay = images.get(imageIndex++);
@@ -70,8 +61,8 @@ public class Goal extends MapElement {
     public void update() {
         if (intersects(player) || collisionBottom(playerlist) || collisionLeft(playerlist) || collisionRight(playerlist)
                 || collisionTop(playerlist)) {
-            System.out.println("Gewonnen");
-            System.exit(0);
+            System.out.println("zu ende");
+            game.setEndscreen();
         }
     }
 

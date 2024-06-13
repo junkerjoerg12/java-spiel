@@ -30,7 +30,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 
     // auf welchem Monitor das Spiel angezeigt werden soll
     // nur während entwicklung wichtig
-    private byte monitor = 1;
+    private byte monitor = 2;
 
     private MainMenu mainMenu;
     private Map map;
@@ -126,7 +126,6 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         gameloop.start();
         imageSwitcher.start();
         timerm.start();
-        // run();
 
     }
 
@@ -148,24 +147,24 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     }
 
     public void pause() {
-
+        gameloop.pause();
     }
-
-    /*
-     * public void returntomainmenu() {
-     * remove(map);
-     * mainMenu();
-     * }
-     */
 
     public void setEndscreen() {
         // hier zeit abfragen und an endscreen übergeben
-        endscreen = new Endscreen(this, "hier sollte die gebrauchte Zeit hin");
-        remove(map);
-        add(endscreen, BorderLayout.CENTER);
+        endscreen = new Endscreen(this, "69:69");
+        gameloop.pause();
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        // remove(map);
+        // map = null;
+        this.add(endscreen, BorderLayout.CENTER);
+        endscreen.setVisible(true);
         revalidate();
         repaint();
-        this.requestFocus();
     }
 
     @Override
@@ -189,13 +188,13 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     }
 
     public void tick() {
-        calls++;
-        upTime += delayBetweenFrames;
-        start = System.currentTimeMillis();
-        map.update();
-        afterUpdate = System.currentTimeMillis();
-        map.draw();
-        fertig = System.currentTimeMillis();
+            calls++;
+            upTime += delayBetweenFrames;
+            start = System.currentTimeMillis();
+            map.update();
+            afterUpdate = System.currentTimeMillis();
+            map.draw();
+            fertig = System.currentTimeMillis();
     }
 
     public long getcurrents() {
@@ -210,15 +209,21 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         return timerformap.calculatecurrenttimeinMIN();
     }
 
+    public boolean alreadybound(int key) {
+        if (key == keyJump) {
+            return true;
+        } else if (key == keyRight) {
+            return true;
+        } else if (key == keyLeft) {
+            return true;
+        } else if (key == keyConsole) {
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public void keyTyped(KeyEvent e) {
-        // if (e.getKeyCode() == keyConsole) {
-        // if (console == null) {
-        // console = new Console(map);
-        // } else {
-        // console.setVisible(!console.isVisible());
-        // }
-        // }
     }
 
     @Override
@@ -243,43 +248,10 @@ public class Game extends JFrame implements ActionListener, KeyListener {
                 console.setVisible(!console.isVisible());
             }
         }
-
-        /*
-         * // geht nur mit final modifier vor Keybinds (eigentlich unnötig, da es auch
-         * mit ifs geht aber man weiß ja nicht ob noch iwas kaputt geht)
-         * switch (e.getKeyCode()) {
-         * case keyRight:
-         * if (!map.getPlayer().collisionRight(map.getAllObjects())) {
-         * map.getPlayer().walkRight = true;
-         * }
-         * break;
-         * case keyLeft:
-         * if (!map.getPlayer().collisionLeft(map.getAllObjects())) {
-         * map.getPlayer().walkLeft = true;
-         * }
-         * break;
-         * case keyJump:
-         * if (map.getPlayer().collisionBottom(map.getAllObjects())) {
-         * map.getPlayer().jump = true;
-         * }
-         * break;
-         * case keyConsole:
-         * if (console == null) {
-         * console = new Console(this);
-         * } else {
-         * console.setVisible(!console.isVisible());
-         * }
-         * break;
-         * default:
-         * break;
-         * }
-         */
-
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-
         if (e.getKeyCode() == keyRight) {
             map.getPlayer().walkRight = false;
         } else if (e.getKeyCode() == keyLeft) {
@@ -287,22 +259,6 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         } else if (e.getKeyCode() == keyJump) {
             map.getPlayer().jump = false;
         }
-
-        /*
-         * // geht nur mit final modifier vor Keybinds
-         * switch (e.getKeyCode()) {
-         * case keyRight:
-         * map.getPlayer().walkRight = false;
-         * break;
-         * case keyLeft:
-         * map.getPlayer().walkLeft = false;
-         * break;
-         * case keyJump:
-         * map.getPlayer().jump = false;
-         * default:
-         * break;
-         * }
-         */
     }
 
     public double getUptime() {
@@ -349,48 +305,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         this.keyConsole = key;
     }
 
-    public boolean alreadybound(int key) {
-        if (key == keyJump) {
-            return true;
-        } else if (key == keyRight) {
-            return true;
-        } else if (key == keyLeft) {
-            return true;
-        } else if (key == keyConsole) {
-            return true;
-        }
-        return false;
-    }
-
     public static void main(String[] args) {
         new Game();
-        // ArrayList<Floor> l1 = new ArrayList<>();
-        // ArrayList<Floor> l2 = new ArrayList<>();
-        // long start;
-
-        // for (int i = 0; i < 50; i++) {
-        // l1.add(new Floor(null));
-        // l2.add(new Floor(null));
-        // }
-
-        // start = System.nanoTime();
-        // int size = l2.size();
-        // for (int i = 0; i < size; i++) {
-        // l2.get(i).calculatePosition();
-        // }
-        // System.out.println(System.nanoTime() - start);
-
-        // start = System.nanoTime();
-        // for (int i = 0; i < l2.size(); i++) {
-        // l2.get(i).calculatePosition();
-        // }
-        // System.out.println(System.nanoTime() - start);
-
-        // start = System.nanoTime();
-        // for (Floor floor : l1) {
-        // floor.calculatePosition();
-        // }
-        // System.out.println(System.nanoTime() - start);
-
     }
 }
