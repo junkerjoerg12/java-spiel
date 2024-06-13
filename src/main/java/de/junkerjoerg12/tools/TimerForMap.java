@@ -1,4 +1,4 @@
-package de.junkerjoerg12;
+package de.junkerjoerg12.tools;
 
 public class TimerForMap {
     private long startTime;

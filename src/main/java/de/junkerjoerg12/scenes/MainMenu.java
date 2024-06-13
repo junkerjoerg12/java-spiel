@@ -1,4 +1,4 @@
-package de.junkerjoerg12;
+package de.junkerjoerg12.scenes;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -13,6 +13,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import de.junkerjoerg12.Game;
 import de.junkerjoerg12.tools.Statreader;
 
 import java.nio.file.Paths;

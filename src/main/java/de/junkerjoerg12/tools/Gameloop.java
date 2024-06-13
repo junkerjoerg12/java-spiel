@@ -1,4 +1,6 @@
-package de.junkerjoerg12;
+package de.junkerjoerg12.tools;
+
+import de.junkerjoerg12.Game;
 
 public class Gameloop extends Thread {
 

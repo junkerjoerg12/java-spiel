@@ -1,4 +1,4 @@
-package de.junkerjoerg12.levels;
+package de.junkerjoerg12.scenes;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
@@ -13,6 +13,7 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import de.junkerjoerg12.Game;
@@ -48,8 +49,7 @@ public class Leveldetails extends JPanel implements ActionListener {
         this.add(back, constraints);
 
         try {
-            backgroundImage = ImageIO.read(new File(
-                    "src\\main\\resources\\map1.png"));
+            backgroundImage = ImageIO.read(new File(Paths.get("src", "main", "resources", "map1.png").toString()));
         } catch (Exception e) {
             e.printStackTrace();
         }

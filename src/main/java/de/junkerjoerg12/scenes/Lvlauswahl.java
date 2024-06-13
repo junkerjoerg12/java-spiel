@@ -1,4 +1,4 @@
-package de.junkerjoerg12.levels;
+package de.junkerjoerg12.scenes;
 
 import java.awt.GridBagLayout;
 import java.awt.Image;
@@ -32,8 +32,7 @@ public class Lvlauswahl extends JPanel implements ActionListener {
 
         this.setBackground(Color.ORANGE);
         try {
-            backgroundImage = ImageIO.read(new File(
-                    "src\\main\\resources\\MainMenu-Background.png"));
+            backgroundImage = ImageIO.read(new File(Paths.get("src", "main", "resources", "MainMenu-Background.png").toString()));
         } catch (Exception e) {
             e.printStackTrace();
         }

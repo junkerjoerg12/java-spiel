@@ -1,10 +1,12 @@
-package de.junkerjoerg12;
+package de.junkerjoerg12.scenes;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+
+import de.junkerjoerg12.Game;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -15,6 +17,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
+import java.nio.file.Paths;
 import java.awt.GridBagConstraints;
 
 public class Settings extends JPanel implements ActionListener, KeyListener {
@@ -46,8 +49,7 @@ public class Settings extends JPanel implements ActionListener, KeyListener {
         this.setFocusable(true); 
         this.addKeyListener(this);
         try {
-            backgroundImage = ImageIO.read(new File(
-                    "src\\main\\resources\\MainMenu-Background.png"));
+            backgroundImage = ImageIO.read(new File(Paths.get("src", "main", "resources", "MainMenu-Background.png").toString()));
         } catch (Exception e) {
             e.printStackTrace();
         }

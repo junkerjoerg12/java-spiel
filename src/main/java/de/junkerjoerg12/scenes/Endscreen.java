@@ -1,4 +1,4 @@
-package de.junkerjoerg12.levels;
+package de.junkerjoerg12.scenes;
 
 import java.awt.Font;
 import java.awt.Graphics;

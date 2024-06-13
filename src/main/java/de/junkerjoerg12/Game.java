@@ -1,11 +1,15 @@
 package de.junkerjoerg12;
 
-import de.junkerjoerg12.levels.Endscreen;
-import de.junkerjoerg12.levels.Lvlauswahl;
 import de.junkerjoerg12.map.Map;
 import de.junkerjoerg12.map.mapElements.Goal;
 import de.junkerjoerg12.map.mapElements.Water;
+import de.junkerjoerg12.scenes.Endscreen;
+import de.junkerjoerg12.scenes.Lvlauswahl;
+import de.junkerjoerg12.scenes.MainMenu;
+import de.junkerjoerg12.scenes.Pause;
 import de.junkerjoerg12.tools.Console;
+import de.junkerjoerg12.tools.Gameloop;
+import de.junkerjoerg12.tools.TimerForMap;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -54,7 +58,9 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 
     public boolean buildMode;
 
-    //Sachen zum testen von performance
+    private boolean paused = false;
+
+    // Sachen zum testen von performance
     Timer timerm;
     int calls = 0;
     public int updates = 0;
@@ -144,7 +150,16 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     }
 
     public void pause() {
-        gameloop.pause();
+        if (!paused) {
+            gameloop.pause();
+            this.add(new Pause(this));
+        } else {
+            gameloop.go();
+            this.add(map);
+        }
+        revalidate();
+        repaint();
+        paused = !paused;
     }
 
     public void setEndscreen() {
@@ -152,7 +167,6 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         endscreen = new Endscreen(this, getcurrentmin(), getcurrents(), getcurrentms());
         gameloop.pause();
         remove(map);
-        // map = null;
         this.add(endscreen, BorderLayout.CENTER);
         endscreen.setVisible(true);
         revalidate();
@@ -220,7 +234,6 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-
         if (e.getKeyCode() == keyRight) {
             if (!map.getPlayer().collisionRight(map.getAllObjects())) {
                 map.getPlayer().walkRight = true;
@@ -239,6 +252,8 @@ public class Game extends JFrame implements ActionListener, KeyListener {
             } else {
                 console.setVisible(!console.isVisible());
             }
+        } else if (e.getKeyCode() == 27) {// esc
+            pause();
         }
     }
 
