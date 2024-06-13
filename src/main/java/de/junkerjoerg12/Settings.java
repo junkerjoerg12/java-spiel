@@ -130,7 +130,7 @@ public class Settings extends JPanel implements ActionListener, KeyListener {
     @Override
     public void addNotify() {
         super.addNotify();
-        requestFocusInWindow(); // Request focus when the panel is added to its parent container
+        requestFocusInWindow();
     }
 
     private String getthekey(int key) {
@@ -151,7 +151,7 @@ public class Settings extends JPanel implements ActionListener, KeyListener {
         } else if (e.getSource() == changejumpbutton) {
             showscurrentjumpkey.setText("please press any key");
             jump = true;
-            requestFocusInWindow(); // Ensure the panel has focus when waiting for key input
+            requestFocusInWindow();
         } else if (e.getSource() == changerightbutton) {
             showscurrentrightkey.setText("please press any key");
             right = true;

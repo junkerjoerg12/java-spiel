@@ -1,6 +1,8 @@
 package de.junkerjoerg12.levels;
 
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -13,12 +15,17 @@ import de.junkerjoerg12.Game;
 
 public class Endscreen extends JPanel implements ActionListener {
     private Game game;
-    private String time;
+    private Long min;
+    private Long seconds;
+    private Long ms;
+    private Font timerFont = new Font("TimesRoman", Font.PLAIN, 20);
     private JButton back = new JButton("back");
 
-    public Endscreen(Game game, String time) {
+    public Endscreen(Game game, Long min, long seconds, Long ms) {
         this.game = game;
-        this.time = time;
+        this.min = min;
+        this.seconds = seconds;
+        this.ms = ms;
         this.setLayout(new GridBagLayout());
         this.setVisible(true);
         this.setBackground(Color.ORANGE);
@@ -31,11 +38,20 @@ public class Endscreen extends JPanel implements ActionListener {
 
     }
 
+    public void paintComponent(Graphics g) {
+        String strLongs = Long.toString(seconds);
+        String strLongms = Long.toString(ms);
+        String strLongmin = Long.toString(min);
+
+        g.setFont(timerFont);
+
+        g.drawString("Time: " + strLongmin + ":" + strLongs + "," + strLongms, 1690, 20);// timer anzeigen
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == back) {
-            game.remove(this);
-            //
+            game.switchScene(this, new Lvlauswahl(game));
         }
     }
 }
