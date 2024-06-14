@@ -41,6 +41,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     public Console console;
     private Lvlauswahl lvlauswahl;
     private Endscreen endscreen;
+    private Pause pause;
 
     private final int targetFPS = 60;
 
@@ -106,9 +107,11 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     public void mainMenu() {
         if (map != null) {
             remove(map);
+            gameloop.pause();
         }
         this.mainMenu = new MainMenu(this);
         this.add(mainMenu, BorderLayout.CENTER);
+        mainMenu.setVisible(true);
         revalidate();
         repaint();
         requestFocus();
@@ -150,20 +153,22 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     }
 
     public void pause() {
-        if (!paused) {
-            gameloop.pause();
-            this.add(new Pause(this));
-        } else {
-            gameloop.go();
-            this.add(map);
-        }
+        gameloop.pause();
+        pause = new Pause(this);
+
         revalidate();
         repaint();
         paused = !paused;
     }
 
+    public void stoppause(Map map) {
+        map.setVisible(true);
+        gameloop.go();
+        revalidate();
+        repaint();
+    }
+
     public void setEndscreen() {
-        // hier zeit abfragen und an endscreen übergeben
         endscreen = new Endscreen(this, getcurrentmin(), getcurrents(), getcurrentms());
         gameloop.pause();
         remove(map);
@@ -310,6 +315,10 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 
     public void setconsolekey(int key) {
         this.keyConsole = key;
+    }
+
+    public void setpaused(boolean b) {
+        paused = b;
     }
 
     public static void main(String[] args) {

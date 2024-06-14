@@ -34,14 +34,15 @@ public class Goal extends MapElement {
                 Goal.images.add(ImageIO
                         .read(new File(Paths.get("src", "main", "resources", "assets", "fire3.png").toString())));
                                 imageToDisplay = images.get(0);
-                this.width = imageToDisplay.getWidth();
-                this.height = imageToDisplay.getHeight();
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
         Goal.player = game.getMap().getPlayer();
         playerlist.add(player);
+        this.width = imageToDisplay.getWidth();
+        this.height = imageToDisplay.getHeight();
     }
 
     public static void switchImages() {
