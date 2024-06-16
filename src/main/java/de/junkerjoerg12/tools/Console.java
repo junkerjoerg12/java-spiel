@@ -8,7 +8,6 @@ import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.JTextPane;
 
 import de.junkerjoerg12.Game;
 import de.junkerjoerg12.Exceptions.InvalidIndexException;
@@ -76,10 +75,10 @@ public class Console extends JFrame {
         if (settings) {
             /* settigns hier einfügen */
             if (true) {
+                //hier einstellunge einfügen
                 print("keine Einstellugen vorhanden");
-            } else {
-                inputError(input);
             }
+
         } else if (build) {
             input = input.replaceAll("build\\s*", "");
             if (game.getMap() == null) {

@@ -3,7 +3,6 @@ package de.junkerjoerg12;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.util.ArrayList;
 
 public abstract class PhysicsObject {
@@ -23,10 +22,9 @@ public abstract class PhysicsObject {
     protected int width;
     protected int height;
 
-    private boolean highlighted;
+    protected boolean collisionActive = true;
 
-    protected ArrayList<String> imageFilepath = new ArrayList<>();
-    protected ArrayList<Image> images = new ArrayList<>();
+    private boolean highlighted;
 
     private Font font1 = new Font("Serif", Font.PLAIN, 20);
     private Font font2 = new Font("Serif", Font.PLAIN, 10);
@@ -37,7 +35,7 @@ public abstract class PhysicsObject {
 
     }
 
-    //intersection detectionalgorithm copied from the java.awt.Rectangle class
+    // intersection detectionalgorithm copied from the java.awt.Rectangle class
     public boolean intersects(PhysicsObject r) {
         int tw = this.width;
         int th = this.height;
@@ -54,7 +52,6 @@ public abstract class PhysicsObject {
         rh += ry;
         tw += tx;
         th += ty;
-        // overflow || intersect
         return ((rw < rx || rw > tx) &&
                 (rh < ry || rh > ty) &&
                 (tw < tx || tw > rx) &&
@@ -66,7 +63,7 @@ public abstract class PhysicsObject {
         int size = list.size();
         for (int i = 0; i < size; i++) {
             PhysicsObject p = list.get(i);
-            if (intersects(p)) {
+            if (intersects(p) && p.collisionActive) {
                 return true;
             }
         }
@@ -78,7 +75,7 @@ public abstract class PhysicsObject {
         for (int i = 0; i < size; i++) {
             PhysicsObject p = list.get(i);
             if (this.getX() == p.getX() + p.getWidth() && this.getY() < p.getY() + p.getHeight()
-                    && this.getY() + this.getHeight() > p.getY()) {
+                    && this.getY() + this.getHeight() > p.getY() && p.collisionActive) {
                 return true;
             }
         }
@@ -90,7 +87,7 @@ public abstract class PhysicsObject {
         for (int i = 0; i < size; i++) {
             PhysicsObject p = list.get(i);
             if (this.getX() + this.getWidth() == p.getX() && this.getY() < p.getY() + p.getHeight()
-                    && this.getY() + this.getHeight() > p.getY()) {
+                    && this.getY() + this.getHeight() > p.getY() && p.collisionActive) {
                 return true;
             }
         }
@@ -102,7 +99,7 @@ public abstract class PhysicsObject {
         for (int i = 0; i < size; i++) {
             PhysicsObject p = list.get(i);
             if (this.getY() == p.getY() + p.getHeight() && this.getX() < p.getX() + p.getWidth()
-                    && this.getX() + this.getWidth() > p.getX()) {
+                    && this.getX() + this.getWidth() > p.getX() && p.collisionActive) {
                 return true;
             }
         }
@@ -114,7 +111,7 @@ public abstract class PhysicsObject {
         for (int i = 0; i < size; i++) {
             PhysicsObject p = list.get(i);
             if (this.getY() + this.getHeight() == p.getY() && this.getX() < p.getX() + p.getWidth()
-                    && this.getX() + this.getWidth() > p.getX()) {
+                    && this.getX() + this.getWidth() > p.getX() && p.collisionActive) {
                 return true;
             }
         }
@@ -127,8 +124,6 @@ public abstract class PhysicsObject {
         if (!collisionBottom(game.getMap().getAllObjects())) {
             deltaTSinceVelicityZero += game.getDelaybetweenFrames();
             double v = velocityVertically + (int) Math.round((acceleration) * game.getDelaybetweenFrames());
-            // double v = velocityVertically + (int) Math.round((acceleration
-            // * ((deltaTSinceInTouchWithFloor) / 1000.0)));
             return v;
         } else {
             return 0;
@@ -192,10 +187,6 @@ public abstract class PhysicsObject {
 
     public int getHeight() {
         return height;
-    }
-
-    public ArrayList<String> getImageFilepath() {
-        return imageFilepath;
     }
 
     protected abstract void calculatePosition();

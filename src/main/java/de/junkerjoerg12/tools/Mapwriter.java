@@ -9,7 +9,7 @@ import java.io.IOException;
 import de.junkerjoerg12.Game;
 import de.junkerjoerg12.Exceptions.InvalidIndexException;
 import de.junkerjoerg12.Exceptions.NoSuchCommandException;
-import de.junkerjoerg12.map.mapElements.MapElement;
+import de.junkerjoerg12.map.MapElement;
 
 public class Mapwriter {
 
@@ -22,9 +22,8 @@ public class Mapwriter {
         this.game = game;
     }
 
-
-    public void setFilepath(String fielpath) {
-        this.filepath = fielpath;
+    public void setFilepath(String filepath) {
+        this.filepath = filepath;
     }
 
     public StringBuffer readMap() { // reads inn the Map file for further processign

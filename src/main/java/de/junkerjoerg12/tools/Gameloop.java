@@ -1,9 +1,12 @@
-package de.junkerjoerg12;
+package de.junkerjoerg12.tools;
+
+import de.junkerjoerg12.Game;
 
 public class Gameloop extends Thread {
 
     long delay;
     Game game;
+    boolean run = true;
 
     public Gameloop(long delay, Game game) {
         this.delay = delay;
@@ -17,7 +20,7 @@ public class Gameloop extends Thread {
     }
 
     private void loop() {
-        while (true) {
+        while (run) {
             game.tick();
             try {
                 Thread.sleep(delay);
@@ -26,6 +29,15 @@ public class Gameloop extends Thread {
             }
 
         }
+    }
+
+    public void pause() {
+        run = false;
+    }
+
+    public void go() {
+        run = true;
+        loop();
     }
 
 }

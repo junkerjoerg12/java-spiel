@@ -1,6 +1,7 @@
 package de.junkerjoerg12.character;
 
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import de.junkerjoerg12.Game;
@@ -13,6 +14,9 @@ public abstract class Entity extends PhysicsObject {
     public boolean walkRight;
     public boolean walkLeft;
     public boolean jump;
+
+    protected ArrayList<BufferedImage> images = new ArrayList<>();
+    protected BufferedImage imageToDisplay;
 
     protected int jumpVelocity = 1000; // glaube nicht 1:1 die Geschwindigkeit, aber mehr ist mehr
 
@@ -34,7 +38,6 @@ public abstract class Entity extends PhysicsObject {
         velocityVertically = calculateVerticalVelocity();
         velocityHorizontally = calculateHorizontalVelocity();
 
-        // auch mit berechneten, nicht gemessenene Zeiten berechnen
         int distanceHorizontal = (int) (velocityHorizontally * (game.getDelaybetweenFrames()) / 1000);
         int distanceVertical = (int) (velocityVertically * (game.getDelaybetweenFrames()) / 1000);
 
@@ -44,11 +47,11 @@ public abstract class Entity extends PhysicsObject {
                 (this.getX() + distanceHorizontal),
                 (this.getY() + distanceVertical));
 
-        // kann und sollte warscheinlich auch noch mal überarbeitet werden
+        //wenn der Spieler sich mit irgendeinem anderen objekt überschneidet
         if (collision(list)) {
 
             // pixel für pixel bewegen, damit die bewegung gestoppt werden kann, sobald die
-            // KOlision stattfindet
+            // Kollision stattfindet
             // und die Objekte sich nicht mehr überschneiden
             int movedHorizontal = 0;
             int movedVertical = 0;
@@ -66,7 +69,7 @@ public abstract class Entity extends PhysicsObject {
                             this.setLocation(this.getX() + 1, this.getY());
                             movedHorizontal++;
                         }
-                    } else if(distanceHorizontal < 0){// nach links
+                    } else if (distanceHorizontal < 0) {// nach links
                         if (!this.collisionLeft(list)) {
                             this.setLocation(this.getX() - 1, this.getY());
                             movedHorizontal--;
@@ -83,13 +86,13 @@ public abstract class Entity extends PhysicsObject {
                         } else {
                             lastTimeInTouchWithFloor = game.getUptime();
                         }
-                    } else if(distanceVertical < 0){// nach oben
+                    } else if (distanceVertical < 0) {// nach oben
                         if (!this.collisionTop(list)) {
                             this.setLocation(this.getX(), this.getY() - 1);
                             movedVertical--;
                         } else {
                             velocityVertically = 0; // rausmachen für ceiling surfing, müsste dann aber noch ein wenig
-                                                    // überaurbeitet werden
+                                                    // überarbeitet werden
                         }
                     }
                 }
@@ -119,9 +122,7 @@ public abstract class Entity extends PhysicsObject {
     public double calculateVerticalVelocity() {
         // bin mir nicht sicher, ob das realistisch ist, es sieht aber ganz gut aus
 
-        if (jump && collisionBottom(game.getMap().getAllObjects())) {// ist nicht schön, funktioniert aber, also
-                                                                     // vielleicht mal noch was anderes
-            // überlegen
+        if (jump && collisionBottom(game.getMap().getAllObjects())) {
             deltaTSinceVelicityZero = 0;
             lastTimeInTouchWithFloor = game.getUptime();
             velocityVertically = -jumpVelocity;

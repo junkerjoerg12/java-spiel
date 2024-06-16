@@ -1,9 +1,15 @@
 package de.junkerjoerg12;
 
-import de.junkerjoerg12.levels.Leveldetails;
-import de.junkerjoerg12.levels.Lvlauswahl;
 import de.junkerjoerg12.map.Map;
+import de.junkerjoerg12.map.mapElements.Goal;
+import de.junkerjoerg12.map.mapElements.Water;
+import de.junkerjoerg12.scenes.Endscreen;
+import de.junkerjoerg12.scenes.Lvlauswahl;
+import de.junkerjoerg12.scenes.MainMenu;
+import de.junkerjoerg12.scenes.Pause;
 import de.junkerjoerg12.tools.Console;
+import de.junkerjoerg12.tools.Gameloop;
+import de.junkerjoerg12.tools.TimerForMap;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -20,29 +26,31 @@ import javax.swing.Timer;
 
 public class Game extends JFrame implements ActionListener, KeyListener {
 
+    // keybinds
+    private int keyRight = 68;
+    private int keyLeft = 65;
+    private int keyJump = 32;
+    private int keyConsole = 130;
+
     // auf welchem Monitor das Spiel angezeigt werden soll
     // nur während entwicklung wichtig
-    private byte monitor = 2;
-
-    // keybinds
-    private final int keyRight = 68;
-    private final int keyLeft = 65;
-    private final int keyJump = 32;
-    private final int keyConsole = 130;
+    private byte monitor = 1;
 
     private MainMenu mainMenu;
     private Map map;
     public Console console;
     private Lvlauswahl lvlauswahl;
-    private Leveldetails leveldetails;
+    private Endscreen endscreen;
+    private Pause pause;
 
     private final int targetFPS = 60;
 
     private double delayBetweenFrames; // in Millisekunden
 
     private Timer timer;
+    private TimerForMap timerformap;
     private Gameloop gameloop;
-    // private Thread timer;
+    private Timer imageSwitcher;
 
     // misst die Zeit, die das Spiel Läuft
     private double upTime;
@@ -51,7 +59,9 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 
     public boolean buildMode;
 
-    // test
+    private boolean paused = false;
+
+    // Sachen zum testen von performance
     Timer timerm;
     int calls = 0;
     public int updates = 0;
@@ -62,9 +72,9 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 
     public Game() {
         delayBetweenFrames = Math.floor(1.0 / targetFPS * 1000);
+
         timerm = new Timer(1000, this);
-        timerm.setRepeats(true);
-        timerm.start();
+        imageSwitcher = new Timer(700, this);
 
         this.setResizable(false);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -87,21 +97,21 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         mainMenu();
         this.setVisible(true);
 
-        gameloop = new Gameloop((long) delayBetweenFrames, this);
-        // timer = new Timer((int) delayBetweenFrames, this);
-        // timer.setRepeats(true);
-        // timer = new Thread();
-
         this.addKeyListener(this);
 
         if (autostart) {
-            start();
+            levelauswahl();
         }
     }
 
     public void mainMenu() {
+        if (map != null) {
+            remove(map);
+            gameloop.pause();
+        }
         this.mainMenu = new MainMenu(this);
         this.add(mainMenu, BorderLayout.CENTER);
+        mainMenu.setVisible(true);
         revalidate();
         repaint();
         requestFocus();
@@ -110,19 +120,22 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     public void addmap(String filepath) {
         remove(lvlauswahl);
         map = new Map(this, filepath);
+        map.build();
         map.setVisible(true);
         this.add(map, BorderLayout.CENTER);
+        timerformap = new TimerForMap();
         revalidate();
         repaint();
 
         this.requestFocus();
-        // timer.start();
+        gameloop = new Gameloop((long) delayBetweenFrames, this);
         gameloop.start();
-        // run();
+        imageSwitcher.start();
+        timerm.start();
 
     }
 
-    public void start() {
+    public void levelauswahl() {
         lvlauswahl = new Lvlauswahl(this);
         remove(mainMenu);
         this.add(lvlauswahl, BorderLayout.CENTER);
@@ -139,40 +152,30 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         this.requestFocus();
     }
 
-    // alterrnative unfetrige game loop
-    // private void run() {
-    // double drawInterval = 1000000000 / targetFPS;
-    // double nextDrawtime = System.nanoTime() + drawInterval;
-    // System.out.println("test");
-
-    // while (true) {
-    // upTime += delayBetweenFrames;
-    // map.update();
-    // map.draw();
-    // try {
-    // // double remainingTime = nextDrawtime - System.nanoTime();
-    // // remainingTime = remainingTime / 100000;
-    // // if (remainingTime < 0) {
-    // // remainingTime = 0;
-    // // }
-
-    // timer.sleep((long) delayBetweenFrames);
-
-    // nextDrawtime += drawInterval;
-    // } catch (InterruptedException e) {
-    // e.printStackTrace();
-    // }
-    // }
-
-    // }
-
     public void pause() {
-        // pausiert das Spiel
+        gameloop.pause();
+        pause = new Pause(this);
+
+        revalidate();
+        repaint();
+        paused = !paused;
     }
 
-    public void quit() {
+    public void stoppause(Map map) {
+        map.setVisible(true);
+        gameloop.go();
+        revalidate();
+        repaint();
+    }
 
-        // kehrt in hauptmenue zurück
+    public void setEndscreen() {
+        endscreen = new Endscreen(this, getcurrentmin(), getcurrents(), getcurrentms());
+        gameloop.pause();
+        remove(map);
+        this.add(endscreen, BorderLayout.CENTER);
+        endscreen.setVisible(true);
+        revalidate();
+        repaint();
     }
 
     @Override
@@ -180,14 +183,18 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         // wird immer wieder vom Timer aufgerufen, ist quasi die Gameloop
         if (e.getSource() == timer) {
         } else if (e.getSource() == timerm) {
-            System.out.println("calls: " + calls);
-            System.out.println("updates: " + updates);
-            System.out.println("drwas: " + draws);
+            // System.out.println("calls: " + calls);
+            // System.out.println("updates: " + updates);
+            // System.out.println("draws: " + draws);
             // System.out.println("update Time: " + (afterUpdate - start));
             // System.out.println("drawTime: " + (fertig - afterUpdate));
             calls = 0;
             updates = 0;
             draws = 0;
+        } else if (e.getSource() == imageSwitcher) {
+            // switch image methode von jeder Mapobjekt klasse aufrufen
+            Water.switchImage();
+            Goal.switchImages();
         }
     }
 
@@ -201,59 +208,68 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         fertig = System.currentTimeMillis();
     }
 
+    public long getcurrents() {
+        return timerformap.calculateCurrentTimeInS();
+    }
+
+    public long getcurrentms() {
+        return timerformap.calculateCurrentTimeInMs();
+    }
+
+    public long getcurrentmin() {
+        return timerformap.calculateCurrentTimeInMin();
+    }
+
+    public boolean alreadybound(int key) {
+        if (key == keyJump) {
+            return true;
+        } else if (key == keyRight) {
+            return true;
+        } else if (key == keyLeft) {
+            return true;
+        } else if (key == keyConsole) {
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public void keyTyped(KeyEvent e) {
-        // if (e.getKeyCode() == keyConsole) {
-        // if (console == null) {
-        // console = new Console(map);
-        // } else {
-        // console.setVisible(!console.isVisible());
-        // }
-        // }
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-        switch (e.getKeyCode()) {
-            case keyRight:
-                if (!map.getPlayer().collisionRight(map.getAllObjects())) {
-                    map.getPlayer().walkRight = true;
-                }
-                break;
-            case keyLeft:
-                if (!map.getPlayer().collisionLeft(map.getAllObjects())) {
-                    map.getPlayer().walkLeft = true;
-                }
-                break;
-            case keyJump:
-                if (map.getPlayer().collisionBottom(map.getAllObjects())) {
-                    map.getPlayer().jump = true;
-                }
-                break;
-            case keyConsole:
-                if (console == null) {
-                    console = new Console(this);
-                } else {
-                    console.setVisible(!console.isVisible());
-                }
-                break;
-            default:
+        if (e.getKeyCode() == keyRight) {
+            if (!map.getPlayer().collisionRight(map.getAllObjects())) {
+                map.getPlayer().walkRight = true;
+            }
+        } else if (e.getKeyCode() == keyLeft) {
+            if (!map.getPlayer().collisionLeft(map.getAllObjects())) {
+                map.getPlayer().walkLeft = true;
+            }
+        } else if (e.getKeyCode() == keyJump) {
+            if (map.getPlayer().collisionBottom(map.getAllObjects())) {
+                map.getPlayer().jump = true;
+            }
+        } else if (e.getKeyCode() == keyConsole) {
+            if (console == null) {
+                console = new Console(this);
+            } else {
+                console.setVisible(!console.isVisible());
+            }
+        } else if (e.getKeyCode() == 27) {// esc
+            pause();
         }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        switch (e.getKeyCode()) {
-            case keyRight:
-                map.getPlayer().walkRight = false;
-                break;
-            case keyLeft:
-                map.getPlayer().walkLeft = false;
-                break;
-            case keyJump:
-                map.getPlayer().jump = false;
-            default:
-                break;
+        if (e.getKeyCode() == keyRight) {
+            map.getPlayer().walkRight = false;
+        } else if (e.getKeyCode() == keyLeft) {
+            map.getPlayer().walkLeft = false;
+        } else if (e.getKeyCode() == keyJump) {
+            map.getPlayer().jump = false;
         }
     }
 
@@ -285,35 +301,27 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         return keyConsole;
     }
 
+    public void setjumpkey(int key) {
+        this.keyJump = key;
+    }
+
+    public void setleftkey(int key) {
+        this.keyLeft = key;
+    }
+
+    public void setrightkey(int key) {
+        this.keyRight = key;
+    }
+
+    public void setconsolekey(int key) {
+        this.keyConsole = key;
+    }
+
+    public void setpaused(boolean b) {
+        paused = b;
+    }
+
     public static void main(String[] args) {
         new Game();
-        // ArrayList<Floor> l1 = new ArrayList<>();
-        // ArrayList<Floor> l2 = new ArrayList<>();
-        // long start;
-
-        // for (int i = 0; i < 50; i++) {
-        // l1.add(new Floor(null));
-        // l2.add(new Floor(null));
-        // }
-
-        // start = System.nanoTime();
-        // int size = l2.size();
-        // for (int i = 0; i < size; i++) {
-        // l2.get(i).calculatePosition();
-        // }
-        // System.out.println(System.nanoTime() - start);
-
-        // start = System.nanoTime();
-        // for (int i = 0; i < l2.size(); i++) {
-        // l2.get(i).calculatePosition();
-        // }
-        // System.out.println(System.nanoTime() - start);
-
-        // start = System.nanoTime();
-        // for (Floor floor : l1) {
-        // floor.calculatePosition();
-        // }
-        // System.out.println(System.nanoTime() - start);
-
     }
 }

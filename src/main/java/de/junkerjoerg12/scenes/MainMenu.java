@@ -1,4 +1,4 @@
-package de.junkerjoerg12;
+package de.junkerjoerg12.scenes;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -13,7 +13,11 @@ import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import de.junkerjoerg12.Game;
+import de.junkerjoerg12.tools.Statreader;
+
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 public class MainMenu extends JPanel implements ActionListener {
 
@@ -35,7 +39,8 @@ public class MainMenu extends JPanel implements ActionListener {
 
         try {
             backgroundImage = ImageIO
-                    .read(new File(Paths.get("src", "main", "resources", "MainMenu-Background.png").toString()));
+                    .read(new File(
+                            Paths.get("src", "main", "resources", "assets", "MainMenu-Background.png").toString()));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -71,12 +76,15 @@ public class MainMenu extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == quit) {
+            Statreader s = new Statreader();
+            ArrayList<String> time = new ArrayList<>();
+            time = s.getbest();
+            for (int i = 0; i < time.size(); i++) {
+            }
             System.exit(0);
         } else if (e.getSource() == start) {
-            System.out.println("Spiel starten");
-            game.start();
+            game.levelauswahl();
         } else if (e.getSource() == settings) {
-            System.out.println("Einstellungen öffnen");
             Settings settings = new Settings(game);
             game.switchScene(this, settings);
         }
