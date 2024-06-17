@@ -1,6 +1,7 @@
 package de.junkerjoerg12.scenes;
 
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -24,7 +25,7 @@ public class Endscreen extends JPanel implements ActionListener {
   private Game game;
   private Font timerFont = new Font("TimesRoman", Font.PLAIN, 20);
   private JButton back = new JButton("back");
-  private String time;
+  private String time = "";
 
   private long min;
   private long sec;
@@ -47,14 +48,14 @@ public class Endscreen extends JPanel implements ActionListener {
     }
 
     GridBagConstraints constraints = new GridBagConstraints();
-    constraints.gridx = 1;
     constraints.gridy = 1;
     this.add(back, constraints);
+    constraints.gridx = 1;
 
     time = "Your Time: " + min + ":" + seconds + "," + ms;
+    compareToBest();
     repaint();
 
-    compareToBest();
   }
 
   private void compareToBest() {
@@ -64,15 +65,18 @@ public class Endscreen extends JPanel implements ActionListener {
     long bestSec = Long.parseLong(best.get(1));
     long bestMs = Long.parseLong(best.get(2));
 
-
     if (bestMin == 0 && bestSec == 0 && bestMs == 0) {// if all 0 no highscore was set yet
       new Statwriter(min + "\n" + sec + "\n" + ms);
+      time += "\n new best";
     } else if (min < bestMin) {
       new Statwriter(min + "\n" + sec + "\n" + ms);
+      time += "\n new best";
     } else if (min == bestMin && sec < bestSec) {
       new Statwriter(min + "\n" + sec + "\n" + ms);
+      time += "\n new best";
     } else if (min == bestMin & sec == bestSec && ms < bestMs) {
       new Statwriter(min + "\n" + sec + "\n" + ms);
+      time += "\n new best";
     }
 
   }
@@ -90,6 +94,13 @@ public class Endscreen extends JPanel implements ActionListener {
     super.paintComponent(g);
     g.drawImage(background, 0, 0, null);
     g.setFont(timerFont);
-    g.drawString(time, 885, 600);
+    FontMetrics metrics = g.getFontMetrics();
+    String[] texts = time.split("\n");
+    for (int i = 0; i < texts.length; i++) {
+      String s = texts[i];
+      int x = (game.getMap().getWidth() - metrics.stringWidth(s)) / 2;
+      g.drawString(s, x, 600 + metrics.getHeight() * i);
+
+    }
   }
 }
