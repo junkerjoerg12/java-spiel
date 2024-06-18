@@ -12,62 +12,62 @@ import de.junkerjoerg12.map.mapElements.*;
 
 public class Mapreader {
 
-    private BufferedReader reader;
-    private Game game;
+  private BufferedReader reader;
+  private Game game;
 
-    public Mapreader(Game game) {
-        this.game = game;
-        new Water(null);
+  public Mapreader(Game game) {
+    this.game = game;
+    new Water(null);
+  }
+
+  public void setFilepath(String filepath) {
+    try {
+      reader = new BufferedReader(new FileReader(filepath));
+    } catch (FileNotFoundException e) {
+      e.printStackTrace();
+    }
+  }
+
+  public ArrayList<MapElement> read() {
+    String line;
+    ArrayList<MapElement> elements = new ArrayList<>();
+    try {
+      while ((line = reader.readLine()) != null) {
+        elements.add(process(line.strip()));
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    return elements;
+  }
+
+  public MapElement process(String line) {
+    String[] objectSomething = line.split(";");
+
+    MapElement mapelement = null;
+    String name = objectSomething[0];
+    if (name.equals("water")) {
+      mapelement = new Water(game);
+    } else if (name.equals("dirt")) {
+      mapelement = new Dirt(game);
+    } else if (name.equals("stone")) {
+      mapelement = new Stone(game);
+    } else if (name.equals("grass")) {
+      mapelement = new Grass(game);
+    } else if (name.equals("goal")) {
+      mapelement = new Goal(game);
+    } else {
+      mapelement = new Floor(game);
     }
 
-    public void setFilepath(String filepath) {
-        try {
-            reader = new BufferedReader(new FileReader(filepath));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+    String[] coordinates = objectSomething[1].split(",");
+    String[] dimesnsions = objectSomething[2].split(",");
+    if (mapelement != null) {
+
+      mapelement.setBounds(Integer.parseInt(coordinates[0].strip()), Integer.parseInt(coordinates[1].strip()),
+          Integer.parseInt(dimesnsions[0].strip()), Integer.parseInt(dimesnsions[1].strip()));
     }
 
-    public ArrayList<MapElement> read() {
-        String line;
-        ArrayList<MapElement> elements = new ArrayList<>();
-        try {
-            while ((line = reader.readLine()) != null) {
-                elements.add(process(line));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return elements;
-    }
-
-    public MapElement process(String line) {
-        String[] objectSomething = line.split(";");
-
-        MapElement mapelement = null;
-        String name = objectSomething[0];
-        if(name.equals("water")){
-            mapelement = new Water(game);
-        } else if (name.equals("dirt")) {
-            mapelement = new Dirt(game);
-        } else if (name.equals("stone")) {
-            mapelement = new Stone(game);
-        } else if (name.equals("grass")) {
-            mapelement = new Grass(game);
-        } else if (name.equals("goal")) {
-            mapelement = new Goal(game);
-        } else {
-            mapelement = new Floor(game);
-        }
-
-        String[] coordinates = objectSomething[1].split(",");
-        String[] dimesnsions = objectSomething[2].split(",");
-        if(mapelement != null){
-
-        mapelement.setBounds(Integer.parseInt(coordinates[0].strip()), Integer.parseInt(coordinates[1].strip()),
-                Integer.parseInt(dimesnsions[0].strip()), Integer.parseInt(dimesnsions[1].strip()));
-        }
-
-        return mapelement;
-    }
+    return mapelement;
+  }
 }

@@ -117,6 +117,15 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     requestFocus();
   }
 
+  public void levelauswahl() {
+    lvlauswahl = new Lvlauswahl(this);
+    remove(mainMenu);
+    this.add(lvlauswahl, BorderLayout.CENTER);
+    revalidate();
+    repaint();
+    this.requestFocus();
+  }
+
   public void addmap(String filepath) {
     remove(lvlauswahl);
     map = new Map(this, filepath);
@@ -132,16 +141,6 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     gameloop.start();
     imageSwitcher.start();
     timerm.start();
-
-  }
-
-  public void levelauswahl() {
-    lvlauswahl = new Lvlauswahl(this);
-    remove(mainMenu);
-    this.add(lvlauswahl, BorderLayout.CENTER);
-    revalidate();
-    repaint();
-    this.requestFocus();
   }
 
   public void switchScene(JPanel oldpanel, JPanel newpanel) { // sollte bspw Settings removen und lvlauswahl adden

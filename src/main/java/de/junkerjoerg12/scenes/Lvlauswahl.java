@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
@@ -15,62 +16,89 @@ import javax.swing.JPanel;
 
 import de.junkerjoerg12.Game;
 
-import java.awt.Color;
 import java.awt.Graphics;
 
 public class Lvlauswahl extends JPanel implements ActionListener {
 
-    private JButton buttonlvl1;
-    private JButton back;
-    private Image backgroundImage;
-    private Game game;
+  private ArrayList<JButton> buttonlvl = new ArrayList<>();
+  private JButton back;
+  // wenn noch andere buttons oder sachen, die ein ActionListener brauchen
+  // hinzugefügt werden dringend Action Performed methode überarbeiten
 
-    public Lvlauswahl(Game game) {
-        this.game = game;
-        this.setLayout(new GridBagLayout());
-        this.setVisible(true);
+  private Image backgroundImage;
+  private Game game;
+  private File mapsDir;
 
-        this.setBackground(Color.ORANGE);
-        try {
-            backgroundImage = ImageIO.read(new File(Paths.get("src", "main", "resources", "MainMenu-Background.png").toString()));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        buttonlvl1 = new JButton("lvl1");
-        back = new JButton("back to main menu");
+  private String currentMap = "map1.txt";
 
-        buttonlvl1.addActionListener(this);
-        back.addActionListener(this);
+  public Lvlauswahl(Game game) {
+    this.game = game;
+    this.setLayout(new GridBagLayout());
+    this.setVisible(true);
 
-        GridBagConstraints constraints = new GridBagConstraints();
-        constraints.anchor = GridBagConstraints.LAST_LINE_START;
-        constraints.gridx = 0;
-        constraints.gridy = 1;
-        constraints.fill = GridBagConstraints.BOTH;
+    try {
+      backgroundImage = ImageIO
+          .read(new File(Paths.get("src", "main", "resources", "MainMenu-Background.png").toString()));
+      mapsDir = new File(Paths.get("maps").toString());
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    String[] dirsAndFiles = mapsDir.list();
+    ArrayList<String> dirs = new ArrayList<>();
 
-        this.add(buttonlvl1, constraints);
-        constraints.gridx = 0;
-        constraints.gridy = 2;
-        this.add(back, constraints);
-
+    for (String string : dirsAndFiles) {
+      if (!string.contains(".")) {
+        dirs.add(string);
+      }
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == buttonlvl1) {
-            Leveldetails lvldetails = new Leveldetails(game, Paths.get("maps", "level1", "map1.txt").toString());
-            game.switchScene(this, lvldetails);
-        } else if (e.getSource() == back) {
-            game.remove(this);
-            game.mainMenu();
-        }
+    GridBagConstraints constraints = new GridBagConstraints();
+    constraints.anchor = GridBagConstraints.LAST_LINE_START;
+    constraints.gridx = 0;
+    constraints.gridy = 0;
+    constraints.fill = GridBagConstraints.BOTH;
 
+    System.out.println("hallo");
+    for (String string : dirs) {
+      System.out.println(string);
     }
+    System.out.println("hallo");
 
-    @Override
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        g.drawImage(backgroundImage, 0, 0, this);
+    for (String dirName : dirs/* level ordner im maps ordner */) {
+      System.out.println("hallo");
+      JButton button = new JButton(dirName);
+      button.addActionListener(this);
+      buttonlvl.add(button);
+      constraints.gridy += 1;
+      this.add(button, constraints);
     }
+    // buttonlvl1 = new JButton("lvl1");
+    back = new JButton("back to main menu");
+
+    back.addActionListener(this);
+
+    constraints.gridx = 0;
+    constraints.gridy += 1;
+    this.add(back, constraints);
+
+  }
+
+  @Override
+  public void actionPerformed(ActionEvent e) {
+    if (e.getSource() == back) {
+      game.remove(this);
+      game.mainMenu();
+    } else {
+      Leveldetails lvldetails = new Leveldetails(game,
+          Paths.get("maps", ((JButton) e.getSource()).getText(), currentMap).toString());
+      game.switchScene(this, lvldetails);
+    }
+  }
+
+  @Override
+  public void paintComponent(Graphics g) {
+    super.paintComponent(g);
+    g.drawImage(backgroundImage, 0, 0, this);
+  }
 
 }
