@@ -8,14 +8,14 @@ import de.junkerjoerg12.map.MapElement;
 
 public class Floor extends MapElement {
 
-    public Floor(Game game) {
-        super(game);
-    }
+  public Floor(Game game) {
+    super(game);
+  }
 
-    @Override
-    public void draw(Graphics2D g){
-        g.setColor(Color.GREEN);
-        g.fillRect(x, y, width, height);
-        super.draw(g);
-    }
+  @Override
+  public void draw(Graphics2D g) {
+    g.setColor(Color.GREEN);
+    g.fillRect(x, y, width, height);
+    super.draw(g);
+  }
 }

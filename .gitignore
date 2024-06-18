@@ -88,3 +88,8 @@ nb-configuration.xml
 ## Miscellaneous
 ##############################
 *.log
+
+#############################
+##This project
+#############################
+stats.txt
