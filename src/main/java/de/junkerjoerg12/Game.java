@@ -61,6 +61,8 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 
     private boolean paused = false;
 
+    private boolean inEndScreen = false;
+
     // Sachen zum testen von performance
     Timer timerm;
     int calls = 0;
@@ -122,6 +124,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         map = new Map(this, filepath);
         map.build();
         map.setVisible(true);
+        inEndScreen = false;
         this.add(map, BorderLayout.CENTER);
         timerformap = new TimerForMap();
         revalidate();
@@ -172,6 +175,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         endscreen = new Endscreen(this, getcurrentmin(), getcurrents(), getcurrentms());
         gameloop.pause();
         remove(map);
+        inEndScreen = true;
         this.add(endscreen, BorderLayout.CENTER);
         endscreen.setVisible(true);
         revalidate();
@@ -257,7 +261,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
             } else {
                 console.setVisible(!console.isVisible());
             }
-        } else if (e.getKeyCode() == 27) {// esc
+        } else if (e.getKeyCode() == 27 && inEndScreen == false) {// esc
             pause();
         }
     }
