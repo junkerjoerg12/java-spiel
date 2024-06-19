@@ -30,7 +30,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
   private int keyRight = 68;
   private int keyLeft = 65;
   private int keyJump = 32;
-  private int keyConsole = 130;
+  private int keyConsole = KeyEvent.VK_F1;
 
   // auf welchem Monitor das Spiel angezeigt werden soll
   // nur während entwicklung wichtig

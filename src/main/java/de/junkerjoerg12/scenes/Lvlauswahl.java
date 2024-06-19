@@ -58,14 +58,7 @@ public class Lvlauswahl extends JPanel implements ActionListener {
     constraints.gridy = 0;
     constraints.fill = GridBagConstraints.BOTH;
 
-    System.out.println("hallo");
-    for (String string : dirs) {
-      System.out.println(string);
-    }
-    System.out.println("hallo");
-
     for (String dirName : dirs/* level ordner im maps ordner */) {
-      System.out.println("hallo");
       JButton button = new JButton(dirName);
       button.addActionListener(this);
       buttonlvl.add(button);
