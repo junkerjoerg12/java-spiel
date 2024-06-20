@@ -3,6 +3,7 @@ package de.junkerjoerg12.tools;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -17,12 +18,11 @@ public class Mapreader {
 
   public Mapreader(Game game) {
     this.game = game;
-    new Water(null);
   }
 
-  public void setFilepath(String filepath) {
+  public void setFile(File file) {
     try {
-      reader = new BufferedReader(new FileReader(filepath));
+      reader = new BufferedReader(new FileReader(file));
     } catch (FileNotFoundException e) {
       e.printStackTrace();
     }

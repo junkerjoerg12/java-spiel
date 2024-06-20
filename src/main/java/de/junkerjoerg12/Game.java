@@ -19,6 +19,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -126,9 +127,9 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     this.requestFocus();
   }
 
-  public void addmap(String filepath) {
+  public void addmap(File mapfile) {
     remove(lvlauswahl);
-    map = new Map(this, filepath);
+    map = new Map(this, mapfile);
     map.build();
     map.setVisible(true);
     this.add(map, BorderLayout.CENTER);
@@ -168,7 +169,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
   }
 
   public void setEndscreen() {
-    endscreen = new Endscreen(this, getcurrentmin(), getcurrents(), getcurrentms());
+    endscreen = new Endscreen(this, getcurrentmin(), getcurrents(), getcurrentms(), map.getMapfile());
     gameloop.pause();
     remove(map);
     this.add(endscreen, BorderLayout.CENTER);

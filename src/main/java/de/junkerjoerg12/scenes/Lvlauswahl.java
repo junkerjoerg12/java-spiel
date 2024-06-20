@@ -83,7 +83,7 @@ public class Lvlauswahl extends JPanel implements ActionListener {
       game.mainMenu();
     } else {
       Leveldetails lvldetails = new Leveldetails(game,
-          Paths.get("maps", ((JButton) e.getSource()).getText(), currentMap).toString());
+          new File(Paths.get("maps", ((JButton) e.getSource()).getText(), currentMap).toString()));
       game.switchScene(this, lvldetails);
     }
   }

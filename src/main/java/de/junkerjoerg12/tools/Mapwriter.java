@@ -5,6 +5,7 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.File;
 
 import de.junkerjoerg12.Game;
 import de.junkerjoerg12.Exceptions.InvalidIndexException;
@@ -14,7 +15,7 @@ import de.junkerjoerg12.map.MapElement;
 public class Mapwriter {
 
   private Game game;
-  private String filepath;
+  private File mapfile;
   private BufferedReader reader;
   private BufferedWriter writer;
 
@@ -22,15 +23,15 @@ public class Mapwriter {
     this.game = game;
   }
 
-  public void setFilepath(String filepath) {
-    this.filepath = filepath;
+  public void setFile(File file) {
+    this.mapfile = file;
   }
 
   public StringBuffer readMap() { // reads inn the Map file for further processign
     String line = "";
     StringBuffer content = new StringBuffer("");
     try {
-      reader = new BufferedReader(new FileReader(filepath));
+      reader = new BufferedReader(new FileReader(mapfile));
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -48,7 +49,7 @@ public class Mapwriter {
   private void writeMap(String map) { // writes the whole map String to the File
     map = map.replaceAll("  ", " ");
     try {
-      writer = new BufferedWriter(new FileWriter(filepath));
+      writer = new BufferedWriter(new FileWriter(mapfile));
       writer.write(map.toString());
       writer.close();
     } catch (IOException e) {

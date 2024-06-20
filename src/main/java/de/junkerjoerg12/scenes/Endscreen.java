@@ -26,6 +26,7 @@ public class Endscreen extends JPanel implements ActionListener {
   private Font timerFont = new Font("TimesRoman", Font.PLAIN, 20);
   private JButton back = new JButton("back");
   private String time = "";
+  private File mapfile;
 
   private long min;
   private long sec;
@@ -33,11 +34,12 @@ public class Endscreen extends JPanel implements ActionListener {
 
   private BufferedImage background;
 
-  public Endscreen(Game game, Long min, long seconds, Long ms) {
+  public Endscreen(Game game, Long min, long seconds, Long ms, File mapfile) {
     this.game = game;
     this.min = min;
     this.sec = seconds;
     this.ms = ms;
+    this.mapfile = mapfile;
     this.setLayout(new GridBagLayout());
     back.addActionListener(this);
 
@@ -59,23 +61,23 @@ public class Endscreen extends JPanel implements ActionListener {
   }
 
   private void compareToBest() {
-    ArrayList<String> best = new Statreader().getbest();
+    ArrayList<String> best = new Statreader(mapfile).getbest();
 
     long bestMin = Long.parseLong(best.get(0));
     long bestSec = Long.parseLong(best.get(1));
     long bestMs = Long.parseLong(best.get(2));
 
     if (bestMin == 0 && bestSec == 0 && bestMs == 0) {// if all 0 no highscore was set yet
-      new Statwriter(min + "\n" + sec + "\n" + ms);
+      new Statwriter(min + "\n" + sec + "\n" + ms, mapfile);
       time += "\n new best";
     } else if (min < bestMin) {
-      new Statwriter(min + "\n" + sec + "\n" + ms);
+      new Statwriter(min + "\n" + sec + "\n" + ms, mapfile);
       time += "\n new best";
     } else if (min == bestMin && sec < bestSec) {
-      new Statwriter(min + "\n" + sec + "\n" + ms);
+      new Statwriter(min + "\n" + sec + "\n" + ms, mapfile);
       time += "\n new best";
     } else if (min == bestMin & sec == bestSec && ms < bestMs) {
-      new Statwriter(min + "\n" + sec + "\n" + ms);
+      new Statwriter(min + "\n" + sec + "\n" + ms, mapfile);
       time += "\n new best";
     }
 

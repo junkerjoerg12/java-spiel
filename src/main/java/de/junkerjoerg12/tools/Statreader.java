@@ -6,9 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.File;
-
 import java.nio.file.Paths;
+import java.io.File;
 
 import java.util.ArrayList;
 
@@ -17,9 +16,12 @@ public class Statreader {
   private BufferedReader reader;
   private ArrayList<String> time = new ArrayList<>();
 
-  private File stats1 = new File(Paths.get("maps", "level1", "stats.txt").toString());
+  // private File stats1;
 
-  public Statreader() {
+  public Statreader(File stats1) {
+    // this.stats1 = stats1;
+    stats1 = new File(Paths.get(stats1.getParent().toString(), "stats.txt").toString());
+    System.out.println(stats1.toString());
     if (!stats1.exists()) {
       try {
         if (!stats1.createNewFile()) {
