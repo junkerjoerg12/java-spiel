@@ -17,58 +17,61 @@ import de.junkerjoerg12.map.MapElement;
 
 public class Goal extends MapElement {
 
-    public static ArrayList<BufferedImage> images = new ArrayList<>();
-    public static BufferedImage imageToDisplay;
-    public static int imageIndex = 0;
+  public static ArrayList<BufferedImage> images = new ArrayList<>();
+  public static BufferedImage imageToDisplay;
+  public static int imageIndex = 0;
 
-    private static Player player;
+  private static Player player;
 
-    private ArrayList<PhysicsObject> playerlist = new ArrayList<>();
+  private ArrayList<PhysicsObject> playerlist = new ArrayList<>();
 
-    public Goal(Game game) {
-        super(game);
-        if (images.size() == 0) {
-            try {
-                Goal.images.add(ImageIO
-                        .read(new File(Paths.get("src", "main", "resources", "assets", "fire1.png").toString())));
-                Goal.images.add(ImageIO
-                        .read(new File(Paths.get("src", "main", "resources", "assets", "fire3.png").toString())));
-                                imageToDisplay = images.get(0);
+  public Goal(Game game) {
+    super(game);
+    if (images.size() == 0) {
+      try {
+        Goal.images.add(ImageIO
+            .read(new File(Paths.get("src", "main", "resources", "assets", "fire1.png").toString())));
+        Goal.images.add(ImageIO
+            .read(new File(Paths.get("src", "main", "resources", "assets", "fire3.png").toString())));
+        imageToDisplay = images.get(0);
 
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        Goal.player = game.getMap().getPlayer();
-        playerlist.add(player);
-        this.width = imageToDisplay.getWidth();
-        this.height = imageToDisplay.getHeight();
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
     }
+    Goal.player = game.getMap().getPlayer();
+    playerlist.add(player);
+    this.width = imageToDisplay.getWidth();
+    this.height = imageToDisplay.getHeight();
+  }
 
-    public static void switchImages() {
-        if (imageIndex != images.size()) {
-            imageToDisplay = images.get(imageIndex++);
-        } else {
-            imageToDisplay = images.get(imageIndex = 0);
-        }
-    }
+  public static void switchImages() {
+    if (images.size() != 0) {
 
-    @Override
-    public void update() {
-        if (intersects(player) || collisionBottom(playerlist) || collisionLeft(playerlist) || collisionRight(playerlist)
-                || collisionTop(playerlist)) {
-            game.setEndscreen();
-        }
+      if (imageIndex != images.size()) {
+        imageToDisplay = images.get(imageIndex++);
+      } else {
+        imageToDisplay = images.get(imageIndex = 0);
+      }
     }
+  }
 
-    @Override
-    public void draw(Graphics2D g) {
-        g.drawImage(imageToDisplay, x, y, null);
-        super.draw(g);
+  @Override
+  public void update() {
+    if (intersects(player) || collisionBottom(playerlist) || collisionLeft(playerlist) || collisionRight(playerlist)
+        || collisionTop(playerlist)) {
+      game.setEndscreen();
     }
+  }
 
-    @Override
-    public void setSize(int width, int height) {
-    }
+  @Override
+  public void draw(Graphics2D g) {
+    g.drawImage(imageToDisplay, x, y, null);
+    super.draw(g);
+  }
+
+  @Override
+  public void setSize(int width, int height) {
+  }
 
 }

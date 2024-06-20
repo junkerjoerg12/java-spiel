@@ -19,6 +19,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -30,7 +31,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
   private int keyRight = 68;
   private int keyLeft = 65;
   private int keyJump = 32;
-  private int keyConsole = 130;
+  private int keyConsole = KeyEvent.VK_F1;
 
   // auf welchem Monitor das Spiel angezeigt werden soll
   // nur während entwicklung wichtig
@@ -117,9 +118,18 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     requestFocus();
   }
 
-  public void addmap(String filepath) {
+  public void levelauswahl() {
+    lvlauswahl = new Lvlauswahl(this);
+    remove(mainMenu);
+    this.add(lvlauswahl, BorderLayout.CENTER);
+    revalidate();
+    repaint();
+    this.requestFocus();
+  }
+
+  public void addmap(File mapfile) {
     remove(lvlauswahl);
-    map = new Map(this, filepath);
+    map = new Map(this, mapfile);
     map.build();
     map.setVisible(true);
     this.add(map, BorderLayout.CENTER);
@@ -132,16 +142,6 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     gameloop.start();
     imageSwitcher.start();
     timerm.start();
-
-  }
-
-  public void levelauswahl() {
-    lvlauswahl = new Lvlauswahl(this);
-    remove(mainMenu);
-    this.add(lvlauswahl, BorderLayout.CENTER);
-    revalidate();
-    repaint();
-    this.requestFocus();
   }
 
   public void switchScene(JPanel oldpanel, JPanel newpanel) { // sollte bspw Settings removen und lvlauswahl adden
@@ -169,7 +169,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
   }
 
   public void setEndscreen() {
-    endscreen = new Endscreen(this, getcurrentmin(), getcurrents(), getcurrentms());
+    endscreen = new Endscreen(this, getcurrentmin(), getcurrents(), getcurrentms(), map.getMapfile());
     gameloop.pause();
     remove(map);
     this.add(endscreen, BorderLayout.CENTER);
