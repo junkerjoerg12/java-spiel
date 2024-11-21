@@ -1,16 +1,5 @@
 package de.junkerjoerg12;
 
-import de.junkerjoerg12.map.Map;
-import de.junkerjoerg12.map.mapElements.Goal;
-import de.junkerjoerg12.map.mapElements.Water;
-import de.junkerjoerg12.scenes.Endscreen;
-import de.junkerjoerg12.scenes.Lvlauswahl;
-import de.junkerjoerg12.scenes.MainMenu;
-import de.junkerjoerg12.scenes.Pause;
-import de.junkerjoerg12.tools.Console;
-import de.junkerjoerg12.tools.Gameloop;
-import de.junkerjoerg12.tools.TimerForMap;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
@@ -24,6 +13,17 @@ import java.io.File;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+
+import de.junkerjoerg12.map.Map;
+import de.junkerjoerg12.map.mapElements.Goal;
+import de.junkerjoerg12.map.mapElements.Water;
+import de.junkerjoerg12.scenes.Endscreen;
+import de.junkerjoerg12.scenes.Lvlauswahl;
+import de.junkerjoerg12.scenes.MainMenu;
+import de.junkerjoerg12.scenes.Pause;
+import de.junkerjoerg12.tools.Console;
+import de.junkerjoerg12.tools.Gameloop;
+import de.junkerjoerg12.tools.TimerForMap;
 
 public class Game extends JFrame implements ActionListener, KeyListener {
 
@@ -42,6 +42,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
   public Console console;
   private Lvlauswahl lvlauswahl;
   private Endscreen endscreen;
+  private boolean ingame = false;
   // private Pause pause;
 
   private final int targetFPS = 60;
@@ -106,6 +107,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
   }
 
   public void mainMenu() {
+    ingame = false;
     if (map != null) {
       remove(map);
       gameloop.pause();
@@ -134,6 +136,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     map.setVisible(true);
     this.add(map, BorderLayout.CENTER);
     timerformap = new TimerForMap();
+    ingame = true;
     revalidate();
     repaint();
 
@@ -153,12 +156,14 @@ public class Game extends JFrame implements ActionListener, KeyListener {
   }
 
   public void pause() {
-    gameloop.pause();
-    new Pause(this);
-
-    revalidate();
-    repaint();
-    paused = !paused;
+    if (ingame) {
+        gameloop.pause();
+        new Pause(this);
+        revalidate();
+        repaint();
+        paused = !paused;
+    }
+    
   }
 
   public void stoppause(Map map) {
@@ -169,6 +174,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
   }
 
   public void setEndscreen() {
+    ingame = false;
     endscreen = new Endscreen(this, getcurrentmin(), getcurrents(), getcurrentms(), map.getMapfile());
     gameloop.pause();
     remove(map);

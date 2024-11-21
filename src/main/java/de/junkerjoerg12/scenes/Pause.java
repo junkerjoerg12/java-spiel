@@ -1,5 +1,6 @@
 package de.junkerjoerg12.scenes;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -25,7 +26,7 @@ public class Pause extends JPanel implements ActionListener {
 
         add(backToMainMenu);
         //add(continueButton);
-
+        this.setBackground(Color.GRAY);
         game.getMap().setVisible(false);
         game.add(this);
         this.setVisible(true);

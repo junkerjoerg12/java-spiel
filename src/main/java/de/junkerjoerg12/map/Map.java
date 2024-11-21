@@ -4,8 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.util.ArrayList;
 import java.io.File;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
@@ -123,7 +123,7 @@ public class Map extends JPanel {
 
   public void addNew(Enemy e) {
     enemies.add(e);
-    // mapwriter.addMApElement(e);
+    // mapwriter.addMapElement(e);
   }
 
   public void removeMapelement(int index) {

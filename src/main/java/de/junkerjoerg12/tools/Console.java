@@ -9,9 +9,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import de.junkerjoerg12.Game;
 import de.junkerjoerg12.Exceptions.InvalidIndexException;
 import de.junkerjoerg12.Exceptions.NoSuchCommandException;
+import de.junkerjoerg12.Game;
 
 public class Console extends JFrame {
 
@@ -126,7 +126,7 @@ public class Console extends JFrame {
         } catch (InvalidIndexException e) {
           indexError(e.getMessage());
         } /* alle weiteren befehle, die zum bauen benötigt werden hier einfügen */
-      } else if (input.matches("\\s*help\\s*")) {
+      } else if (input.matches("\\s*help\\s*")) { //-n dirt; 400, 500; 50, 50
         print(
             "-n {art des MapObjects}; {x-Koordinate}, {y.Koordinate}; {Breite}, {Hoehe}       Erzeugt ein neues MapObjet an gegebener Stelle\n"
                 +
