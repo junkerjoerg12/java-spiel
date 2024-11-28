@@ -33,7 +33,7 @@ public class Mapreader {
     ArrayList<MapElement> elements = new ArrayList<>();
     try {
       while ((line = reader.readLine()) != null) {
-        elements.add(process(line.strip()));
+        elements.add(process(line.trim()));
       }
     } catch (IOException e) {
       e.printStackTrace();
@@ -64,8 +64,8 @@ public class Mapreader {
     String[] dimesnsions = objectSomething[2].split(",");
     if (mapelement != null) {
 
-      mapelement.setBounds(Integer.parseInt(coordinates[0].strip()), Integer.parseInt(coordinates[1].strip()),
-          Integer.parseInt(dimesnsions[0].strip()), Integer.parseInt(dimesnsions[1].strip()));
+      mapelement.setBounds(Integer.parseInt(coordinates[0].trim()), Integer.parseInt(coordinates[1].trim()),
+          Integer.parseInt(dimesnsions[0].trim()), Integer.parseInt(dimesnsions[1].trim()));
     }
 
     return mapelement;

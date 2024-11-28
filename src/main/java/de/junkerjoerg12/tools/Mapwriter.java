@@ -118,7 +118,7 @@ public class Mapwriter {
         mapString.append(string);
         mapString.append("\n");
       }
-      game.getMap().repalceMapelement(element, stringToElement(lines[element]));
+      game.getMap().replaceMapelement(element, stringToElement(lines[element]));
 
     } catch (IndexOutOfBoundsException e) {
       throw new InvalidIndexException(element);
@@ -148,7 +148,7 @@ public class Mapwriter {
         mapString.append(string);
         mapString.append("\n");
       }
-      game.getMap().repalceMapelement(element, stringToElement(lines[element]));
+      game.getMap().replaceMapelement(element, stringToElement(lines[element]));
 
     } catch (IndexOutOfBoundsException e) {
       throw new InvalidIndexException(element);
@@ -179,7 +179,7 @@ public class Mapwriter {
         mapString.append(string);
         mapString.append("\n");
       }
-      game.getMap().repalceMapelement(element, stringToElement(lines[element]));
+      game.getMap().replaceMapelement(element, stringToElement(lines[element]));
 
     } catch (IndexOutOfBoundsException e) {
       throw new InvalidIndexException(element);
@@ -211,7 +211,7 @@ public class Mapwriter {
         mapString.append(string);
         mapString.append("\n");
       }
-      game.getMap().repalceMapelement(element, stringToElement(lines[element]));
+      game.getMap().replaceMapelement(element, stringToElement(lines[element]));
 
     } catch (IndexOutOfBoundsException e) {
       throw new InvalidIndexException(element);
@@ -246,7 +246,7 @@ public class Mapwriter {
     } catch (IndexOutOfBoundsException e) {
       throw new InvalidIndexException(element);
     }
-    game.getMap().repalceMapelement(element, stringToElement(lines[element]));
+    game.getMap().replaceMapelement(element, stringToElement(lines[element]));
   }
 
   private void replaceMapelement(String s) throws InvalidIndexException { // platziert ein MapElement an einer neuen
@@ -271,7 +271,7 @@ public class Mapwriter {
         mapString.append(string);
         mapString.append("\n");
       }
-      game.getMap().repalceMapelement(element, stringToElement(lines[element]));
+      game.getMap().replaceMapelement(element, stringToElement(lines[element]));
 
     } catch (IndexOutOfBoundsException e) {
       throw new InvalidIndexException(element);

@@ -60,6 +60,7 @@ public class Map extends JPanel {
   }
 
   public void update() {
+    player.update();
     int sizeAllObjects = allObjects.size();
     for (int i = 0; i < sizeAllObjects; i++) {
       allObjects.get(i).update();
@@ -68,7 +69,6 @@ public class Map extends JPanel {
     for (int i = 0; i < sizeEnemies; i++) {
       enemies.get(i).update();
     }
-    player.update();
     game.updates++;
   }
 
@@ -142,7 +142,7 @@ public class Map extends JPanel {
     return mapwriter;
   }
 
-  public void repalceMapelement(int index, MapElement newElement) {
+  public void replaceMapelement(int index, MapElement newElement) {
     allObjects.set(index, newElement);
   }
 
