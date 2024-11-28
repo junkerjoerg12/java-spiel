@@ -33,7 +33,7 @@ public class Map extends JPanel {
   public Map(Game game, File mapfile) {
     this.mapfile = mapfile;
     this.game = game;
-    this.setBackground(Color.CYAN);
+    this.setBackground(Color.orange);
     this.setLayout(null);
     this.setDoubleBuffered(true);
     mapreader = new Mapreader(game);

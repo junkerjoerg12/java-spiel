@@ -184,6 +184,10 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     repaint();
   }
 
+  public void setGameover(){
+    
+  }
+
   @Override
   public void actionPerformed(ActionEvent e) {
     // wird immer wieder vom Timer aufgerufen, ist quasi die Gameloop
