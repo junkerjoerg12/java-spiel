@@ -4,9 +4,12 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.io.File;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import de.junkerjoerg12.Game;
@@ -27,6 +30,7 @@ public class Map extends JPanel {
   private Game game;
 
   private File mapfile;
+  private Image backgroundImage;
 
   private Font timerFont = new Font("TimesRoman", Font.PLAIN, 20);
 
@@ -41,6 +45,13 @@ public class Map extends JPanel {
   }
 
   public void build() {
+    try {
+      backgroundImage = ImageIO
+          .read(new File(
+              Paths.get("src", "main", "resources", "assets", "trying.png").toString()));
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
     player = new Player(game);
     this.add(player);
 
@@ -75,6 +86,7 @@ public class Map extends JPanel {
   // Die beiden Methoden vielleicht zusammenlegen, für einen loopdurchgang weniger
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
+    g.drawImage(backgroundImage, 0, 0, this);
     Graphics2D g2D = (Graphics2D) g;
     int sizeAllObjects = allObjects.size();
     for (int i = 0; i < sizeAllObjects; i++) {
