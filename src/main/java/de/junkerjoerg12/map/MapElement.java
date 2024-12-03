@@ -20,7 +20,6 @@ public abstract class MapElement extends PhysicsObject {
         calculatePosition();
     }
 
-
     public void draw(Graphics2D g) {
         super.draw(g);
     }
@@ -73,7 +72,7 @@ public abstract class MapElement extends PhysicsObject {
             // zeichent die untere rechte ecke des Objektes
             if (heightSub > 0 && widthSub > 0) {
                 subImage = imageToDisplay.getSubimage(0, 0, widthSub, heightSub);
-                g.drawImage(subImage, this.x + width * iteratorWidth, this.y + height *iteratorHeight, null);
+                g.drawImage(subImage, this.x + width * iteratorWidth, this.y + height * iteratorHeight, null);
             }
         }
         super.draw(g);

@@ -46,10 +46,10 @@ public class Settings extends JPanel implements ActionListener, KeyListener {
         this.setLayout(new GridBagLayout());
         this.setVisible(true);
         this.setBackground(Color.GRAY);
-        this.setFocusable(true); 
+        this.setFocusable(true);
         this.addKeyListener(this);
         try {
-            backgroundImage = ImageIO.read(new File(Paths.get("src", "main", "resources", "MainMenu-Background.png").toString()));
+            backgroundImage = ImageIO.read(new File(Paths.get("src", "main", "resources", "trying.png").toString()));
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -38,7 +38,7 @@ public class Lvlauswahl extends JPanel implements ActionListener {
 
     try {
       backgroundImage = ImageIO
-          .read(new File(Paths.get("src", "main", "resources", "MainMenu-Background.png").toString()));
+          .read(new File(Paths.get("src", "main", "resources", "trying.png").toString()));
       mapsDir = new File(Paths.get("maps").toString());
     } catch (Exception e) {
       e.printStackTrace();
