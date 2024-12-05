@@ -13,7 +13,7 @@ import de.junkerjoerg12.map.MapElement;
 
 public class Stone extends MapElement{
 
-    public static BufferedImage imageToDisplay;
+    public static BufferedImage imageToDisplay;         //https://stock.adobe.com/583384224?clickref=1011lzZfBBGc&mv=affiliate&mv2=pz&as_camptype=search-sponsored-ao_2407_15_10-ignore&as_channel=affiliate&as_source=partnerize&as_campaign=cheezy
 
     public Stone(Game game) {
         super(game);
