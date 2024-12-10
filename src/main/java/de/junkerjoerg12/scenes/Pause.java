@@ -22,6 +22,7 @@ public class Pause extends JPanel implements ActionListener {
     private JButton backToMainMenu = new JButton("back to main menu");
     private JButton quitGame = new JButton("quit the game");
     private JButton continueButton = new JButton("continue");
+    private JButton backtolvls = new JButton("Choose Level");
 
     private Image backgroundImage;
 
@@ -39,19 +40,24 @@ public class Pause extends JPanel implements ActionListener {
         this.game = game;
         this.map = game.getMap();
 
+        backtolvls.setFocusable(false);
+        backtolvls.addActionListener(this);
+        this.add(backtolvls, constraints);
+
+        constraints.gridy = 2;
         backToMainMenu.addActionListener(this);
         backToMainMenu.setFocusable(false);
         this.add(backToMainMenu, constraints);
 
-        constraints.gridy = 2;
-        quitGame.addActionListener(this);
-        quitGame.setFocusable(false);
-        this.add(quitGame, constraints);
-
-        // constraints.gridy = 3;
+        // constraints.gridy = 1;
         // continueButton.addActionListener(this);
         // continueButton.setFocusable(false);
         // this.add(continueButton, constraints);
+
+        constraints.gridy = 3;
+        quitGame.addActionListener(this);
+        quitGame.setFocusable(false);
+        this.add(quitGame, constraints);
 
         this.setBackground(Color.GRAY);
         game.getMap().setVisible(false);
@@ -80,6 +86,9 @@ public class Pause extends JPanel implements ActionListener {
             game.setpaused(false);
         } else if (e.getSource() == quitGame) {
             System.exit(0);
+        } else if (e.getSource() == backtolvls) {
+            game.remove(this);
+            game.levelauswahl();
         }
     }
 
