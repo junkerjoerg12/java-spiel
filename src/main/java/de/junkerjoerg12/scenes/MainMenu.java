@@ -75,14 +75,7 @@ public class MainMenu extends JPanel implements ActionListener {
 
   @Override
   public void actionPerformed(ActionEvent e) {
-    if (e.getSource() == quit) { // wtf is this?
-      /*
-       * Statreader s = new Statreader();
-       * ArrayList<String> time = new ArrayList<>();
-       * time = s.getbest();
-       * for (int i = 0; i < time.size(); i++) {
-       * }
-       */
+    if (e.getSource() == quit) {
       System.exit(0);
     } else if (e.getSource() == start) {
       game.levelauswahl();
