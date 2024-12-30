@@ -31,6 +31,10 @@ public class Settings extends JPanel implements ActionListener, KeyListener {
     private JLabel showscurrentrightkey;
     private JLabel showscurrentleftkey;
     private JLabel showscurrentconsolekey;
+    private JLabel spacebetweenJLabel1;
+    private JLabel spacebetweenJLabel2;
+    private JLabel spacebetweenJLabel3;
+    private JLabel spacebetweenJLabel4;
 
     private boolean jump = false;
     private boolean right = false;
@@ -67,6 +71,13 @@ public class Settings extends JPanel implements ActionListener, KeyListener {
         constraints.gridx = 1;
         constraints.gridy = 0;
 
+        spacebetweenJLabel1 = new JLabel("    ", SwingConstants.CENTER);
+        spacebetweenJLabel1.setVisible(true);
+        this.add(spacebetweenJLabel1, constraints);
+
+        constraints.gridx = 2;
+        constraints.gridy = 0;
+
         showscurrentjumpkey = new JLabel("", SwingConstants.CENTER);
         showscurrentjumpkey.setText(getthekey(game.getjumpkey()));
         showscurrentjumpkey.setForeground(Color.BLACK);
@@ -81,6 +92,13 @@ public class Settings extends JPanel implements ActionListener, KeyListener {
         this.add(changerightbutton, constraints);
 
         constraints.gridx = 1;
+        constraints.gridy = 1;
+
+        spacebetweenJLabel2 = new JLabel("    ", SwingConstants.CENTER);
+        spacebetweenJLabel2.setVisible(true);
+        this.add(spacebetweenJLabel2, constraints);
+
+        constraints.gridx = 2;
         constraints.gridy = 1;
 
         showscurrentrightkey = new JLabel("", SwingConstants.CENTER);
@@ -99,6 +117,13 @@ public class Settings extends JPanel implements ActionListener, KeyListener {
         constraints.gridx = 1;
         constraints.gridy = 2;
 
+        spacebetweenJLabel3 = new JLabel("    ", SwingConstants.CENTER);
+        spacebetweenJLabel3.setVisible(true);
+        this.add(spacebetweenJLabel3, constraints);
+
+        constraints.gridx = 2;
+        constraints.gridy = 2;
+
         showscurrentleftkey = new JLabel("", SwingConstants.CENTER);
         showscurrentleftkey.setText(getthekey(game.getleftkey()));
         showscurrentleftkey.setForeground(Color.BLACK);
@@ -113,6 +138,13 @@ public class Settings extends JPanel implements ActionListener, KeyListener {
         this.add(changeconsolebutton, constraints);
 
         constraints.gridx = 1;
+        constraints.gridy = 3;
+
+        spacebetweenJLabel4 = new JLabel("   ", SwingConstants.CENTER);
+        spacebetweenJLabel4.setVisible(true);
+        this.add(spacebetweenJLabel4, constraints);
+
+        constraints.gridx = 2;
         constraints.gridy = 3;
 
         showscurrentconsolekey = new JLabel("", SwingConstants.CENTER);
