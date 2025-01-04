@@ -42,6 +42,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
   public Console console;
   private Lvlauswahl lvlauswahl;
   private Endscreen endscreen;
+  private boolean inmap = false;
   // private Pause pause;
 
   private final int targetFPS = 60;
@@ -106,6 +107,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
   }
 
   public void mainMenu() {
+    inmap = false;
     if (map != null) {
       remove(map);
       gameloop.pause();
@@ -119,6 +121,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
   }
 
   public void levelauswahl() {
+    inmap = false;
     lvlauswahl = new Lvlauswahl(this);
     remove(mainMenu);
     this.add(lvlauswahl, BorderLayout.CENTER);
@@ -142,6 +145,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     gameloop.start();
     imageSwitcher.start();
     timerm.start();
+    inmap = true;
   }
 
   public void switchScene(JPanel oldpanel, JPanel newpanel) { // sollte bspw Settings removen und lvlauswahl adden
@@ -153,12 +157,15 @@ public class Game extends JFrame implements ActionListener, KeyListener {
   }
 
   public void pause() {
-    gameloop.pause();
-    new Pause(this);
+    if (inmap == true) {
+      gameloop.pause();
+      new Pause(this);
 
-    revalidate();
-    repaint();
-    paused = !paused;
+      revalidate();
+      repaint();
+      paused = !paused;
+    }
+
   }
 
   public void stoppause(Map map) {
@@ -169,6 +176,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
   }
 
   public void setEndscreen() {
+    inmap = false;
     endscreen = new Endscreen(this, getcurrentmin(), getcurrents(), getcurrentms(), map.getMapfile());
     gameloop.pause();
     remove(map);

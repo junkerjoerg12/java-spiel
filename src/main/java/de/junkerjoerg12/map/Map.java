@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
@@ -16,6 +17,7 @@ import de.junkerjoerg12.Game;
 import de.junkerjoerg12.PhysicsObject;
 import de.junkerjoerg12.character.Enemy;
 import de.junkerjoerg12.character.Player;
+import de.junkerjoerg12.scenes.Failscreen;
 import de.junkerjoerg12.tools.Mapreader;
 import de.junkerjoerg12.tools.Mapwriter;
 
@@ -162,4 +164,13 @@ public class Map extends JPanel {
     return mapfile;
   }
 
+  public static void setbackroundmapForFail(Failscreen panel) throws IOException {
+    if (panel.getMapfile().toString().contains("level1")) {
+      panel.setBackground(ImageIO.read(new File(Paths.get("src", "main", "resources", "map1.png").toString())));
+    } else if (panel.getMapfile().toString().contains("level2")) {
+
+    } else if (panel.getMapfile().toString().contains("level3")) {
+
+    }
+  }
 }

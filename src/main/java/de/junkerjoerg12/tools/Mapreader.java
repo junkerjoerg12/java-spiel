@@ -56,8 +56,10 @@ public class Mapreader {
       mapelement = new Grass(game);
     } else if (name.equals("goal")) {
       mapelement = new Goal(game);
-    } else if (name.equals("Floor")){
+    } else if (name.equals("Floor")) {
       mapelement = new Floor(game);
+    } else if (name.equals("trap")) {
+      mapelement = new Trap(game);
     }
 
     String[] coordinates = objectSomething[1].split(",");
