@@ -45,9 +45,12 @@ public class Failscreen extends JPanel implements ActionListener {
         }
 
         GridBagConstraints constraints = new GridBagConstraints();
+        constraints.gridx = 1;
         constraints.gridy = 1;
         this.add(main, constraints);
         constraints.gridx = 1;
+        constraints.gridy = 2;
+        this.add(retry, constraints);
 
         repaint();
 
@@ -58,6 +61,8 @@ public class Failscreen extends JPanel implements ActionListener {
         if (e.getSource() == main) {
             game.remove(this);
             game.mainMenu();
+        } else if (e.getSource() == retry) {
+            game.addmap(mapfile);
         }
     }
 

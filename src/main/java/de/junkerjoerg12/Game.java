@@ -4,6 +4,7 @@ import de.junkerjoerg12.map.Map;
 import de.junkerjoerg12.map.mapElements.Goal;
 import de.junkerjoerg12.map.mapElements.Water;
 import de.junkerjoerg12.scenes.Endscreen;
+import de.junkerjoerg12.scenes.Failscreen;
 import de.junkerjoerg12.scenes.Lvlauswahl;
 import de.junkerjoerg12.scenes.MainMenu;
 import de.junkerjoerg12.scenes.Pause;
@@ -42,6 +43,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
   public Console console;
   private Lvlauswahl lvlauswahl;
   private Endscreen endscreen;
+  private Failscreen failscreen;
   private boolean inmap = false;
   // private Pause pause;
 
@@ -131,6 +133,10 @@ public class Game extends JFrame implements ActionListener, KeyListener {
   }
 
   public void addmap(File mapfile) {
+    if (failscreen != null) {
+      remove(failscreen);
+    }
+
     remove(lvlauswahl);
     map = new Map(this, mapfile);
     map.build();
@@ -182,6 +188,17 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     remove(map);
     this.add(endscreen, BorderLayout.CENTER);
     endscreen.setVisible(true);
+    revalidate();
+    repaint();
+  }
+
+  public void setFailscreen() {
+    inmap = false;
+    failscreen = new Failscreen(this, map.getMapfile());
+    gameloop.pause();
+    remove(map);
+    this.add(failscreen, BorderLayout.CENTER);
+    failscreen.setVisible(true);
     revalidate();
     repaint();
   }

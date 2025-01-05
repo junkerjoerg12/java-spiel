@@ -54,7 +54,7 @@ public class Trap extends MapElement {
     public void update() {
         if (intersects(player) || collisionBottom(playerlist) || collisionLeft(playerlist) || collisionRight(playerlist)
                 || collisionTop(playerlist)) {
-            game.setEndscreen();
+            game.setFailscreen();
         }
     }
 
