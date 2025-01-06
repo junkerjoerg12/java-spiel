@@ -19,6 +19,7 @@ import de.junkerjoerg12.character.Enemy;
 import de.junkerjoerg12.character.Player;
 import de.junkerjoerg12.scenes.Endscreen;
 import de.junkerjoerg12.scenes.Failscreen;
+import de.junkerjoerg12.scenes.Leveldetails;
 import de.junkerjoerg12.tools.Mapreader;
 import de.junkerjoerg12.tools.Mapwriter;
 
@@ -108,7 +109,8 @@ public class Map extends JPanel {
 
     g.setFont(timerFont);
 
-    g.drawString("Time: " + strLongmin + ":" + strLongs + "," + strLongms, 1690, 20);// timer anzeigen
+    g.drawString("Time: " + strLongmin + ":" + strLongs + "," + strLongms, 1690,
+        20);// timer anzeigen
 
   }
 
@@ -169,7 +171,7 @@ public class Map extends JPanel {
     if (panel.getMapfile().toString().contains("level1")) {
       panel.setBackground(ImageIO.read(new File(Paths.get("src", "main", "resources", "map1.png").toString())));
     } else if (panel.getMapfile().toString().contains("level2")) {
-      panel.setBackground(ImageIO.read(new File(Paths.get("src", "main", "resources", "map1.png").toString())));
+      panel.setBackground(ImageIO.read(new File(Paths.get("src", "main", "resources", "map2.png").toString())));
     } else if (panel.getMapfile().toString().contains("level3")) {
       panel.setBackground(ImageIO.read(new File(Paths.get("src", "main", "resources", "map1.png").toString())));
     }
@@ -179,7 +181,17 @@ public class Map extends JPanel {
     if (panel.getMapfile().toString().contains("level1")) {
       panel.setBackground(ImageIO.read(new File(Paths.get("src", "main", "resources", "map1.png").toString())));
     } else if (panel.getMapfile().toString().contains("level2")) {
+      panel.setBackground(ImageIO.read(new File(Paths.get("src", "main", "resources", "map2.png").toString())));
+    } else if (panel.getMapfile().toString().contains("level3")) {
       panel.setBackground(ImageIO.read(new File(Paths.get("src", "main", "resources", "map1.png").toString())));
+    }
+  }
+
+  public static void setbackroundmapForlvl(Leveldetails panel) throws IOException {
+    if (panel.getMapfile().toString().contains("level1")) {
+      panel.setBackground(ImageIO.read(new File(Paths.get("src", "main", "resources", "map1.png").toString())));
+    } else if (panel.getMapfile().toString().contains("level2")) {
+      panel.setBackground(ImageIO.read(new File(Paths.get("src", "main", "resources", "map2.png").toString())));
     } else if (panel.getMapfile().toString().contains("level3")) {
       panel.setBackground(ImageIO.read(new File(Paths.get("src", "main", "resources", "map1.png").toString())));
     }
