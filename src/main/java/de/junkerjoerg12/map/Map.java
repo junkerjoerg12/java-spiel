@@ -108,9 +108,8 @@ public class Map extends JPanel {
     String strLongmin = Long.toString(game.getcurrentmin());
 
     g.setFont(timerFont);
-
-    g.drawString("Time: " + strLongmin + ":" + strLongs + "," + strLongms, 1690,
-        20);// timer anzeigen
+    g.setColor(Color.WHITE);
+    g.drawString("Time: " + strLongmin + ":" + strLongs + "," + strLongms, 1690, 20);// timer anzeigen
 
   }
 

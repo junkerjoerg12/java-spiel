@@ -76,7 +76,9 @@ public class Leveldetails extends JPanel implements ActionListener {
     super.paintComponent(g);
     g.drawImage(background, 0, 0, this); // am besten in die Mitte des Bildschirmes(links ist auch möglich dann
                                          // halt die Buttons + time rechts)
+
     g.setFont(timeFont);
+    g.setColor(Color.WHITE);
     g.drawString("Best time: " + getbestmin() + " min " + getbests() + " sec " + getbestms() + " ms", 770, 1000);// timer
   }
 
