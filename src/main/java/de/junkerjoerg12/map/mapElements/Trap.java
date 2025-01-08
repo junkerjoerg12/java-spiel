@@ -27,13 +27,13 @@ public class Trap extends MapElement {
         if (Trap.images.size() == 0) {
             try {
                 Trap.images.add(ImageIO
-                        .read(new File(Paths.get("src", "main", "resources", "assets", "wasser1.png").toString())));
+                        .read(new File(Paths.get("src", "main", "resources", "assets", "Lava1.png").toString())));
                 Trap.images.add(ImageIO
-                        .read(new File(Paths.get("src", "main", "resources", "assets", "wasser2.png").toString())));
+                        .read(new File(Paths.get("src", "main", "resources", "assets", "Lava2.png").toString())));
                 Trap.images.add(ImageIO
-                        .read(new File(Paths.get("src", "main", "resources", "assets", "wasser3.png").toString())));
+                        .read(new File(Paths.get("src", "main", "resources", "assets", "Lava3.png").toString())));
                 Trap.images.add(ImageIO
-                        .read(new File(Paths.get("src", "main", "resources", "assets", "wasser2.png").toString())));
+                        .read(new File(Paths.get("src", "main", "resources", "assets", "Lava2.png").toString())));
                 Trap.imageToDisplay = images.get(0);
             } catch (IOException e) {
                 e.printStackTrace();

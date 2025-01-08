@@ -2,6 +2,7 @@ package de.junkerjoerg12;
 
 import de.junkerjoerg12.map.Map;
 import de.junkerjoerg12.map.mapElements.Goal;
+import de.junkerjoerg12.map.mapElements.Trap;
 import de.junkerjoerg12.map.mapElements.Water;
 import de.junkerjoerg12.scenes.Endscreen;
 import de.junkerjoerg12.scenes.Failscreen;
@@ -218,6 +219,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
       draws = 0;
     } else if (e.getSource() == imageSwitcher) {
       // switch image methode von jeder Mapobjekt klasse aufrufen
+      Trap.switchImage();
       Water.switchImage();
       Goal.switchImages();
     }
