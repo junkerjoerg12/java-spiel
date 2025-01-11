@@ -55,14 +55,18 @@ public class Trap extends MapElement {
         if (intersects(player) || collisionBottom(playerlist) || collisionLeft(playerlist) || collisionRight(playerlist)
                 || collisionTop(playerlist)) {
             game.setFailscreen();
+
         }
     }
 
-    public static void switchImage() {
-        if (imageIndex != images.size()) {
-            imageToDisplay = images.get(imageIndex++);
-        } else {
-            imageToDisplay = images.get(imageIndex = 0);
+    public static void switchImages() {
+        if (images.size() != 0) {
+
+            if (imageIndex != images.size()) {
+                imageToDisplay = images.get(imageIndex++);
+            } else {
+                imageToDisplay = images.get(imageIndex = 0);
+            }
         }
     }
 }

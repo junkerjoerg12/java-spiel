@@ -40,10 +40,17 @@ public class Water extends MapElement {
     }
 
     public static void switchImage() {
-        if (imageIndex != images.size()) {
-            imageToDisplay = images.get(imageIndex++);
-        } else {
-            imageToDisplay = images.get(imageIndex = 0);
+        /*
+         * if (imageIndex != images.size()) {
+         * imageToDisplay = images.get(imageIndex++);
+         * } else {
+         * imageToDisplay = images.get(imageIndex = 0);
+         * }
+         */
+
+        if (!images.isEmpty()) {
+            imageIndex = (imageIndex + 1) % images.size();
+            imageToDisplay = images.get(imageIndex);
         }
     }
 

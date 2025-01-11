@@ -151,6 +151,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     gameloop = new Gameloop((long) delayBetweenFrames, this);
     gameloop.start();
     imageSwitcher.start();
+
     timerm.start();
     inmap = true;
   }
@@ -219,9 +220,10 @@ public class Game extends JFrame implements ActionListener, KeyListener {
       draws = 0;
     } else if (e.getSource() == imageSwitcher) {
       // switch image methode von jeder Mapobjekt klasse aufrufen
-      Trap.switchImage();
+      System.out.println("switchin");
       Water.switchImage();
       Goal.switchImages();
+      Trap.switchImages();
     }
   }
 

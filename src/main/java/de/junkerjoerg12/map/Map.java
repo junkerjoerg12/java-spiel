@@ -172,7 +172,7 @@ public class Map extends JPanel {
     } else if (panel.getMapfile().toString().contains("level2")) {
       panel.setBackground(ImageIO.read(new File(Paths.get("src", "main", "resources", "map2.png").toString())));
     } else if (panel.getMapfile().toString().contains("level3")) {
-      panel.setBackground(ImageIO.read(new File(Paths.get("src", "main", "resources", "map1.png").toString())));
+      panel.setBackground(ImageIO.read(new File(Paths.get("src", "main", "resources", "map3.png").toString())));
     }
   }
 
@@ -182,7 +182,7 @@ public class Map extends JPanel {
     } else if (panel.getMapfile().toString().contains("level2")) {
       panel.setBackground(ImageIO.read(new File(Paths.get("src", "main", "resources", "map2.png").toString())));
     } else if (panel.getMapfile().toString().contains("level3")) {
-      panel.setBackground(ImageIO.read(new File(Paths.get("src", "main", "resources", "map1.png").toString())));
+      panel.setBackground(ImageIO.read(new File(Paths.get("src", "main", "resources", "map3.png").toString())));
     }
   }
 
@@ -192,7 +192,7 @@ public class Map extends JPanel {
     } else if (panel.getMapfile().toString().contains("level2")) {
       panel.setBackground(ImageIO.read(new File(Paths.get("src", "main", "resources", "map2.png").toString())));
     } else if (panel.getMapfile().toString().contains("level3")) {
-      panel.setBackground(ImageIO.read(new File(Paths.get("src", "main", "resources", "map1.png").toString())));
+      panel.setBackground(ImageIO.read(new File(Paths.get("src", "main", "resources", "map3.png").toString())));
     }
   }
 
