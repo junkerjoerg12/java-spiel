@@ -22,7 +22,7 @@ public class Trap extends MapElement {
     private ArrayList<PhysicsObject> playerlist = new ArrayList<>();
     public static int imageIndex;
 
-    public Trap(Game game) { // needs to be size :
+    public Trap(Game game) {
         super(game);
         if (Trap.images.size() == 0) {
             try {

@@ -1,5 +1,6 @@
 package de.junkerjoerg12.scenes;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
@@ -24,7 +25,7 @@ import de.junkerjoerg12.tools.Statwriter;
 
 public class Failscreen extends JPanel implements ActionListener {
     private Game game;
-    private Font timerFont = new Font("TimesRoman", Font.PLAIN, 20);
+    private Font timerFont = new Font("TimesRoman", Font.PLAIN, 40);
     private JButton main = new JButton("Main Menu");
     private File mapfile;
     private JButton retry = new JButton("Try again");
@@ -72,15 +73,10 @@ public class Failscreen extends JPanel implements ActionListener {
         g.drawImage(background, 0, 0, null);
         g.setFont(timerFont);
         FontMetrics metrics = g.getFontMetrics();
-        /*
-         * String[] texts = time.split("\n");
-         * for (int i = 0; i < texts.length; i++) {
-         * String s = texts[i];
-         * int x = (game.getMap().getWidth() - metrics.stringWidth(s)) / 2;
-         * g.drawString(s, x, 600 + metrics.getHeight() * i);
-         * 
-         * }
-         */
+        // g.setColor(Color.WHITE);
+        int x = (game.getMap().getWidth() - metrics.stringWidth("You died!")) / 2;
+        g.drawString("You died!", x, 300 + metrics.getHeight());
+
     }
 
     public File getMapfile() {

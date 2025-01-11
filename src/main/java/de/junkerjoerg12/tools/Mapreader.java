@@ -60,6 +60,10 @@ public class Mapreader {
       mapelement = new Floor(game);
     } else if (name.equals("trap")) {
       mapelement = new Trap(game);
+    } else if (name.equals("leaf")) {
+      mapelement = new Leaf(game);
+    } else if (name.equals("log")) {
+      mapelement = new Log(game);
     }
 
     String[] coordinates = objectSomething[1].split(",");
