@@ -2,8 +2,12 @@ package de.junkerjoerg12;
 
 import de.junkerjoerg12.map.Map;
 import de.junkerjoerg12.map.mapElements.Goal;
+import de.junkerjoerg12.map.mapElements.Leaf;
+import de.junkerjoerg12.map.mapElements.Trap;
 import de.junkerjoerg12.map.mapElements.Water;
+import de.junkerjoerg12.scenes.Characterselect;
 import de.junkerjoerg12.scenes.Endscreen;
+import de.junkerjoerg12.scenes.Failscreen;
 import de.junkerjoerg12.scenes.Lvlauswahl;
 import de.junkerjoerg12.scenes.MainMenu;
 import de.junkerjoerg12.scenes.Pause;
@@ -42,6 +46,10 @@ public class Game extends JFrame implements ActionListener, KeyListener {
   public Console console;
   private Lvlauswahl lvlauswahl;
   private Endscreen endscreen;
+  private Failscreen failscreen;
+  private Characterselect characterselect;
+  private boolean inmap = false;
+  private int character = 0;
   // private Pause pause;
 
   private final int targetFPS = 60;
@@ -106,6 +114,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
   }
 
   public void mainMenu() {
+    inmap = false;
     if (map != null) {
       remove(map);
       gameloop.pause();
@@ -119,6 +128,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
   }
 
   public void levelauswahl() {
+    inmap = false;
     lvlauswahl = new Lvlauswahl(this);
     remove(mainMenu);
     this.add(lvlauswahl, BorderLayout.CENTER);
@@ -128,6 +138,10 @@ public class Game extends JFrame implements ActionListener, KeyListener {
   }
 
   public void addmap(File mapfile) {
+    if (failscreen != null) {
+      remove(failscreen);
+    }
+
     remove(lvlauswahl);
     map = new Map(this, mapfile);
     map.build();
@@ -141,7 +155,9 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     gameloop = new Gameloop((long) delayBetweenFrames, this);
     gameloop.start();
     imageSwitcher.start();
+
     timerm.start();
+    inmap = true;
   }
 
   public void switchScene(JPanel oldpanel, JPanel newpanel) { // sollte bspw Settings removen und lvlauswahl adden
@@ -153,12 +169,15 @@ public class Game extends JFrame implements ActionListener, KeyListener {
   }
 
   public void pause() {
-    gameloop.pause();
-    new Pause(this);
+    if (inmap == true) {
+      gameloop.pause();
+      new Pause(this);
 
-    revalidate();
-    repaint();
-    paused = !paused;
+      revalidate();
+      repaint();
+      paused = !paused;
+    }
+
   }
 
   public void stoppause(Map map) {
@@ -169,11 +188,32 @@ public class Game extends JFrame implements ActionListener, KeyListener {
   }
 
   public void setEndscreen() {
+    inmap = false;
     endscreen = new Endscreen(this, getcurrentmin(), getcurrents(), getcurrentms(), map.getMapfile());
     gameloop.pause();
     remove(map);
     this.add(endscreen, BorderLayout.CENTER);
     endscreen.setVisible(true);
+    revalidate();
+    repaint();
+  }
+
+  public void setCharacterselect() {
+    characterselect = new Characterselect(this);
+    remove(mainMenu);
+    this.add(characterselect, BorderLayout.CENTER);
+    characterselect.setVisible(true);
+    revalidate();
+    repaint();
+  }
+
+  public void setFailscreen() {
+    inmap = false;
+    failscreen = new Failscreen(this, map.getMapfile());
+    gameloop.pause();
+    remove(map);
+    this.add(failscreen, BorderLayout.CENTER);
+    failscreen.setVisible(true);
     revalidate();
     repaint();
   }
@@ -195,6 +235,8 @@ public class Game extends JFrame implements ActionListener, KeyListener {
       // switch image methode von jeder Mapobjekt klasse aufrufen
       Water.switchImage();
       Goal.switchImages();
+      Trap.switchImages();
+      Leaf.switchImages();
     }
   }
 
@@ -319,6 +361,14 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 
   public void setpaused(boolean b) {
     paused = b;
+  }
+
+  public void setCharacter(int c) {
+    character = c;
+  }
+
+  public int getCharacter() {
+    return character;
   }
 
   public static void main(String[] args) {

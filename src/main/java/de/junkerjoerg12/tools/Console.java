@@ -90,7 +90,7 @@ public class Console extends JFrame {
     print(input);
     input = input.toLowerCase();
     if (settings) {
-      /* settigns hier einfügen */
+      /* settigns hier einfügen */ /////
       if (true) {
         // hier einstellunge einfügen
         print("keine Einstellugen vorhanden");
@@ -126,7 +126,7 @@ public class Console extends JFrame {
         } catch (InvalidIndexException e) {
           indexError(e.getMessage());
         } /* alle weiteren befehle, die zum bauen benötigt werden hier einfügen */
-      } else if (input.matches("\\s*help\\s*")) { //-n dirt; 400, 500; 50, 50
+      } else if (input.matches("\\s*help\\s*")) { // -n dirt; 400, 500; 50, 50
         print(
             "-n {art des MapObjects}; {x-Koordinate}, {y.Koordinate}; {Breite}, {Hoehe}       Erzeugt ein neues MapObjet an gegebener Stelle\n"
                 +

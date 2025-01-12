@@ -12,11 +12,13 @@ import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import de.junkerjoerg12.Game;
+import de.junkerjoerg12.map.Map;
 import de.junkerjoerg12.tools.Statreader;
 
 public class Leveldetails extends JPanel implements ActionListener {
@@ -24,7 +26,7 @@ public class Leveldetails extends JPanel implements ActionListener {
   private Game game;
   private JButton back = new JButton("back");
   private JButton start = new JButton("start");
-  private Image backgroundImage;
+  private BufferedImage background;
   private Font timeFont = new Font("TimesRoman", Font.PLAIN, 30);
   private File mapfile;
 
@@ -49,7 +51,7 @@ public class Leveldetails extends JPanel implements ActionListener {
     this.add(back, constraints);
 
     try {
-      backgroundImage = ImageIO.read(new File(Paths.get("src", "main", "resources", "map1.png").toString()));
+      Map.setbackroundmapForlvl(this);
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -72,9 +74,11 @@ public class Leveldetails extends JPanel implements ActionListener {
   @Override
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
-    g.drawImage(backgroundImage, 0, 0, this); // am besten in die Mitte des Bildschirmes(links ist auch möglich dann
-                                              // halt die Buttons + time rechts)
+    g.drawImage(background, 0, 0, this); // am besten in die Mitte des Bildschirmes(links ist auch möglich dann
+                                         // halt die Buttons + time rechts)
+
     g.setFont(timeFont);
+    g.setColor(Color.WHITE);
     g.drawString("Best time: " + getbestmin() + " min " + getbests() + " sec " + getbestms() + " ms", 770, 1000);// timer
   }
 
@@ -95,6 +99,14 @@ public class Leveldetails extends JPanel implements ActionListener {
   public String getbestms() {
     ArrayList<String> time = getstats();
     return time.get(2);
+  }
+
+  public File getMapfile() {
+    return mapfile;
+  }
+
+  public void setBackground(BufferedImage image) {
+    background = image;
   }
 
 }

@@ -23,6 +23,7 @@ public class MainMenu extends JPanel implements ActionListener {
 
   private JButton start;
   private JButton settings;
+  private JButton characterselect;
   private JButton quit;
 
   private Image backgroundImage;
@@ -54,14 +55,20 @@ public class MainMenu extends JPanel implements ActionListener {
     start.addActionListener(this);
 
     constraints.gridy = 2;
+    characterselect = new JButton("Character");
+    characterselect.setFocusable(false);
+    this.add(characterselect, constraints);
+    characterselect.addActionListener(this);
+
+    constraints.gridy = 3;
     settings = new JButton("Settings");
     settings.setFocusable(false);
     this.add(settings, constraints);
     settings.addActionListener(this);
 
+    constraints.gridy = 4;
     quit = new JButton("Quit");
     quit.setFocusable(false);
-    constraints.gridy = 3;
     this.add(quit, constraints);
     quit.addActionListener(this);
 
@@ -82,6 +89,8 @@ public class MainMenu extends JPanel implements ActionListener {
     } else if (e.getSource() == settings) {
       Settings settings = new Settings(game);
       game.switchScene(this, settings);
+    } else if (e.getSource() == characterselect) {
+      game.setCharacterselect();
     }
   }
 }

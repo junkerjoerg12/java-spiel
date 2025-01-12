@@ -18,13 +18,15 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import de.junkerjoerg12.Game;
+import de.junkerjoerg12.map.Map;
 import de.junkerjoerg12.tools.Statreader;
 import de.junkerjoerg12.tools.Statwriter;
 
 public class Endscreen extends JPanel implements ActionListener {
   private Game game;
   private Font timerFont = new Font("TimesRoman", Font.PLAIN, 20);
-  private JButton back = new JButton("back");
+  private JButton back = new JButton("back to Menu");
+  private JButton retry = new JButton("play again");
   private String time = "";
   private File mapfile;
 
@@ -42,9 +44,10 @@ public class Endscreen extends JPanel implements ActionListener {
     this.mapfile = mapfile;
     this.setLayout(new GridBagLayout());
     back.addActionListener(this);
+    retry.addActionListener(this);
 
     try {
-      background = ImageIO.read(new File(Paths.get("src", "main", "resources", "map1.png").toString()));
+      Map.setbackroundmapForEnd(this);
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -104,5 +107,13 @@ public class Endscreen extends JPanel implements ActionListener {
       g.drawString(s, x, 600 + metrics.getHeight() * i);
 
     }
+  }
+
+  public File getMapfile() {
+    return mapfile;
+  }
+
+  public void setBackground(BufferedImage image) {
+    background = image;
   }
 }

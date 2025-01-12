@@ -192,4 +192,5 @@ public abstract class PhysicsObject {
     protected abstract void calculatePosition();
 
     public abstract void update();
+
 }
