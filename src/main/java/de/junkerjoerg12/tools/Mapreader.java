@@ -64,6 +64,10 @@ public class Mapreader {
       mapelement = new Leaf(game);
     } else if (name.equals("log")) {
       mapelement = new Log(game);
+    } else if (name.equals("log2")) {
+      mapelement = new Log2(game);
+    } else if (name.equals("logsideways")) {
+      mapelement = new Logsideways(game);
     }
 
     String[] coordinates = objectSomething[1].split(",");

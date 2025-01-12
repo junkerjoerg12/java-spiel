@@ -5,6 +5,7 @@ import de.junkerjoerg12.map.mapElements.Goal;
 import de.junkerjoerg12.map.mapElements.Leaf;
 import de.junkerjoerg12.map.mapElements.Trap;
 import de.junkerjoerg12.map.mapElements.Water;
+import de.junkerjoerg12.scenes.Characterselect;
 import de.junkerjoerg12.scenes.Endscreen;
 import de.junkerjoerg12.scenes.Failscreen;
 import de.junkerjoerg12.scenes.Lvlauswahl;
@@ -46,7 +47,9 @@ public class Game extends JFrame implements ActionListener, KeyListener {
   private Lvlauswahl lvlauswahl;
   private Endscreen endscreen;
   private Failscreen failscreen;
+  private Characterselect characterselect;
   private boolean inmap = false;
+  private int character = 0;
   // private Pause pause;
 
   private final int targetFPS = 60;
@@ -191,6 +194,15 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     remove(map);
     this.add(endscreen, BorderLayout.CENTER);
     endscreen.setVisible(true);
+    revalidate();
+    repaint();
+  }
+
+  public void setCharacterselect() {
+    characterselect = new Characterselect(this);
+    remove(mainMenu);
+    this.add(characterselect, BorderLayout.CENTER);
+    characterselect.setVisible(true);
     revalidate();
     repaint();
   }
@@ -349,6 +361,14 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 
   public void setpaused(boolean b) {
     paused = b;
+  }
+
+  public void setCharacter(int c) {
+    character = c;
+  }
+
+  public int getCharacter() {
+    return character;
   }
 
   public static void main(String[] args) {

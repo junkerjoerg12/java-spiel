@@ -13,13 +13,18 @@ public class Player extends Entity {
 
     public Player(double acceleration, Game game) {
         super(acceleration, game);
-
         try {
-            images.add(ImageIO
-                    .read(new File(Paths.get("src", "main", "resources", "assets", "characterRight.png").toString())));
-            images.add(ImageIO
-                    .read(new File(Paths.get("src", "main", "resources", "assets", "characterLeft.png").toString())));
-            imageToDisplay = images.get(0);
+            if (game.getCharacter() == 1) {
+
+                images.add(ImageIO
+                        .read(new File(
+                                Paths.get("src", "main", "resources", "assets", "characterRight.png").toString())));
+                images.add(ImageIO
+                        .read(new File(
+                                Paths.get("src", "main", "resources", "assets", "characterLeft.png").toString())));
+                imageToDisplay = images.get(0);
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -32,11 +37,10 @@ public class Player extends Entity {
 
     @Override
     public void update() {
-        
+
         if (walkRight && !walkLeft) {
             imageToDisplay = images.get(0);
-        }
-        else if (walkLeft && !walkRight) {
+        } else if (walkLeft && !walkRight) {
             imageToDisplay = images.get(1);
         }
         super.update();
