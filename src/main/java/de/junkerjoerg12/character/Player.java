@@ -14,16 +14,56 @@ public class Player extends Entity {
     public Player(double acceleration, Game game) {
         super(acceleration, game);
         try {
-            if (game.getCharacter() == 1) {
+            if (game.getCharacter() == 0) {
 
                 images.add(ImageIO
                         .read(new File(
-                                Paths.get("src", "main", "resources", "assets", "characterRight.png").toString())));
+                                Paths.get("src", "main", "resources", "assets", "characterRight0.png").toString())));
                 images.add(ImageIO
                         .read(new File(
-                                Paths.get("src", "main", "resources", "assets", "characterLeft.png").toString())));
+                                Paths.get("src", "main", "resources", "assets", "characterLeft0.png").toString())));
                 imageToDisplay = images.get(0);
-            }
+
+
+           }else if(game.getCharacter() == 1){
+            images.add(ImageIO
+                        .read(new File(
+                                Paths.get("src", "main", "resources", "assets", "characterRight1.png").toString())));
+                images.add(ImageIO
+                        .read(new File(
+                                Paths.get("src", "main", "resources", "assets", "characterLeft1.png").toString())));
+                imageToDisplay = images.get(0);
+
+
+           }else if(game.getCharacter() == 2){
+            images.add(ImageIO
+                        .read(new File(
+                                Paths.get("src", "main", "resources", "assets", "characterRight2.png").toString())));
+                images.add(ImageIO
+                        .read(new File(
+                                Paths.get("src", "main", "resources", "assets", "characterLeft2.png").toString())));
+                imageToDisplay = images.get(0);
+
+
+           }else if(game.getCharacter() == 3){
+            images.add(ImageIO
+                        .read(new File(
+                                Paths.get("src", "main", "resources", "assets", "characterRight3.png").toString())));
+                images.add(ImageIO
+                        .read(new File(
+                                Paths.get("src", "main", "resources", "assets", "characterLeft3.png").toString())));
+                imageToDisplay = images.get(0);
+
+
+           }else if(game.getCharacter() == 4){
+            images.add(ImageIO
+                        .read(new File(
+                                Paths.get("src", "main", "resources", "assets", "characterRight4.png").toString())));
+                images.add(ImageIO
+                        .read(new File(
+                                Paths.get("src", "main", "resources", "assets", "characterLeft4.png").toString())));
+                imageToDisplay = images.get(0);
+           }
 
         } catch (IOException e) {
             e.printStackTrace();
