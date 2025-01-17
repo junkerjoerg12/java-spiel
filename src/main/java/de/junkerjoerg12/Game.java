@@ -17,6 +17,7 @@ import de.junkerjoerg12.tools.TimerForMap;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Graphics2D;
 import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -170,6 +171,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 
   public void pause() {
     if (inmap == true) {
+      inmap = false;
       gameloop.pause();
       new Pause(this);
 

@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
@@ -23,6 +24,10 @@ public class Characterselect extends JPanel implements ActionListener {
     private JButton back;
 
     private ArrayList<JButton> buttons = new ArrayList<>();
+    public ArrayList<BufferedImage> images = new ArrayList<>();
+    private int characters = 5;
+    public int x;
+    public int y;
 
     private Image backgroundImage;
     private Game game;
@@ -36,6 +41,11 @@ public class Characterselect extends JPanel implements ActionListener {
             backgroundImage = ImageIO
                     .read(new File(Paths.get("src", "main", "resources", "trying.png").toString()));
 
+            for (int i = 0; i < characters; i++) {
+                images.add(ImageIO.read(new File(Paths
+                        .get("src", "main", "resources", "assets", "characterRight" + i).toString())));
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -46,15 +56,11 @@ public class Characterselect extends JPanel implements ActionListener {
         constraints.gridy = 0;
         constraints.fill = GridBagConstraints.BOTH;
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < characters; i++) {
             buttons.add(new JButton("Character " + (i + 1)));
             buttons.get(i).addActionListener(this);
             this.add(buttons.get(i), constraints);
             constraints.gridx += 1;
-        }
-
-        for (int i = 0; i < 5; i++) {
-
         }
 
         back = new JButton("back to main menu");
@@ -89,6 +95,8 @@ public class Characterselect extends JPanel implements ActionListener {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(backgroundImage, 0, 0, this);
+        g.drawImage(images.get(0), 0, 0, null);
+
     }
 
 }
