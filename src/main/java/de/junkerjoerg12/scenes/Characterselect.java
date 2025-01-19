@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 import de.junkerjoerg12.Game;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 public class Characterselect extends JPanel implements ActionListener {
 
@@ -25,9 +26,10 @@ public class Characterselect extends JPanel implements ActionListener {
 
     private ArrayList<JButton> buttons = new ArrayList<>();
     public ArrayList<BufferedImage> images = new ArrayList<>();
+    protected BufferedImage image;
     private int characters = 5;
-    public int x;
-    public int y;
+    public int x = 720; // erster wert bei 5 Charakteren
+    public int y = 450;
 
     private Image backgroundImage;
     private Game game;
@@ -35,15 +37,16 @@ public class Characterselect extends JPanel implements ActionListener {
     public Characterselect(Game game) {
         this.game = game;
         this.setLayout(new GridBagLayout());
-        this.setVisible(true);
 
         try {
             backgroundImage = ImageIO
                     .read(new File(Paths.get("src", "main", "resources", "trying.png").toString()));
 
             for (int i = 0; i < characters; i++) {
-                images.add(ImageIO.read(new File(Paths
-                        .get("src", "main", "resources", "assets", "characterRight" + i).toString())));
+                BufferedImage img = ImageIO.read(new File(
+                        Paths.get("src", "main", "resources", "assets", "characterRight" + i + ".png").toString()));
+                images.add(img);
+
             }
 
         } catch (Exception e) {
@@ -56,7 +59,7 @@ public class Characterselect extends JPanel implements ActionListener {
         constraints.gridy = 0;
         constraints.fill = GridBagConstraints.BOTH;
 
-        for (int i = 0; i < characters; i++) {
+        for (int i = 0; i < characters; i++) { // wenn es aus irgendeinem grund weniger character werden überarbeiten
             buttons.add(new JButton("Character " + (i + 1)));
             buttons.get(i).addActionListener(this);
             this.add(buttons.get(i), constraints);
@@ -67,9 +70,11 @@ public class Characterselect extends JPanel implements ActionListener {
 
         back.addActionListener(this);
 
-        constraints.gridx = 2;
+        constraints.gridx = constraints.gridx / 2;
         constraints.gridy = 2;
         this.add(back, constraints);
+
+        this.setVisible(true);
 
     }
 
@@ -78,16 +83,14 @@ public class Characterselect extends JPanel implements ActionListener {
         if (e.getSource() == back) {
             game.remove(this);
             game.mainMenu();
-        } else if (e.getSource() == buttons.get(0)) {
-            game.setCharacter(0);
-        } else if (e.getSource() == buttons.get(1)) {
-            game.setCharacter(1);
-        } else if (e.getSource() == buttons.get(2)) {
-            game.setCharacter(2);
-        } else if (e.getSource() == buttons.get(3)) {
-            game.setCharacter(3);
-        } else if (e.getSource() == buttons.get(4)) {
-            game.setCharacter(4);
+        } else {
+            for (int i = 0; i < characters; i++) {
+                if (e.getSource() == buttons.get(i)) {
+                    int previousCharacterIndex = game.getCharacter();
+                    resetimg(previousCharacterIndex);
+                    game.setCharacter(i);
+                }
+            }
         }
     }
 
@@ -95,8 +98,32 @@ public class Characterselect extends JPanel implements ActionListener {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(backgroundImage, 0, 0, this);
-        g.drawImage(images.get(0), 0, 0, null);
-
+        Graphics2D g2D = (Graphics2D) g;
+        draw(g2D);
     }
 
+    private void resetimg(int index) {
+        GridBagConstraints constraints = ((GridBagLayout) this.getLayout()).getConstraints(buttons.get(index));
+        int buttonX = buttons.get(index).getX();
+        int imageX = buttonX + (buttons.get(index).getWidth() - 41) / 2;
+        y = 450;
+        // zurücksetzen y Position
+        repaint();
+    }
+
+    public void draw(Graphics2D g) {
+
+        if (!images.isEmpty() && images.size() == buttons.size()) {
+            int selectedCharacterIndex = game.getCharacter();
+            for (int i = 0; i < characters; i++) {
+                GridBagConstraints constraints = ((GridBagLayout) this.getLayout()).getConstraints(buttons.get(i));
+                int buttonX = buttons.get(i).getX();
+                int imageX = buttonX + (buttons.get(i).getWidth() - 41) / 2;
+                int offsetY = (i == selectedCharacterIndex) ? 10 : 0;
+                g.drawImage(images.get(i), imageX, y + offsetY, null);
+            }
+        } else {
+            System.err.println("Images liste ist leer (oder buttons != images)");
+        }
+    }
 }
