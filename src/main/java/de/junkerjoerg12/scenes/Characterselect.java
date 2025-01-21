@@ -29,7 +29,7 @@ public class Characterselect extends JPanel implements ActionListener {
     protected BufferedImage image;
     private int characters = 5;
     public int x = 720; // erster wert bei 5 Charakteren
-    public int y = 450;
+    public int y = 460;
 
     private Image backgroundImage;
     private Game game;
@@ -106,7 +106,7 @@ public class Characterselect extends JPanel implements ActionListener {
         GridBagConstraints constraints = ((GridBagLayout) this.getLayout()).getConstraints(buttons.get(index));
         int buttonX = buttons.get(index).getX();
         int imageX = buttonX + (buttons.get(index).getWidth() - 41) / 2;
-        y = 450;
+        y = 460;
         // zurücksetzen y Position
         repaint();
     }
@@ -120,7 +120,7 @@ public class Characterselect extends JPanel implements ActionListener {
                 int buttonX = buttons.get(i).getX();
                 int imageX = buttonX + (buttons.get(i).getWidth() - 41) / 2;
                 int offsetY = (i == selectedCharacterIndex) ? 10 : 0;
-                g.drawImage(images.get(i), imageX, y + offsetY, null);
+                g.drawImage(images.get(i), imageX, (y - offsetY), null);
             }
         } else {
             System.err.println("Images liste ist leer (oder buttons != images)");
