@@ -1,5 +1,6 @@
 package de.junkerjoerg12.scenes;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
@@ -101,6 +102,7 @@ public class Endscreen extends JPanel implements ActionListener {
     g.setFont(timerFont);
     FontMetrics metrics = g.getFontMetrics();
     String[] texts = time.split("\n");
+    g.setColor(Color.white);
     for (int i = 0; i < texts.length; i++) {
       String s = texts[i];
       int x = (game.getMap().getWidth() - metrics.stringWidth(s)) / 2;

@@ -100,7 +100,7 @@ public class Console extends JFrame {
       input = input.replaceAll("build\\s*", "");
       if (game.getMap() == null) {
         print("erst ein Level Starten");
-      } else if (input.matches("^-n [a-zA-Z0-9,; ]*$")) { // neues Element hinzufügen
+      } else if (input.matches("^-n [a-zA-Z0-9,; ]*$")) { // neues Element hinzufügen                 //input.matches("^-n [a-zA-Z0-9,;\\- ]*$")
         game.getMap().getMapwriter().addMapElement(input.replaceAll("-n ", ""));
       } else if (input.contains("-m")) { // schon bestehendes Element bewegen
         try {
