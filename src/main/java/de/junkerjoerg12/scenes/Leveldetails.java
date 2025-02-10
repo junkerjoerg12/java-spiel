@@ -29,6 +29,7 @@ public class Leveldetails extends JPanel implements ActionListener {
   private BufferedImage background;
   private Font timeFont = new Font("TimesRoman", Font.PLAIN, 30);
   private File mapfile;
+  
 
   public Leveldetails(Game game, File mapfile) {
     this.game = game;
@@ -52,6 +53,7 @@ public class Leveldetails extends JPanel implements ActionListener {
 
     try {
       Map.setbackroundmapForlvl(this);
+      
     } catch (Exception e) {
       e.printStackTrace();
     }
