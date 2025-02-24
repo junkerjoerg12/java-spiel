@@ -166,7 +166,9 @@ public class Console extends JFrame {
     } else if (input.equals("settings")) {
       settings = true;
       build = false;
-
+    } else if (input.equals("easierbuild")) {
+      ////////////////////////////////////////////////////////////////////////////
+      
     } else {
       inputError(input);
     }

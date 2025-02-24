@@ -13,6 +13,7 @@ import de.junkerjoerg12.scenes.MainMenu;
 import de.junkerjoerg12.scenes.Pause;
 import de.junkerjoerg12.tools.Console;
 import de.junkerjoerg12.tools.Gameloop;
+import de.junkerjoerg12.tools.Mapelementselect;
 import de.junkerjoerg12.tools.TimerForMap;
 
 import java.awt.BorderLayout;
@@ -45,6 +46,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
   private MainMenu mainMenu;
   private Map map;
   public Console console;
+  public Mapelementselect mapelementselect;
   private Lvlauswahl lvlauswahl;
   private Endscreen endscreen;
   private Failscreen failscreen;
@@ -139,6 +141,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
   }
 
   public void addmap(File mapfile) {
+    remove(mapelementselect);     //entfernt das window, damit nicht das falsche level bearbeitet wird
     if (failscreen != null) {
       remove(failscreen);
     }
