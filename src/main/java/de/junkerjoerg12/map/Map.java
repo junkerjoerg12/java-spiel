@@ -110,7 +110,9 @@ public class Map extends JPanel {
           for (int i = 0; i < sizeEnemies; i++) {
             enemies.get(i).draw(g2D);
           }
-          player.draw(g2D);
+         
+          
+          
           g.setColor(Color.BLACK);
       
           String strLongs = Long.toString(game.getcurrents());
@@ -119,7 +121,12 @@ public class Map extends JPanel {
       
           g.setFont(timerFont);
           g.setColor(Color.WHITE);
-          g.drawString("Time: " + strLongmin + ":" + strLongs + "," + strLongms, 1690, 20);// timer anzeigen
+
+          if(game.mapelementselect == null){    //wird nicht gemalt wenn man im easy build mode ist
+            player.draw(g2D);
+            g.drawString("Time: " + strLongmin + ":" + strLongs + "," + strLongms, 1690, 20);// timer anzeigen
+          }
+          
       
         }
       

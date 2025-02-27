@@ -167,6 +167,9 @@ public class Console extends JFrame {
       settings = true;
       build = false;
     } else if (input.equals("easierbuild")) {
+      if(game.inmap == true){
+        game.enterEasyBuildMode();
+      }
       ////////////////////////////////////////////////////////////////////////////
       
     } else {

@@ -51,7 +51,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
   private Endscreen endscreen;
   private Failscreen failscreen;
   private Characterselect characterselect;
-  private boolean inmap = false;
+  public boolean inmap = false;
   private int character = 0;
   // private Pause pause;
 
@@ -141,10 +141,9 @@ public class Game extends JFrame implements ActionListener, KeyListener {
   }
 
   public void addmap(File mapfile) {
-    remove(mapelementselect);     //entfernt das window, damit nicht das falsche level bearbeitet wird
-    if (failscreen != null) {
-      remove(failscreen);
-    }
+   if(mapelementselect != null) this.remove(mapelementselect);     //entfernt das window, damit nicht das falsche level bearbeitet wird
+   if(failscreen != null) remove(failscreen);
+  
 
     remove(lvlauswahl);
     map = new Map(this, mapfile);
@@ -221,6 +220,14 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     failscreen.setVisible(true);
     revalidate();
     repaint();
+  }
+
+  public void enterEasyBuildMode(){
+
+  }
+
+  public void leaveEasyBuildMode(){
+
   }
 
   @Override
