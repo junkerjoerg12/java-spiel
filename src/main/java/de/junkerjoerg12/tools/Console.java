@@ -169,6 +169,8 @@ public class Console extends JFrame {
     } else if (input.equals("easierbuild")) {
       if(game.inmap == true){
         game.enterEasyBuildMode();
+      }else{
+        print("Bitte erst eine Map öffnen");
       }
       ////////////////////////////////////////////////////////////////////////////
       
@@ -184,4 +186,7 @@ public class Console extends JFrame {
   private void indexError(String input) {
     print("Der Index " + input + " existiert nicht");
   }
+
+
+
 }

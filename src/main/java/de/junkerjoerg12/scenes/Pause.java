@@ -90,9 +90,6 @@ public class Pause extends JPanel implements ActionListener {
         } else if (e.getSource() == quitGame) {
             System.exit(0);
         } else if (e.getSource() == backtolvls) {
-            if(game.mapelementselect != null){
-                game.leaveEasyBuildMode();
-            }
             game.remove(this);
             game.levelauswahl();
         }

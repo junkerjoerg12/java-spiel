@@ -47,6 +47,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
   private Map map;
   public Console console;
   public Mapelementselect mapelementselect;
+  public boolean easybuildmodeON = false;
   private Lvlauswahl lvlauswahl;
   private Endscreen endscreen;
   private Failscreen failscreen;
@@ -172,6 +173,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
   }
 
   public void pause() {
+    leaveEasyBuildMode();
     if (inmap == true) {
       inmap = false;
       gameloop.pause();
@@ -223,11 +225,14 @@ public class Game extends JFrame implements ActionListener, KeyListener {
   }
 
   public void enterEasyBuildMode(){
-
+    easybuildmodeON = true;
+    mapelementselect = new Mapelementselect(this);
+    buildMode = true;
   }
 
   public void leaveEasyBuildMode(){
-
+    buildMode = false;
+    easybuildmodeON = false;
   }
 
   @Override
@@ -312,7 +317,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         console.setVisible(!console.isVisible());
       }
     } else if (e.getKeyCode() == 27) {// esc
-      pause();
+        pause();
     }
   }
 

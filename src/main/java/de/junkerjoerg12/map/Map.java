@@ -122,7 +122,7 @@ public class Map extends JPanel {
           g.setFont(timerFont);
           g.setColor(Color.WHITE);
 
-          if(game.mapelementselect == null){    //wird nicht gemalt wenn man im easy build mode ist
+          if(game.easybuildmodeON == false){    //wird nicht gemalt wenn man im easy build mode ist
             player.draw(g2D);
             g.drawString("Time: " + strLongmin + ":" + strLongs + "," + strLongms, 1690, 20);// timer anzeigen
           }
