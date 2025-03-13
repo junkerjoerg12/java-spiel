@@ -21,7 +21,7 @@ public class Dirt extends MapElement {
 
             try {
                 Dirt.imageToDisplay = ImageIO
-                        .read(new File(Paths.get("src", "main", "resources", "assets", "dirtWithoutDarkMiddle96.png").toString()));
+                        .read(new File(Paths.get("src", "main", "resources", "assets", "dirt2.png").toString()));
             } catch (IOException e) {
                 e.printStackTrace();
             }

@@ -21,7 +21,7 @@ public class Grass extends MapElement {
         if (imageToDisplay == null) {
             try {
                 Grass.imageToDisplay = ImageIO
-                        .read(new File(Paths.get("src", "main", "resources", "assets", "grass.png").toString()));
+                        .read(new File(Paths.get("src", "main", "resources", "assets", "grass1.png").toString()));
             } catch (IOException e) {
                 e.printStackTrace();
             }
