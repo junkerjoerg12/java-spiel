@@ -142,9 +142,10 @@ public class Game extends JFrame implements ActionListener, KeyListener {
   }
 
   public void addmap(File mapfile) {
-   if(mapelementselect != null) this.remove(mapelementselect);     //entfernt das window, damit nicht das falsche level bearbeitet wird
-   if(failscreen != null) remove(failscreen);
-  
+    if (mapelementselect != null)
+      this.remove(mapelementselect); // entfernt das window, damit nicht das falsche level bearbeitet wird
+    if (failscreen != null)
+      remove(failscreen);
 
     remove(lvlauswahl);
     map = new Map(this, mapfile);
@@ -224,15 +225,21 @@ public class Game extends JFrame implements ActionListener, KeyListener {
     repaint();
   }
 
-  public void enterEasyBuildMode(){
+  public void enterEasyBuildMode() {
     easybuildmodeON = true;
     mapelementselect = new Mapelementselect(this);
     buildMode = true;
   }
 
-  public void leaveEasyBuildMode(){
+  public void leaveEasyBuildMode() {
     buildMode = false;
     easybuildmodeON = false;
+    mapelementselect.dispose();
+    remove(mapelementselect);
+    if (mapelementselect != null) {
+      mapelementselect.selected = "";
+    }
+
   }
 
   @Override
@@ -317,7 +324,7 @@ public class Game extends JFrame implements ActionListener, KeyListener {
         console.setVisible(!console.isVisible());
       }
     } else if (e.getKeyCode() == 27) {// esc
-        pause();
+      pause();
     }
   }
 
@@ -386,6 +393,10 @@ public class Game extends JFrame implements ActionListener, KeyListener {
 
   public int getCharacter() {
     return character;
+  }
+
+  public Mapelementselect getmapelementselect() {
+    return mapelementselect;
   }
 
   public static void main(String[] args) {

@@ -12,26 +12,23 @@ import javax.swing.JTextField;
 import java.awt.BorderLayout;
 
 import de.junkerjoerg12.Game;
-import javafx.scene.input.KeyEvent;
+import de.junkerjoerg12.scenes.Mapelementscene;
+import de.junkerjoerg12.scenes.RectanglePanel;
 
-public class Mapelementselect extends JFrame{
+public class Mapelementselect extends JFrame {
 
-private Game game;
-private JPanel selectscreen;
+  private Game game;
+  private JPanel selectscreen;
+  public String selected = "";
 
-public Mapelementselect(Game game) {
+  public Mapelementselect(Game game) {
     this.game = game;
     setTitle("Mapelement Selection Screen");
-    setSize(500, 500);
+    setSize(500, 250);
     setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     this.setLayout(new BorderLayout());
-   
-    
- 
-
-
-
+    this.add(new Mapelementscene(this));
     setVisible(true);
   }
-    
+
 }
