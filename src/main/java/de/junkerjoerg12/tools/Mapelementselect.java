@@ -1,19 +1,11 @@
 package de.junkerjoerg12.tools;
 
-import java.awt.Color;
-import java.awt.GridBagLayout;
-import java.awt.LayoutManager;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import java.awt.BorderLayout;
 
 import de.junkerjoerg12.Game;
 import de.junkerjoerg12.scenes.Mapelementscene;
-import de.junkerjoerg12.scenes.RectanglePanel;
 
 public class Mapelementselect extends JFrame {
 

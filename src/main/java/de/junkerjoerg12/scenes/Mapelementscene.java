@@ -6,7 +6,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -19,12 +18,6 @@ import de.junkerjoerg12.tools.ImageLoader;
 import de.junkerjoerg12.tools.Mapelementselect;
 
 public class Mapelementscene extends JPanel implements ActionListener {
-
-    private BufferedImage buttonIcon;
-
-    private JButton button;
-    // public ArrayList<BufferedImage> images = new ArrayList<>();
-    // protected BufferedImage image;
 
     private Game game;
     private ArrayList<JButton> buttons = new ArrayList<>();
