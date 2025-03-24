@@ -100,7 +100,8 @@ public class Console extends JFrame {
       input = input.replaceAll("build\\s*", "");
       if (game.getMap() == null) {
         print("erst ein Level Starten");
-      } else if (input.matches("^-n [a-zA-Z0-9,;\\- ]*$")) { // neues Element hinzufügen                 //  input.matches("^-n [a-zA-Z0-9,; ]*$") ohne - koordinaten
+      } else if (input.matches("^-n [a-zA-Z0-9,;\\- ]*$")) { // neues Element hinzufügen // input.matches("^-n
+                                                             // [a-zA-Z0-9,; ]*$") ohne - koordinaten
         game.getMap().getMapwriter().addMapElement(input.replaceAll("-n ", ""));
       } else if (input.contains("-m")) { // schon bestehendes Element bewegen
         try {
@@ -146,6 +147,7 @@ public class Console extends JFrame {
       } else if (input.matches("^\\s*exit\\s*")) {
         build = false;
         game.buildMode = false;
+        game.leaveEasyBuildMode();
         inputField.setText("");
       } else {
         inputError(input);
@@ -167,13 +169,16 @@ public class Console extends JFrame {
       settings = true;
       build = false;
     } else if (input.equals("ebm")) {
-      if(game.inmap == true){
+      if (game.inmap == true) {
         game.enterEasyBuildMode();
-      }else{
+      } else {
         print("Bitte erst eine Map öffnen");
       }
       ////////////////////////////////////////////////////////////////////////////
-      
+
+    } else if (input.matches("^\\s*exit\\s*")) {
+      game.leaveEasyBuildMode();
+      inputField.setText("");
     } else {
       inputError(input);
     }
@@ -186,7 +191,5 @@ public class Console extends JFrame {
   private void indexError(String input) {
     print("Der Index " + input + " existiert nicht");
   }
-
-
 
 }
